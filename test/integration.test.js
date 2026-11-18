@@ -5,6 +5,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { build, serve } from '../src/index.js';
 import { init } from '../src/init.js';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 async function fixture(t, config = {}, files = {}) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(),'miradocs-integration-'));
@@ -78,4 +80,12 @@ test('development watcher rebuilds and notifies connected browsers',async t=>{
     const event=await reader.read();assert.match(new TextDecoder().decode(event.value),/reload/);
     assert.match(await (await fetch(preview.url)).text(),/Updated/);
   } finally {clearTimeout(timer);await reader.cancel();}
+});
+
+test('CLI reports its version and rejects unknown options',()=>{
+  const cli=fileURLToPath(new URL('../bin/miradocs.js',import.meta.url));
+  const version=spawnSync(process.execPath,[cli,'--version'],{encoding:'utf8'});
+  assert.equal(version.status,0);assert.match(version.stdout,/1\.0\.0/);
+  const invalid=spawnSync(process.execPath,[cli,'--typo'],{encoding:'utf8'});
+  assert.equal(invalid.status,1);assert.match(invalid.stderr,/Unknown option/);
 });
