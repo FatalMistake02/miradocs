@@ -13,7 +13,7 @@ description: Page syntax and the roles of Markdown, YAML, HTML, JSON, CSS, and J
 | CSS | Theme and component styles | `theme/custom.css` |
 | JavaScript | Optional client-side behavior | `public/example.js` |
 
-Page files use the `.md` extension. MDX, JSX, AsciiDoc, and reStructuredText are not page input formats. Custom content structures can be built with [HTML component templates](/components/custom-components/).
+Page files use the `.md` extension. MDX, JSX, AsciiDoc, and reStructuredText are not page input formats. Use [HTML component templates](/components/custom-components/) for reusable markup or register [framework components](/components/framework-components/) to embed JSX/TSX, Vue, and Svelte components in a Markdown page.
 
 ## Markdown support
 

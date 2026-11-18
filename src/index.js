@@ -12,6 +12,7 @@ import { icon } from './icons.js';
 import { messages } from './i18n.js';
 import { layout } from './layout.js';
 import { clean, label, exists, escape, walk, inside } from './utils.js';
+import { compileClientComponents } from './client-components.js';
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const marker = '.miradocs-output';
@@ -36,11 +37,13 @@ async function buildSite(ctx, options) {
   if (await exists(output) && !(await exists(path.join(output, marker))) && (await fs.readdir(output)).length) throw Error(`Refusing to replace ${output}: it is not a miradocs output directory. Choose an empty output folder.`);
   const components = {};
   if (await exists(ctx.components)) for (const file of await walk(ctx.components)) if (file.endsWith('.html')) components[path.basename(file, '.html')] = await fs.readFile(file, 'utf8');
+  const client = await compileClientComponents(ctx);
+  for(const name of Object.keys(client.components))if(Object.hasOwn(components,name))throw Error(`Component ${name} is registered as both HTML and a client component.`);
   const icons = {};
-  for (const name of ['book-open','search','sun','moon','menu','chevron-down','chevron-right','arrow-left','arrow-right','square-pen','languages','info','lightbulb','triangle-alert','octagon-alert','link','file-text','corner-down-left','x']) icons[name] = await icon(name, base);
+  for (const name of ['book-open','search','sun','moon','menu','chevron-down','chevron-right','arrow-left','arrow-right','square-pen','languages','info','lightbulb','triangle-alert','octagon-alert','link','file-text','corner-down-left','x','folder','folder-open','folder-tree','file-code','file-json','file-image']) icons[name] = await icon(name, base);
   icons.note = icons.info; icons.tip = icons.lightbulb; icons.caution = icons['triangle-alert']; icons.danger = icons['octagon-alert'];
   for (const [i, link] of (config.links || []).entries()) icons['link' + i] = link.icon ? await icon(link.icon, base, true) : '';
-  const render = createMarkdown(components, { base, rawHtml: config.markdown?.html === true });
+  const render = createMarkdown(components, { base, rawHtml: config.markdown?.html === true, clientComponents:client.components });
   const pages = [];
   for (const [locale, settings] of Object.entries(locales)) {
     const directory = path.join(source, settings.path), ui = messages(locale, settings);
@@ -56,9 +59,10 @@ async function buildSite(ctx, options) {
       if (data.order !== undefined && !Number.isFinite(Number(data.order))) throw Error(`${rel}: order must be a number.`);
       const parts = relative.replace(/\.md$/, '').split('/').map(clean); if (parts.at(-1) === 'index') parts.pop();
       const key = parts.join('/'), url = base + (settings.path ? settings.path + '/' : '') + parts.map(encodeURIComponent).join('/') + (parts.length ? '/' : '');
-      let rendered;
-      try { rendered = render(markdown, { ui, icons }); } catch (error) { throw Error(`${rel}: ${error.message}`); }
-      pages.push({ ...rendered, locale, rel, relative, key, url, title: data.title || label(path.basename(file, '.md')), description: data.description || '', layout: data.layout === 'landing' ? 'landing' : 'docs', sidebar: data.sidebar, search: data.search, order: Number(data.order ?? 0) });
+      let rendered;const usedComponents = new Set();
+      try { rendered = render(markdown, { ui, icons, usedComponents }); } catch (error) { throw Error(`${rel}: ${error.message}`); }
+      const clientStyles=[...new Set([...usedComponents].map(name=>client.components[name].css).filter(Boolean))];
+      pages.push({ ...rendered, locale, rel, relative, key, url, clientStyles, title: data.title || label(path.basename(file, '.md')), description: data.description || '', layout: data.layout === 'landing' ? 'landing' : 'docs', sidebar: data.sidebar, search: data.search, order: Number(data.order ?? 0) });
     }
   }
   const sortPath = page => page.relative.replace(/(^|\/)index\.md$/, '$1');
@@ -77,6 +81,7 @@ async function buildSite(ctx, options) {
   await fs.mkdir(stage, { recursive: true });
   try {
     await fs.cp(path.join(packageRoot, 'assets'), path.join(stage, 'assets'), { recursive: true });
+    for(const file of client.files){const destination=path.join(stage,'assets/components',file.path);await fs.mkdir(path.dirname(destination),{recursive:true});await fs.writeFile(destination,file.contents);}
     const fusePath = createRequire(import.meta.url).resolve('fuse.js/min');
     await fs.copyFile(fusePath.replace(/\.cjs$/, '.mjs'), path.join(stage, 'assets', 'fuse.js'));
     for (const [dir, dest] of [[ctx.publicDir, stage], [ctx.theme, path.join(stage, 'theme')]]) {
@@ -141,6 +146,6 @@ async function buildSite(ctx, options) {
     if (hadOutput) await fs.rm(backup, { recursive: true, force: true });
   } catch (error) { await fs.rm(stage,{recursive:true,force:true}); throw error; }
   console.log(`Built ${pages.length} pages in ${output}`);
-  return { ...ctx, pages };
+  return { ...ctx, pages, clientWatchFiles:client.watchFiles.filter(file=>!file.split(path.sep).includes('node_modules')) };
 }
 export { serve } from './server.js';

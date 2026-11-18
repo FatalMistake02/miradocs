@@ -1,58 +1,64 @@
 ---
 title: Installation
-description: Install, preview, and build a documentation site.
+description: Create a documentation project with miradocs as a dependency.
 ---
-## Requirements
+## Create a project
 
-Node.js 20.19 or later is required to build a site. The generated HTML, CSS, and JavaScript do not require Node.js on the host.
-
-## Install from this repository
-
-Clone the repository, enter its directory, and install dependencies:
+The starter package is `create-miradocs`. After registry publication, the standard command is:
 
 ```sh
-npm ci
-```
-
-The repository includes the miradocs source and its documentation. To preview that documentation:
-
-```sh
+npm create miradocs@latest my-docs
+cd my-docs
+npm install
 npm run dev
 ```
 
-Open [localhost:8000](http://localhost:8000). The preview watches content, configuration, styles, and components. Changes rebuild the site and reload the page. A failed build displays the error and leaves the previous output available.
+The registry packages have not been published yet. The local-package instructions below work from this repository now.
 
-## Create documentation
+The generated project contains only your content, configuration, and theme overrides. It does not copy the framework source, this documentation site, demo components, or repository tooling.
 
-Run these commands from the repository directory:
+:::file-tree my-docs
+- docs/
+  - index.md
+- theme/
+  - tokens.css
+- miradocs.config.json
+- package.json
+- .gitignore
+:::
+
+## Requirements
+
+Use Node.js 20.19 or newer. The generated site is static and needs no Node.js runtime on the host.
+
+## Use the local starter
+
+From a checkout of the miradocs repository:
 
 ```sh
-node bin/miradocs.js init ../my-docs
-node bin/miradocs.js dev --config ../my-docs/miradocs.config.json
+npm ci
+node packages/create-miradocs/build.js
+node packages/create-miradocs/bin/create-miradocs.js ../my-docs
 ```
 
-The first command creates a content folder, configuration file, and theme. Existing files are protected from overwriting. The second command previews the new site.
+For testing before publication, pack the core with `npm pack`, then generate with `--miradocs-version file:/absolute/path/to/miradocs-1.0.0.tgz`. Installing the generated project's dependencies uses that local package.
 
 ## Write your first page
 
-Follow [Writing content](/guides/writing-content/) for a complete Markdown file, or copy one of the [Page examples](/guides/page-examples/).
+Edit `docs/index.md`. Follow [Writing content](/guides/writing-content/) for a complete Markdown file, or use [Page examples](/guides/page-examples/) for a landing page, guide, and reference page.
 
-## Build static output
+## Build and preview
 
-For the included documentation:
+Run these commands inside the generated project:
 
 ```sh
+npm run dev
 npm run build
+npm run preview
 ```
 
-For another project:
+Development mode watches your content, styles, components, and configuration. The build command writes `site/` for deployment. The preview command serves a built preview without watching. See [Deployment](/guides/deployment/) for hosting settings.
 
-```sh
-node bin/miradocs.js build --config ../my-docs/miradocs.config.json
-```
+## Other package managers
 
-Upload the generated `site/` directory to a static host. See [Deployment](/guides/deployment/) for subpaths and metadata.
-
-## Use another package manager
-
-The scripts work with npm, pnpm, yarn, or Bun after installing the dependencies. You can also call `node bin/miradocs.js` directly. The package can be installed from this repository or a locally generated tarball; it has not been published to the npm registry.
+After registry publication, the creator also works with `pnpm create miradocs`, `yarn create miradocs`, and `bun create miradocs`. The generated scripts use the miradocs CLI and do not depend on a particular package manager.

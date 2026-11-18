@@ -1,4 +1,5 @@
 export const english = {
+  fileTree:'File structure',componentError:'This component could not load.',
   close:'Close', linkToSection:'Link to section', searchResults:'{count} results', themeSwitch:'{current} theme. Switch to {next}.', searchClear:'Clear search',searchSuggested:'Suggested pages',searchResultsLabel:'Results',
   search: 'Search documentation', searchPlaceholder: 'Search the docs…', searchEmpty: 'No results found. Try another search.', searchLoading: 'Loading search…', searchError: 'Search could not load. Try again.', searchNavigate: 'Navigate', searchSelect: 'Select', theme: 'Color theme', system: 'System', light: 'Light', dark: 'Dark', menu: 'Navigation', documentation: 'Documentation', outline: 'On this page', previous: 'Previous', next: 'Next', skip: 'Skip to content', copy: 'Copy code', copied: 'Copied', copyError: 'Unable to copy', edit: 'Edit this page', language: 'Language', notFound: 'Page not found', notFoundText: 'The page may have moved or the address may be incorrect.', home: 'Go to documentation', note: 'Note', tip: 'Tip', caution: 'Caution', danger: 'Danger'
 };

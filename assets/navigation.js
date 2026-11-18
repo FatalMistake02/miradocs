@@ -44,8 +44,24 @@ export function enableNavigation(initializePage) {
       if (request.signal.aborted) return;
       const page = new DOMParser().parseFromString(html, 'text/html');
       if (!page.querySelector('#miradocs-data') || !page.querySelector('.layout')) throw Error('Not a documentation page');
+      const styleSelector='link[data-miradocs-component-style]';
+      const nextStyles=[...page.head.querySelectorAll(styleSelector)],styleURLs=new Set(nextStyles.map(link=>new URL(link.getAttribute('href'),url).href));
+      await Promise.all(nextStyles.map(link=>{
+        const href=new URL(link.getAttribute('href'),url).href;
+        if([...document.head.querySelectorAll(styleSelector)].some(existing=>existing.href===href))return;
+        return new Promise((resolve,reject)=>{
+          const style=document.importNode(link,true);style.href=href;
+          const cancel=()=>{style.remove();reject(Error('Navigation cancelled'));};
+          request.signal.addEventListener('abort',cancel,{once:true});
+          style.onload=()=>{request.signal.removeEventListener('abort',cancel);resolve();};
+          style.onerror=()=>{request.signal.removeEventListener('abort',cancel);style.remove();reject(Error('Component stylesheet unavailable'));};
+          document.head.insertBefore(style,document.head.querySelector('link[data-miradocs-theme]'));
+        });
+      }));
+      if(request.signal.aborted)return;
       const sidebarScroll = document.querySelector('.sidebar-inner')?.scrollTop || 0;
       document.querySelector('dialog[open]')?.close();
+      document.dispatchEvent(new CustomEvent('miradocs:before-navigate'));
       document.body.classList.remove('menu-open');
       for (const selector of ['.topbar', '.layout', '.search-dialog', '#miradocs-data']) {
         const current = document.querySelector(selector), next = page.querySelector(selector);
@@ -59,6 +75,7 @@ export function enableNavigation(initializePage) {
       const metadata = 'meta[name="description"], meta[property^="og:"], link[rel="canonical"], link[rel="alternate"]';
       document.head.querySelectorAll(metadata).forEach(node => node.remove());
       page.head.querySelectorAll(metadata).forEach(node => document.head.append(document.importNode(node, true)));
+      document.head.querySelectorAll(styleSelector).forEach(link=>{if(!styleURLs.has(link.href))link.remove();});
       if (!pop) history.pushState({ miradocsScroll: [0, 0] }, '', finalURL);
       displayed = finalURL;
       initializePage();

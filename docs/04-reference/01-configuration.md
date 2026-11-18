@@ -47,3 +47,7 @@ Set `strictLinks: false` to opt out of internal link and fragment checking. By d
 ## Client navigation
 
 `clientNavigation` defaults to true. Set it to false to use standard page loads. Custom scripts can listen for `miradocs:navigate` after a page is rendered. The event includes the destination in `event.detail.url`. Add `data-no-router` to a custom anchor to use normal browser navigation for that link.
+
+## Framework components
+
+Register entries in `clientComponents` with a `src` module and a `framework` value of `react`, `vue`, `svelte`, or `module`. Set `load` to `visible`, `idle`, or `eager`. See [Framework components](/components/framework-components/) for complete source and Markdown examples.

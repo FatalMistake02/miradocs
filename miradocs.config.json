@@ -19,5 +19,27 @@
   ],
   "$schema": "./miradocs.schema.json",
   "logo": "/miradocs-logo.png",
-  "favicon": "/miradocs-logo.png"
+  "favicon": "/miradocs-logo.png",
+  "clientComponents": {
+    "react-counter": {
+      "src": "./components/frameworks/Counter.jsx",
+      "framework": "react",
+      "load": "visible"
+    },
+    "vue-counter": {
+      "src": "./components/frameworks/Counter.vue",
+      "framework": "vue",
+      "load": "visible"
+    },
+    "svelte-counter": {
+      "src": "./components/frameworks/Counter.svelte",
+      "framework": "svelte",
+      "load": "visible"
+    },
+    "web-counter": {
+      "src": "./components/frameworks/CounterElement.js",
+      "framework": "module",
+      "load": "visible"
+    }
+  }
 }

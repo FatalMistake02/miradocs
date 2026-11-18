@@ -33,6 +33,15 @@ export async function loadConfig(configPath = 'miradocs.config.json') {
   if (config.styles && (!Array.isArray(config.styles) || config.styles.some(s => typeof s !== 'string' || s.includes('..') || path.isAbsolute(s)))) throw Error('styles must contain paths inside the theme folder.');
   if(config.scripts && (!Array.isArray(config.scripts) || config.scripts.some(s=>typeof s !== 'string'))) throw Error('scripts must be an array of URLs.');
   for(const script of config.scripts || []) safeUrl(script,'script');
+  const reserved = new Set(['note','tip','caution','danger','tabs','tab','details','steps','cards','card','button','file-tree','badge','constructor','prototype']);
+  if(config.clientComponents && (typeof config.clientComponents !== 'object' || Array.isArray(config.clientComponents))) throw Error('clientComponents must be an object.');
+  for(const [name,component] of Object.entries(config.clientComponents || {})) {
+    if(!/^[a-z][a-z0-9-]*$/.test(name) || reserved.has(name)) throw Error(`Invalid or reserved client component name: ${name}`);
+    if(!component || typeof component !== 'object' || typeof component.src !== 'string' || !component.src.trim()) throw Error(`${name}: client components need a src module.`);
+    if(!['react','vue','svelte','module'].includes(component.framework)) throw Error(`${name}: framework must be react, vue, svelte, or module.`);
+    if(component.load && !['eager','idle','visible'].includes(component.load)) throw Error(`${name}: load must be eager, idle, or visible.`);
+    if(component.export && !/^[A-Za-z_$][\w$]*$/.test(component.export)) throw Error(`${name}: invalid export name.`);
+  }
   const locales = config.locales || { [config.language || 'en']: { label: config.language || 'English', path: '' } };
   if (!Object.keys(locales).length) throw Error('At least one locale is required.');
   const prefixes = new Set();

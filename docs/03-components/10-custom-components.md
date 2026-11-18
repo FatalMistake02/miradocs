@@ -63,3 +63,5 @@ function initializeExample() {
 initializeExample();
 document.addEventListener("miradocs:navigate", initializeExample);
 ```
+
+For React, Vue, Svelte, or an external component library, use [Framework components](/components/framework-components/) instead of managing mounts manually.

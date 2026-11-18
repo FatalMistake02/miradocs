@@ -1,4 +1,5 @@
 import { enableNavigation } from './navigation.js';
+import { initializeClientComponents } from './client-components.js';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -13,6 +14,8 @@ function initializePage() {
   cleanup = () => { controller.abort(); cleanups.forEach(dispose => dispose()); };
   const on = (target, event, listener) => target?.addEventListener(event, listener, { signal });
   const config = JSON.parse($('#miradocs-data').textContent), { ui } = config;
+  on(document,'miradocs:before-navigate',cleanup);
+  initializeClientComponents(signal,ui);
   const visit = url => {
     if (config.clientNavigation !== false) document.dispatchEvent(new CustomEvent('miradocs:visit', { detail: { url } }));
     else location.assign(url);

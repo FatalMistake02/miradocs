@@ -22,3 +22,4 @@ jobs:
       - run: npm run build
       - run: node bin/miradocs.js build --config examples/basic/miradocs.config.json
       - run: npm pack --dry-run
+      - run: npm pack ./packages/create-miradocs --dry-run

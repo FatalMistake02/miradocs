@@ -47,12 +47,12 @@ export async function serve(configPath, port = 8000, { watchFiles = true } = {})
   const rebuild = async () => {
     if (building) { pending = true; return; }
     building = true;
-    try { ctx = await build(configPath,{dev:true,drafts:true}); watcher?.add([ctx.file,ctx.source,ctx.theme,ctx.components,ctx.publicDir]); broadcast({type:'reload'}); }
+    try { ctx = await build(configPath,{dev:true,drafts:true}); watcher?.add([ctx.file,ctx.source,ctx.theme,ctx.components,ctx.publicDir,...ctx.clientWatchFiles]); broadcast({type:'reload'}); }
     catch(error) { console.error(error.message); broadcast({type:'error',message:error.message}); }
     finally { building = false; if(pending){pending=false;await rebuild();} }
   };
   if(watchFiles) {
-    watcher = watch([ctx.file, ctx.source, ctx.theme, ctx.components, ctx.publicDir, fileURLToPath(new URL('../assets/',import.meta.url))],{ignoreInitial:true,awaitWriteFinish:{stabilityThreshold:100,pollInterval:30}});
+    watcher = watch([ctx.file, ctx.source, ctx.theme, ctx.components, ctx.publicDir, ...ctx.clientWatchFiles, fileURLToPath(new URL('../assets/',import.meta.url))],{ignoreInitial:true,awaitWriteFinish:{stabilityThreshold:100,pollInterval:30}});
     watcher.on('all',()=>{clearTimeout(timer);timer=setTimeout(rebuild,100);});
     await new Promise(resolve=>watcher.once('ready',resolve));
   }

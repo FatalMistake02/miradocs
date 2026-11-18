@@ -24,17 +24,22 @@ The framework includes:
 - Light, dark, and system themes, semantic CSS tokens, custom styles, logos, and links.
 - Lazy-loaded fuzzy search with platform-aware keyboard shortcuts.
 - Locale folders, language switching, translated interface dictionaries, and RTL layout support.
-- Tabs, callouts, disclosures, cards, action links, steps, badges, file trees, and custom HTML components.
+- Tabs, callouts, disclosures, cards, action links, steps, badges, icon-based file trees, and custom HTML components.
+- Optional React, Vue, Svelte, and browser module components with per-page bundles and navigation cleanup.
 - Landing pages without sidebars.
 - Static metadata, sitemap generation, 404 pages, drafts, and internal link checking.
 - Atomic builds that preserve previous output on failure.
 
-Create another site:
+Create another site with the separate `create-miradocs` package. After registry publication:
 
 ```sh
-node bin/miradocs.js init ../my-docs
-node bin/miradocs.js dev --config ../my-docs/miradocs.config.json
+npm create miradocs@latest my-docs
+cd my-docs
+npm install
+npm run dev
 ```
+
+Generated projects contain only their own content, config, and theme overrides. The core is installed as a dependency. The creator can also be packed and run locally before publication.
 
 Configuration lives in `miradocs.config.json`. The `docs/` directory is the framework's own documentation, including setup, components, navigation, theming, localization, and deployment. `miradocs.schema.json` provides editor schema support. The npm registry package has not been published; install from this repository or a locally generated tarball.
 

@@ -32,6 +32,9 @@ Display a short status label.
 :::card Code blocks | /components/code-blocks/
 Highlighted code with a copy button.
 :::
+:::card Framework components | /components/framework-components/
+Use React, Vue, Svelte, or a browser module.
+:::
 :::card Custom components | /components/custom-components/
 Create a reusable HTML template.
 :::

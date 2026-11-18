@@ -1,0 +1,12 @@
+{
+  "name": "create-miradocs",
+  "version": "1.0.0",
+  "description": "Create a minimal miradocs documentation project.",
+  "type": "module",
+  "bin": { "create-miradocs": "bin/create-miradocs.js" },
+  "files": ["bin", "lib", "LICENSE"],
+  "scripts": { "prepack": "node build.js" },
+  "engines": { "node": ">=20.19" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/FatalMistake02/miradocs.git", "directory": "packages/create-miradocs" }
+}

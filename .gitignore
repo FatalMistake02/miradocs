@@ -10,3 +10,6 @@ site.previous-*/
 search-preview.jpg
 *.lock/
 docs-preview.jpg
+packages/create-miradocs/lib/
+packages/create-miradocs/LICENSE
+.miradocs-test-*/

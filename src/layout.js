@@ -8,7 +8,7 @@ export function layout(ctx, page, pages, navigation, icons, ui, { dev = false, n
   const index = sameLanguage.indexOf(page), previous = sameLanguage[index - 1], next = sameLanguage[index + 1];
   const home = base + (locale.path ? locale.path + '/' : '');
   const siteName = config.title || 'Documentation';
-  const styles = (config.styles || []).map(file => `<link rel="stylesheet" href="${e(base + 'theme/' + file)}">`).join('');
+  const styles = (page.clientStyles || []).map(url=>`<link rel="stylesheet" data-miradocs-component-style href="${e(url)}">`).join('') + (config.styles || []).map(file => `<link rel="stylesheet" data-miradocs-theme href="${e(base + 'theme/' + file)}">`).join('');
   const links = (config.links || []).map((link, i) => `<a href="${e(localUrl(base, link.url))}" ${link.newTab ? 'target="_blank" rel="noopener noreferrer"' : ''}>${icons['link' + i]}<span>${e(link.label)}</span></a>`).join('');
   const languages = Object.entries(locales).length > 1 ? `<label class="select-control">${icons.languages}<span class="sr-only">${e(ui.language)}</span><select class="language-select" aria-label="${e(ui.language)}">${Object.entries(locales).map(([key, value]) => {
     const target = pages.find(p => p.locale === key && p.key === page.key) || pages.find(p => p.locale === key && p.key === '') || pages.find(p => p.locale === key);

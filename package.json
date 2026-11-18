@@ -17,7 +17,9 @@
     "build": "node bin/miradocs.js build",
     "dev": "node bin/miradocs.js dev",
     "test": "node --test",
-    "check": "npm test && npm run build"
+    "check": "npm test && npm run build",
+    "pretest": "node packages/create-miradocs/build.js",
+    "pack:creator": "npm pack ./packages/create-miradocs"
   },
   "engines": {
     "node": ">=20.19"
@@ -25,6 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "chokidar": "^4.0.3",
+    "esbuild": "^0.28.2",
     "fuse.js": "^7.5.0",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.12.0",
@@ -40,6 +43,11 @@
     "url": "https://github.com/FatalMistake02/miradocs.git"
   },
   "devDependencies": {
-    "jsdom": "^26.1.0"
+    "@vue/compiler-sfc": "^3.5.45",
+    "jsdom": "^26.1.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "svelte": "^5.58.0",
+    "vue": "^3.5.45"
   }
 }

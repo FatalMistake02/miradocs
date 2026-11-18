@@ -1,25 +1,45 @@
 ---
 title: File trees
-description: Format a nested list as a directory structure.
+description: Display files and folders from a nested Markdown list.
 ---
 ## Example
 
-:::file-tree
+:::file-tree Project
 - docs/
-  - index.md
-  - 01-guides/
-    - 01-install.md
-- theme/
-  - tokens.css
-- miradocs.config.json
+  - index.md — Home page
+  - guides/
+    - installation.md
+- components/
+  - Counter.jsx
+- public/
+  - logo.svg
+- **miradocs.config.json** — Site settings
 :::
 
 ## Usage
 
-Write a nested Markdown list inside `file-tree`. Indentation determines the hierarchy.
+Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing slash identifies a folder even when it has no children. File extensions select the icon.
 
 ```md
-:::file-tree
+:::file-tree Project
+- docs/
+  - index.md — Home page
+  - guides/
+    - installation.md
+- components/
+  - Counter.jsx
+- **miradocs.config.json** — Site settings
+:::
+```
+
+Add a description after ` — `. Names support inline code, emphasis, and links. Folder rows can be toggled with a click or with Enter or Space while focused.
+
+## Start with folders closed
+
+Use JSON options to set a title and the initial folder state:
+
+```md
+:::file-tree {"title":"Project","collapsed":true}
 - docs/
   - index.md
 - theme/
@@ -27,17 +47,25 @@ Write a nested Markdown list inside `file-tree`. Indentation determines the hier
 :::
 ```
 
-File trees are display content. The component does not read the filesystem or create files.
+:::file-tree {"title":"Project","collapsed":true}
+- docs/
+  - index.md
+- theme/
+  - tokens.css
+:::
 
 ## Customize
 
-The wrapper uses `.file-tree`. Lists and items retain their normal Markdown structure.
+`--tree-indent` sets nesting depth, `--tree-row-height` controls row spacing, `--tree-guide` colors connector lines, and `--tree-icon` colors the icons. Other colors use the shared theme tokens.
 
 ```css
 .file-tree {
-  background: var(--code-bg);
-  font-family: var(--mono);
-  padding: 12px 22px;
+  --tree-indent: 28px;
+  --tree-row-height: 36px;
+  --tree-guide: var(--border);
+  --tree-icon: var(--muted);
 }
-.file-tree ul { padding-inline-start: 24px; }
+.file-tree-description { font-size: 12px; }
 ```
+
+The main selectors are `.file-tree-row`, `.file-tree-name`, `.file-tree-description`, and `.file-tree-directory`. Keep the folder disclosure element when customizing its markup or focus styles.
