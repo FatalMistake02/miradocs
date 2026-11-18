@@ -45,7 +45,8 @@ export async function build(configPath = 'miradocs.config.json', options = {}) {
       pages.push({ ...rendered, locale, rel, relative, key, url, title: data.title || label(path.basename(file, '.md')), description: data.description || '', layout: data.layout === 'landing' ? 'landing' : 'docs', sidebar: data.sidebar, search: data.search, order: Number(data.order ?? 0) });
     }
   }
-  pages.sort((a,b) => a.locale.localeCompare(b.locale) || (a.key === '' ? -1 : b.key === '' ? 1 : a.order - b.order || a.relative.localeCompare(b.relative,'en',{numeric:true})));
+  const sortPath = page => page.relative.replace(/(^|\/)index\.md$/, '$1');
+  pages.sort((a,b) => a.locale.localeCompare(b.locale) || (a.key === '' ? -1 : b.key === '' ? 1 : a.order - b.order || sortPath(a).localeCompare(sortPath(b),'en',{numeric:true})));
   if (!pages.length) throw Error('No Markdown pages found.');
   const urls = new Set(); for (const page of pages) { const key = page.url.toLowerCase(); if (urls.has(key)) throw Error(`Two pages have the same URL: ${page.url}`); urls.add(key); }
   // Resolve links to Markdown sources, including numbered filenames.

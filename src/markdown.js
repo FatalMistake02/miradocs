@@ -105,7 +105,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false } = {})
         const raw = slug(title), count = ids.get(raw) || 0; ids.set(raw, count + 1);
         const id = raw + (count ? `-${count + 1}` : ''); token.attrSet('id', id);
         if(tokens[i+2]?.type === 'heading_close') tokens[i+2].meta = {id};
-        if (['h2', 'h3'].includes(token.tag)) headings.push([Number(token.tag[1]), title, id]);
+        if (Number(token.tag[1]) >= 2) headings.push([Number(token.tag[1]), title, id]);
       }
       if (token.type === 'component_open' && token.meta.name === 'tab') token.meta.id = `tab-${++tabId}`;
     }

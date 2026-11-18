@@ -1,21 +1,24 @@
 ---
 title: Navigation
-description: Generate nested navigation from folders or define it explicitly.
+description: Configure the sidebar and page outline.
 ---
-## Automatic navigation
+## Sidebar from folders
 
-Folder groups are collapsible. Nested folders create nested groups, and the current page's ancestors remain open. Numeric prefixes and page `order` control ordering. `sidebar: false` hides a page from the sidebar and pagination.
+Each content folder becomes a collapsible sidebar group. Child pages and nested groups are indented. The current page's parent groups open automatically.
 
-## Explicit navigation
+Numeric filename prefixes set the default order. Page frontmatter `order` overrides that order. Set `sidebar: false` to remove a page from the sidebar and pagination.
 
-Set `sidebar` to an array of page links, external links, and groups:
+## Custom sidebar
+
+Set `sidebar` to an array:
 
 ```json
 {
   "sidebar": [
-    { "page": "01-getting-started/01-quick-start.md", "label": "Start here" },
+    { "page": "01-getting-started/01-quick-start.md", "label": "Installation" },
     {
-      "label": "Guides", "collapsed": true,
+      "label": "Guides",
+      "collapsed": true,
       "items": [{ "page": "guides/theming" }]
     },
     { "label": "Source", "link": "https://github.com" }
@@ -23,4 +26,12 @@ Set `sidebar` to an array of page links, external links, and groups:
 }
 ```
 
-A page reference can be its source filename relative to the locale folder or its generated route without a leading slash. Invalid page references fail the build. Locale-specific sidebars override the global sidebar.
+A `page` value can be a source filename relative to the locale folder or its generated route. A group contains an `items` array. Groups can be nested. `collapsed: true` closes a group unless it contains the current page.
+
+A `link` value creates an ordinary URL link. Every link needs a label. Invalid page references fail the build. A locale's `sidebar` setting replaces the global sidebar for that language.
+
+## Page outline
+
+The outline lists headings from level two through level six. Each level is indented under the previous level. The page title is excluded. It remains pinned during article scrolling, and the current section is marked as you scroll.
+
+At smaller widths, the outline moves above the article into a disclosure. Landing pages omit both the sidebar and outline.

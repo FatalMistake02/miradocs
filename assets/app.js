@@ -52,7 +52,7 @@ if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
     for(const entry of entries) if(entry.isIntersecting) { outlineLinks.forEach(link => { const current = link.hash === '#'+entry.target.id; link.classList.toggle('active',current); if(current) link.setAttribute('aria-current','location'); else link.removeAttribute('aria-current'); }); }
   }, { rootMargin: '-80px 0px -65% 0px' });
-  $$('.article h2, .article h3').forEach(heading => observer.observe(heading));
+  $$('.article h2, .article h3, .article h4, .article h5, .article h6').forEach(heading => observer.observe(heading));
 }
 
 const trigger = $('.search-trigger'), dialog = $('.search-dialog');

@@ -1,35 +1,54 @@
 ---
-title: Quick start
-description: Create a project, preview your pages, and produce a static build.
+title: Installation
+description: Install, preview, and build a documentation site.
 ---
 ## Requirements
 
-Use Node.js 20.19 or newer. Install dependencies with npm, pnpm, yarn, or Bun. The built site needs no Node.js runtime.
+Node.js 20.19 or later is required to build a site. The generated HTML, CSS, and JavaScript do not require Node.js on the host.
 
-## Run this repository
+## Install from this repository
+
+Clone the repository, enter its directory, and install dependencies:
 
 ```sh
 npm ci
+```
+
+The repository includes the miradocs source and its documentation. To preview that documentation:
+
+```sh
 npm run dev
 ```
 
-Open [localhost:8000](http://localhost:8000). Content, theme, component, and configuration changes rebuild and reload the preview automatically. Errors appear in the terminal and browser while the previous build stays available.
+Open [localhost:8000](http://localhost:8000). The preview watches content, configuration, styles, and components. Changes rebuild the site and reload the page. A failed build displays the error and leaves the previous output available.
 
-## Create another site
+## Create documentation
 
-From this repository, run:
+Run these commands from the repository directory:
 
 ```sh
 node bin/miradocs.js init ../my-docs
 node bin/miradocs.js dev --config ../my-docs/miradocs.config.json
 ```
 
-The initializer creates content, configuration, and a theme. It refuses to overwrite existing files. You can also install the package from a local directory or a generated tarball, then use the installed `miradocs` command. This repository has not been published to the npm registry.
+The first command creates a content folder, configuration file, and theme. Existing files are protected from overwriting. The second command previews the new site.
 
-## Build
+## Build static output
+
+For the included documentation:
 
 ```sh
 npm run build
 ```
 
-The output is written to `site/`. Run `node bin/miradocs.js serve` for a preview without file watching. Both preview commands accept `--port 3000`. All commands accept `--config` except init.
+For another project:
+
+```sh
+node bin/miradocs.js build --config ../my-docs/miradocs.config.json
+```
+
+Upload the generated `site/` directory to a static host. See [Deployment](/guides/deployment/) for subpaths and metadata.
+
+## Use another package manager
+
+The scripts work with npm, pnpm, yarn, or Bun after installing the dependencies. You can also call `node bin/miradocs.js` directly. The package can be installed from this repository or a locally generated tarball; it has not been published to the npm registry.

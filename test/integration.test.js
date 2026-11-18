@@ -89,3 +89,10 @@ test('CLI reports its version and rejects unknown options',()=>{
   const invalid=spawnSync(process.execPath,[cli,'--typo'],{encoding:'utf8'});
   assert.equal(invalid.status,1);assert.match(invalid.stderr,/Unknown option/);
 });
+
+test('outline preserves heading levels two through six and omits breadcrumbs',async t=>{
+  const f=await fixture(t,{}, {'docs/index.md':'---\ntitle: Headings\n---\n## Section\n### Subsection\n#### Detail\n##### Subdetail\n###### Reference'});
+  await build(f.configPath);const html=await f.read('index.html');
+  for(const level of [2,3,4,5,6])assert.match(html,new RegExp(`class="toc-level-${level}"`));
+  assert.doesNotMatch(html,/class="breadcrumb"/);
+});

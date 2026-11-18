@@ -1,24 +1,22 @@
 ---
-title: Documentation that fits your project.
-description: Write in Markdown. Organize with folders. Customize the parts you need.
+title: miradocs
+description: Static documentation framework.
 layout: landing
 sidebar: false
 ---
-:::button Get started | /getting-started/quick-start/
+miradocs builds HTML pages from Markdown files. It includes navigation, search, themes, language switching, and content components. The generated site can be served by any static host.
+
+:::button Installation | /getting-started/quick-start/
 :::
 
 :::cards
-:::card Write and organize | /guides/writing-content/
-CommonMark, tables, task lists, footnotes, and highlighted code. Files and folders become your navigation.
+:::card Content | /guides/writing-content/
+Markdown syntax, code blocks, images, tables, task lists, and footnotes.
 :::
-:::card Adjust the interface | /guides/theming/
-Shared layout tokens with independent light and dark palettes. Add your own styles and components.
+:::card Configuration | /reference/configuration/
+Site settings, content folders, themes, navigation, search, and languages.
 :::
-:::card Publish static files | /guides/deployment/
-Build once and serve from a static host, a CDN, or your own web server.
+:::card Components | /components/
+Tabs, callouts, cards, disclosures, steps, and custom templates.
 :::
 :::
-
-## Included
-
-Keyboard search, collapsible nested navigation, a pinned page outline, translated interfaces, live preview updates, and accessible components are part of the default site. There is no client framework runtime.

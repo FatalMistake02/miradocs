@@ -33,7 +33,7 @@ ${config.search !== false ? `<button class="search-trigger" type="button" aria-l
 <label class="select-control theme-control">${icons['sun-moon']}<span class="sr-only">${e(ui.theme)}</span><select class="theme-select" aria-label="${e(ui.theme)}"><option value="system">${e(ui.system)}</option><option value="light">${e(ui.light)}</option><option value="dark">${e(ui.dark)}</option></select></label>
 <button class="menu-toggle icon-button" type="button" aria-label="${e(ui.menu)}" aria-expanded="false" aria-controls="sidebar">${icons.menu}</button></div></header>
 <div class="layout ${landing ? 'landing-layout' : ''}">${!landing ? `<aside class="sidebar" id="sidebar"><div class="sidebar-inner"><nav aria-label="${e(ui.documentation)}">${navigationHtml(navigation, page.url, icons['chevron-down'])}</nav></div></aside>` : ''}
-<main id="main" class="main" tabindex="-1">${!landing ? `<div class="breadcrumb"><a href="${home}">${e(ui.documentation)}</a>${icons['chevron-right']}<span>${e(page.title)}</span></div>` : ''}
+<main id="main" class="main" tabindex="-1">
 <h1>${e(page.title)}</h1>${page.description ? `<p class="lede">${e(page.description)}</p>` : ''}${toc ? `<details class="mobile-toc"><summary>${e(ui.outline)}</summary>${toc}</details>` : ''}
 <article class="article">${page.content}</article>
 ${config.editUrl && !notFound ? `<a class="edit-link" href="${e(config.editUrl.replace(/\/$/, '') + '/' + page.rel.split('/').map(encodeURIComponent).join('/'))}">${icons['square-pen']}${e(ui.edit)}</a>` : ''}
