@@ -28,7 +28,7 @@ For a custom system-dark palette, add the same color overrides under `@media (pr
 | Text | `--text`, `--muted`, `--accent`, `--accent-text` |
 | Structure | `--border`, `--radius`, `--panel-radius`, `--header-height` |
 | Layout | `--sidebar-width`, `--outline-width`, `--content-width` |
-| Type | `--font`, `--mono` |
+| Type | `--font`, `--mono`, `--brand-font-weight` |
 | Code | `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, `--code-comment` |
 | Feedback | `--info`, `--warning`, `--danger` |
 | Motion | `--duration`, `--ease` |
@@ -36,6 +36,14 @@ For a custom system-dark palette, add the same color overrides under `@media (pr
 ## Site identity
 
 Set `title`, `logo`, `favicon`, and optional `footer` in configuration. Asset paths refer to files in the public folder.
+
+The header title uses regular weight (`400`) by default. Override `--brand-font-weight` in your theme to change it:
+
+```css
+:root {
+  --brand-font-weight: 500;
+}
+```
 
 ## Header accent
 
