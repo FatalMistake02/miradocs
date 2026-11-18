@@ -1,0 +1,16 @@
+/* Your design tokens. One layout, two palettes. */
+:root {
+  --accent: #687f5d;
+  --accent-soft: #edf2e8;
+  --radius: 10px;
+}
+html[data-theme="dark"] {
+  --accent: #b4cca6;
+  --accent-soft: #29382a;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-theme="dark"]) {
+    --accent: #b4cca6;
+    --accent-soft: #29382a;
+  }
+}

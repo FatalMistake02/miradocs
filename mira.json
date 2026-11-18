@@ -1,0 +1,14 @@
+{
+  "title": "Mira",
+  "label": "DOCUMENTATION",
+  "eyebrow": "WELCOME TO MIRA",
+  "description": "A calmer way to build documentation.",
+  "language": "en",
+  "base": "/",
+  "content": "docs",
+  "output": "site",
+  "theme": "theme",
+  "components": "components",
+  "styles": ["tokens.css", "custom.css"],
+  "links": [{"label": "GitHub ↗", "url": "https://github.com/FatalMistake02/miradocs"}]
+}
