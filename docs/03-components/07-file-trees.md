@@ -20,6 +20,8 @@ description: Display files and folders from a nested Markdown list.
 
 Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing slash identifies a folder even when it has no children. File extensions select the icon.
 
+Items keep the order you write them in. Place folder entries before file entries to show folders first.
+
 ```md
 :::file-tree Project
 - docs/
