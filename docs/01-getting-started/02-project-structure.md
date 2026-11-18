@@ -5,14 +5,15 @@ description: A familiar folder structure that keeps content, presentation, and o
 ## Everything in its place
 
 ```text
-mira.json             Site settings
+miradocs.config.json             Site settings
 docs/                 Markdown content
   index.md            Home page
   01-getting-started/ A navigation group
 theme/                Your tokens and custom CSS
 components/           Reusable HTML templates
 public/               Optional static files
-miradocs/             Generator and default assets
+src/                  Generator
+assets/               Default styles and scripts
 site/                 Generated output
 ```
 
@@ -34,3 +35,4 @@ Descriptions appear below the title, in search results, and in the page's metada
 :::caution Keep output separate
 The output directory is rebuilt from scratch. Don't put your source files or anything you want to keep there.
 :::
+

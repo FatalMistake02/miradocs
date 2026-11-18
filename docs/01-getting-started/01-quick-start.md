@@ -1,43 +1,28 @@
 ---
 title: Quick start
-description: From a folder of files to your first documentation site, in a few small steps.
+description: Install dependencies, run the local preview, and build your site.
 ---
-## What you need
+## Requirements
 
-You need Python 3.9 or newer. Mira uses the standard library, so there are no packages to install. Copy this project as a starting point, or keep the `miradocs` folder alongside your own content and configuration.
+Install Node.js 20 or newer. The project uses JavaScript; the generated site is static and needs no server runtime. You can install the dependencies with npm, pnpm, yarn, or another compatible package manager.
 
-## Build and preview
+## Preview
 
-Run these commands from the project directory:
-
-:::tabs
-:::tab Preview locally
 ```sh
-python -m miradocs serve
+npm install
+npm run dev
 ```
-:::
-:::tab Build for production
+
+Visit [localhost:8000](http://localhost:8000). The server builds at startup. Restart it after editing content or configuration.
+
+## Build
+
 ```sh
-python -m miradocs build
-```
-:::
-:::
-
-Open [localhost:8000](http://localhost:8000) to preview. The preview builds once at startup; restart it after editing. The production command writes the complete static site to `site/`.
-
-## Make your first edit
-
-Open `docs/index.md` and change the title, description, or content. Every Markdown file becomes a page. Add another file and Mira will include it in navigation automatically.
-
-```text
-docs/
-  index.md
-  01-getting-started/
-    01-quick-start.md
+npm run build
 ```
 
-Numeric prefixes control ordering and are removed from URLs and navigation labels. The example page appears at `/getting-started/quick-start/`.
+Deploy the contents of `site/` to a static host. You can also run `node bin/miradocs.js build` directly. Use `--config path/to/miradocs.config.json` to select a configuration file and `--port 3000` to select a preview port.
 
-:::note Running from another directory
-Use `--config path/to/mira.json` to point to a configuration file. All configured paths are resolved relative to that file. Python must be able to find the `miradocs` module.
-:::
+## Add a page
+
+Create a Markdown file in `docs/`. Numeric prefixes set the order and are omitted from URLs. For example `docs/01-guides/02-install.md` becomes `/guides/install/`.

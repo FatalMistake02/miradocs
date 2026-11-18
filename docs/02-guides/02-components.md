@@ -9,12 +9,12 @@ Group related choices without making a page longer. Tabs support click and arrow
 :::tabs
 :::tab macOS / Linux
 ```sh
-python3 -m miradocs build
+npm run build
 ```
 :::
 :::tab Windows
 ```powershell
-python -m miradocs build
+npm run build
 ```
 :::
 :::
@@ -52,3 +52,4 @@ This content is rendered as Markdown.
 ```
 
 Style the component in your theme's CSS. The card on the introduction page uses this exact pattern.
+

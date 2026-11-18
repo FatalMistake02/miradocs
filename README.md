@@ -1,13 +1,12 @@
-# Mira Docs
+# miradocs
 
-A small static documentation framework with folder-based navigation, a customizable CSS token theme, built-in search, and reusable components. Mira builds its own documentation with no third-party dependencies.
+A static documentation framework with folder-based navigation, Markdown, search, themes, and custom components. The documentation in `docs/` is built with miradocs.
 
-Requires Python 3.9 or newer.
+Requires Node.js 20 or later.
 
 ```sh
-python -m miradocs serve
+npm install
+npm run dev
 ```
 
-Visit http://localhost:8000. Restart the preview after editing. Run `python -m miradocs build` to generate the static site in `site/` for deployment to any static host. Start with `mira.json`, `docs/`, and `theme/`; the documentation covers configuration, components, theming, search, and deployment.
-
-Mira is an early framework: it supports a deliberately small Markdown dialect and currently has English interface text. See the documentation for supported syntax and hosting details.
+Open http://localhost:8000. Restart the preview after editing. Run `npm run build` to generate `site/` for any static host. Configure the site in `miradocs.config.json`.

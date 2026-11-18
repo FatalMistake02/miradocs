@@ -1,33 +1,22 @@
 ---
 title: Introduction
-description: A calmer way to build documentation. Simple to start, flexible enough to make entirely yours.
+description: Build a static documentation site from Markdown files.
 ---
-:::card DOCUMENTATION, WITHOUT THE NOISE
-Mira gives your ideas a thoughtful home. Bring your content, choose your colors, and publish a fast, beautiful site anywhere.
-:::
+miradocs generates a documentation site from a directory of Markdown files. It includes navigation, search, a responsive layout, dark mode, syntax highlighting, and customizable styles.
 
-## A little less setup, a lot more clarity
+## Get started
 
-Great documentation should feel effortless to read and straightforward to maintain. Mira turns a folder of Markdown files into a complete static site, with the details already taken care of.
-
-- **Start small.** A config file, a content folder, and Python are all you need.
-- **Make it yours.** Change a few variables or go deeper with your own CSS and components.
-- **Ship anywhere.** The output is just HTML, CSS, and JavaScript. No server runtime required.
-
-## Get going in a minute
-
-From the project folder, build the site and start a local preview:
+Install dependencies and start the development server:
 
 ```sh
-python -m miradocs serve
+npm install
+npm run dev
 ```
 
-Then visit [localhost:8000](http://localhost:8000). Edit a page in `docs/` and restart the command to rebuild. When you're ready to publish, run `python -m miradocs build` and upload the `site/` folder.
+Open [localhost:8000](http://localhost:8000). Restart the server after changing files. To create static files for deployment, run `npm run build`.
 
-:::tip A good place to start
-Head to [Quick start](/getting-started/quick-start/) for the full walkthrough, or explore [Theming](/guides/theming/) to make Mira feel like your own.
-:::
+## How it works
 
-## Built for the long run
+Pages live in `docs/`. Their filenames and folders determine URLs and navigation order. Configure the site in `miradocs.config.json`, override design tokens in `theme/`, and add reusable HTML templates in `components/`.
 
-Mira keeps the moving parts visible. Your content stays in plain files, your theme lives in its own folder, and your built site has no dependency on a particular hosting provider.
+Continue with [Quick start](/getting-started/quick-start/) or read about [theming](/guides/theming/).

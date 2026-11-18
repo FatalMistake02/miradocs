@@ -1,40 +1,37 @@
 ---
 title: Writing content
-description: Write in a small, readable Markdown dialect and let the structure do the work.
+description: Write pages in Markdown, including tables, images, lists, and code.
 ---
-## The essentials
+## Markdown
 
-Mira supports headings, paragraphs, links, bold and italic text, inline code, fenced code blocks, simple ordered and unordered lists, and blockquotes. Headings at levels two and three appear in the page outline automatically.
+miradocs uses markdown-it with CommonMark syntax, tables, link detection, and typography. Use headings, nested lists, links, images, blockquotes, tables, and fenced code blocks. Raw HTML in Markdown is disabled; use trusted custom components for custom markup.
 
 ```md
-## A useful heading
+## A heading
 
-A paragraph with **emphasis**, `code`, and [a link](https://example.com).
+![Diagram](/diagram.png)
 
-- One idea
-- Another idea
+| Feature | Status |
+| --- | --- |
+| Search | Included |
 ```
 
-Keep lists flat and use one paragraph per block. Tables, images, nested lists, and raw HTML in Markdown are not currently supported. For richer markup, use a custom component template.
+Put static images and other files in `public/` to copy them to the site root. For sites hosted under a subpath, include that prefix in root-relative content links.
 
 ## Callouts
 
-Use a directive to make important information easy to notice. Choose `note`, `tip`, `caution`, or `danger`, and optionally add a title.
+Use `note`, `tip`, `caution`, or `danger` directives:
 
 ```md
-:::tip A helpful title
-A little context for your reader.
+:::note Optional title
+This is a note.
 :::
 ```
 
-:::tip A helpful title
-A little context for your reader.
+:::note Optional title
+This is a note.
 :::
 
-## Code blocks
+## Code
 
-Use triple backticks and an optional language label. Readers can copy the contents with the button in the corner. Code is displayed as plain text, without syntax highlighting.
-
-## Links and paths
-
-Use ordinary Markdown links. For a site hosted under a subpath, include that subpath in root-relative links, or use relative links where appropriate. External links work as expected.
+Fenced code blocks support syntax highlighting when the language is known, and include a copy button. Unknown languages are displayed as plain text.
