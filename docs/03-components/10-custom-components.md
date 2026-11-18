@@ -44,10 +44,22 @@ Put CSS in a file under the theme folder and include it in the configuration's `
 
 ## Add behavior
 
-Put a JavaScript module in `public/` and list its URL in the configuration's `scripts` array. The module loads on every page, so initialize only when the component exists.
+Put a JavaScript module in `public/` and list its URL in the configuration's `scripts` array. The module loads once. Initialize the component on the first page and after the `miradocs:navigate` event.
 
 ```json
 { "scripts": ["/example.js"] }
 ```
 
 Templates and scripts are trusted project code. Use raw HTML in Markdown only when all content authors are trusted. Raw HTML is disabled by default.
+
+```js
+function initializeExample() {
+  document.querySelectorAll(".feature-card").forEach(card => {
+    if (card.dataset.initialized) return;
+    card.dataset.initialized = "true";
+    // Attach component behavior here.
+  });
+}
+initializeExample();
+document.addEventListener("miradocs:navigate", initializeExample);
+```

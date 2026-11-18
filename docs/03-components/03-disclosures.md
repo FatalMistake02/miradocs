@@ -31,4 +31,3 @@ Target `.details`, `.details summary`, and the open attribute.
 .details > div { padding: 4px 22px 16px; }
 ```
 
-Expansion uses a short size transition in browsers that support it. Other browsers open the content immediately. Reduced-motion preferences disable the transition.

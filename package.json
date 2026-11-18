@@ -32,10 +32,14 @@
     "markdown-it": "^15.0.3",
     "markdown-it-footnote": "^4.0.0",
     "markdown-it-task-lists": "^2.1.1",
+    "proper-lockfile": "^4.1.2",
     "simple-icons": "^16.38.0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/FatalMistake02/miradocs.git"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
   }
 }

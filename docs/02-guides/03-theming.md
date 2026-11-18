@@ -33,10 +33,17 @@ For a custom system-dark palette, add the same color overrides under `@media (pr
 | Feedback | `--info`, `--warning`, `--danger` |
 | Motion | `--duration`, `--ease` |
 
-## Scroll and motion
-
-Navigation and long outlines have independent scroll areas with thin scrollbars. The outline stays pinned while the article scrolls. Controls use short transitions; reduced-motion preferences disable them.
-
 ## Site identity
 
-Set `title`, `logo`, `favicon`, and optional `footer` in configuration. No framework credit or marketing text is inserted into pages. The docs site's identity is ordinary configuration.
+Set `title`, `logo`, `favicon`, and optional `footer` in configuration. Asset paths refer to files in the public folder.
+
+## Header accent
+
+Set `--accent-gradient` to a CSS gradient and `--header-divider` to use it for the header border. Set `--header-divider: var(--border)` for a solid line.
+
+```css
+:root {
+  --accent-gradient: linear-gradient(110deg, #ff0951b8, #f50983);
+  --header-divider: var(--accent-gradient);
+}
+```

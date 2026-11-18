@@ -6,16 +6,18 @@ import { escape, localUrl, safeUrl } from './utils.js';
 
 const lucide = path.dirname(createRequire(import.meta.url).resolve('lucide-static/package.json'));
 const cache = new Map();
-export async function icon(name = 'book-open', base = '/') {
+export async function icon(name = 'book-open', base = '/', preferBrand = false) {
   if (name.startsWith('custom:')) return `<img src="${escape(localUrl(base, safeUrl(name.slice(7))))}" alt="">`;
-  if (cache.has(name)) return cache.get(name);
-  const brand = Object.values(brands).find(item => item && typeof item === 'object' && item.slug === name);
+  const cacheKey = `${preferBrand}:${name}`;
+  if (cache.has(cacheKey)) return cache.get(cacheKey);
+  const brand = preferBrand && Object.values(brands).find(item => item && typeof item === 'object' && item.slug === name);
   let svg;
-  if (brand) svg = brand.svg.replace(/<title>.*?<\/title>/, '').replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
+  if (brand) svg = brand.svg.replace(/<title>.*?<\/title>/, '');
   else {
     if (!/^[a-z0-9-]+$/.test(name)) throw Error(`Invalid icon: ${name}`);
-    try { svg = (await fs.readFile(path.join(lucide, 'icons', `${name}.svg`), 'utf8')).replace('<svg ', '<svg aria-hidden="true" focusable="false" '); }
+    try { svg = await fs.readFile(path.join(lucide, 'icons', `${name}.svg`), 'utf8'); }
     catch { throw Error(`Unknown icon: ${name}. Use a Lucide name, Simple Icons slug, or custom:/file.svg.`); }
   }
-  cache.set(name, svg); return svg;
+  svg = svg.replace(/<svg\b/, '<svg aria-hidden="true" focusable="false"');
+  cache.set(cacheKey, svg); return svg;
 }

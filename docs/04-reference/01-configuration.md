@@ -43,3 +43,7 @@ Use `--config path` to select a config and `--port number` to select a preview p
 ## Validation and extensions
 
 Set `strictLinks: false` to opt out of internal link and fragment checking. By default, missing pages and assets fail the build. Add `scripts` as an array of public module-script URLs to initialize custom interactive components. The `miradocs.schema.json` file provides editor completion and validation through a `$schema` reference.
+
+## Client navigation
+
+`clientNavigation` defaults to true. Set it to false to use standard page loads. Custom scripts can listen for `miradocs:navigate` after a page is rendered. The event includes the destination in `event.detail.url`. Add `data-no-router` to a custom anchor to use normal browser navigation for that link.

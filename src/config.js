@@ -27,6 +27,7 @@ export async function loadConfig(configPath = 'miradocs.config.json') {
   if(config.search?.limit !== undefined && (!Number.isInteger(config.search.limit) || config.search.limit < 1 || config.search.limit > 50)) throw Error('search.limit must be an integer from 1 to 50.');
   if(config.search?.threshold !== undefined && (typeof config.search.threshold !== 'number' || config.search.threshold < 0 || config.search.threshold > 1)) throw Error('search.threshold must be between 0 and 1.');
   if(config.sidebar && !Array.isArray(config.sidebar)) throw Error('sidebar must be an array.');
+  if(config.clientNavigation !== undefined && typeof config.clientNavigation !== 'boolean') throw Error('clientNavigation must be a boolean.');
   if(config.links && !Array.isArray(config.links)) throw Error('links must be an array.');
   for (const link of config.links || []) { if (!link.label) throw Error('Every header link needs a label.'); safeUrl(link.url, 'header link'); }
   if (config.styles && (!Array.isArray(config.styles) || config.styles.some(s => typeof s !== 'string' || s.includes('..') || path.isAbsolute(s)))) throw Error('styles must contain paths inside the theme folder.');

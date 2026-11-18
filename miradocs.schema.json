@@ -20,6 +20,7 @@
     "editUrl": {"type":"string"},
     "language": {"type":"string", "default":"en"},
     "strictLinks": {"type":"boolean", "default":true},
+    "clientNavigation": {"type":"boolean", "default":true},
     "markdown": {"type":"object", "properties":{"html":{"type":"boolean", "default":false}}},
     "search": {"oneOf":[{"const":false},{"type":"object", "properties":{"limit":{"type":"integer","minimum":1,"maximum":50},"threshold":{"type":"number","minimum":0,"maximum":1}}}]},
     "links": {"type":"array","items":{"type":"object","required":["label","url"],"properties":{"label":{"type":"string"},"url":{"type":"string"},"icon":{"type":"string"},"newTab":{"type":"boolean"}}}},

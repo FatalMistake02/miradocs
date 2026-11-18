@@ -7,3 +7,5 @@ preview.jpg
 *.tgz
 site.tmp-*/
 site.previous-*/
+search-preview.jpg
+*.lock/

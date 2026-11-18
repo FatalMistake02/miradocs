@@ -7,6 +7,7 @@ import { build, serve } from '../src/index.js';
 import { init } from '../src/init.js';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { icon } from '../src/icons.js';
 
 async function fixture(t, config = {}, files = {}) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(),'miradocs-integration-'));
@@ -95,4 +96,16 @@ test('outline preserves heading levels two through six and omits breadcrumbs',as
   await build(f.configPath);const html=await f.read('index.html');
   for(const level of [2,3,4,5,6])assert.match(html,new RegExp(`class="toc-level-${level}"`));
   assert.doesNotMatch(html,/class="breadcrumb"/);
+});
+
+test('interface icons remain Lucide when a brand has the same name',async()=>{
+  const close=await icon('x'),brand=await icon('x','/',true);
+  assert.match(close,/lucide-x/);assert.doesNotMatch(brand,/lucide-x/);
+  assert.match(close,/aria-hidden="true"/);assert.match(brand,/aria-hidden="true"/);
+});
+
+test('concurrent builds serialize replacement of the same output',async t=>{
+  const f=await fixture(t,{}, {'docs/index.md':'---\ntitle: Concurrent\n---\nContent'});
+  await Promise.all([build(f.configPath),build(f.configPath)]);
+  assert.match(await f.read('index.html'),/Concurrent/);
 });

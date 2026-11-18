@@ -17,5 +17,7 @@
       "icon": "github"
     }
   ],
-  "$schema": "./miradocs.schema.json"
+  "$schema": "./miradocs.schema.json",
+  "logo": "/miradocs-logo.png",
+  "favicon": "/miradocs-logo.png"
 }

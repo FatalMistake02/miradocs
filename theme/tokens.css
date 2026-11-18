@@ -1,3 +1,2 @@
-/* Override semantic roles here. Both modes share the same layout. */
-:root { --radius: 8px; --panel-radius: 12px; }
-html[data-theme="dark"] { /* Add dark palette overrides here. */ }
+/* Site accent. Override --header-divider with a color or gradient. */
+:root { --radius:8px; --panel-radius:12px; --header-divider:var(--accent-gradient); }

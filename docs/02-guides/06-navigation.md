@@ -4,7 +4,7 @@ description: Configure the sidebar and page outline.
 ---
 ## Sidebar from folders
 
-Each content folder becomes a collapsible sidebar group. Child pages and nested groups are indented. The current page's parent groups open automatically.
+Each content folder becomes a sidebar group. Use nested folders to create nested groups.
 
 Numeric filename prefixes set the default order. Page frontmatter `order` overrides that order. Set `sidebar: false` to remove a page from the sidebar and pagination.
 
@@ -32,6 +32,4 @@ A `link` value creates an ordinary URL link. Every link needs a label. Invalid p
 
 ## Page outline
 
-The outline lists headings from level two through level six. Each level is indented under the previous level. The page title is excluded. It remains pinned during article scrolling, and the current section is marked as you scroll.
-
-At smaller widths, the outline moves above the article into a disclosure. Landing pages omit both the sidebar and outline.
+Headings from level two through level six become outline links. The page title is excluded. Use Markdown heading levels to define the outline hierarchy.
