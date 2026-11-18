@@ -49,3 +49,11 @@ test('a later navigation wins when requests overlap',async t=>{
   await new Promise(resolve=>setTimeout(resolve,60));
   assert.equal(w.location.pathname,'/next/');assert.equal(w.document.title,'Next');
 });
+
+test('a link to the current page clears its old fragment without fetching',async t=>{
+  const {w,requests}=await setup(t);
+  w.history.replaceState({},'','/start/#section');
+  const link=w.document.createElement('a');link.href='/start/';link.id='top';w.document.querySelector('main').append(link);
+  click(w,'#top');
+  assert.equal(w.location.hash,'');assert.equal(requests.length,0);
+});

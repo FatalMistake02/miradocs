@@ -95,7 +95,9 @@ export function enableNavigation(initializePage) {
     if (url.origin !== location.origin || !url.pathname.startsWith(base) || /\.[a-z0-9]+$/i.test(url.pathname) && !url.pathname.endsWith('.html')) return;
     if (url.pathname === location.pathname && url.search === location.search) {
       if (url.hash) return;
-      event.preventDefault(); position(url); return;
+      event.preventDefault();
+      if(url.href !== location.href) { remember(); history.pushState({miradocsScroll:[0,0]},'',url); displayed=url; }
+      position(url); return;
     }
     event.preventDefault(); navigate(url);
   });
