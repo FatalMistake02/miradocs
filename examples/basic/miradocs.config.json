@@ -1,0 +1,9 @@
+{
+  "title": "Project documentation",
+  "content": "docs",
+  "output": "site",
+  "theme": "theme",
+  "styles": [
+    "tokens.css"
+  ]
+}

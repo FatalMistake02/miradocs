@@ -33,6 +33,10 @@ node bin/miradocs.js dev --config ../my-docs/miradocs.config.json
 
 The first command creates a content folder, configuration file, and theme. Existing files are protected from overwriting. The second command previews the new site.
 
+## Write your first page
+
+Follow [Writing content](/guides/writing-content/) for a complete Markdown file, or copy one of the [Page examples](/guides/page-examples/).
+
 ## Build static output
 
 For the included documentation:

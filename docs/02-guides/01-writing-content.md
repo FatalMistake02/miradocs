@@ -1,42 +1,88 @@
 ---
 title: Writing content
-description: Use Markdown for headings, tables, images, lists, code, and references.
+description: Create a Markdown page and add it to your site.
 ---
-## Markdown syntax
+## Markdown references
 
-miradocs uses markdown-it for CommonMark with tables, automatic links, task lists, and footnotes. Nested ordered and unordered lists work normally.
+For Markdown syntax, use the [CommonMark interactive tutorial](https://commonmark.org/help/tutorial/) or the [Markdown Guide basic syntax reference](https://www.markdownguide.org/basic-syntax/). The [extended syntax reference](https://www.markdownguide.org/extended-syntax/) covers tables, task lists, and footnotes. See [Content formats](/reference/content-formats/) for the extensions enabled in miradocs.
 
-| Syntax | Example |
-| --- | --- |
-| Emphasis | **bold**, *italic*, ~~strikethrough~~ |
-| Code | `inline code` |
-| Link | [Quick start](/getting-started/quick-start/) |
+The rest of this guide covers what to put in your files and how miradocs uses them.
 
-- [x] Write content
-- [x] Preview changes
-- [ ] Publish the output
+## Create a page
 
-## Links and images
+Save this as `docs/01-guides/01-installation.md`:
 
-Links to Markdown sources are resolved to generated page URLs. Root-relative links and image paths receive the configured base prefix automatically. Use `../01-getting-started/01-quick-start.md` to link to another source page. Put images in `public/`, then reference `![Alternative text](/diagram.svg)`.
+````md title=docs/01-guides/01-installation.md
+---
+title: Installation
+description: Install the project and start a local preview.
+---
 
-## Code blocks
+## Requirements
 
-Fenced code supports language highlighting, a copy button, and an optional title:
+- Node.js 20.19 or later
+- A copy of the project repository
 
-```js title=example.js
-const message = 'Hello';
-console.log(message);
+## Install dependencies
+
+Run these commands from the project directory:
+
+```sh
+npm ci
+npm run dev
 ```
 
-Use four backticks around an example that contains triple backticks. Unknown languages are escaped and shown as plain text.
+:::note Production build
+Run `npm run build` to generate the static site.
+:::
 
-## Footnotes
+## Next steps
 
-Use a footnote to keep supporting information out of the main paragraph.[^example]
+Add another Markdown page to the same folder.
+````
 
-[^example]: A footnote can contain additional Markdown.
+The page appears at `/guides/installation/`. Its frontmatter supplies the title and description; start the body with `##` because the page title is rendered automatically. Replace the sample instructions with your project's own setup steps.
 
-## HTML
+Use [Page examples](/guides/page-examples/) for complete landing, guide, and reference files. See [Page metadata](/getting-started/project-structure/#page-metadata) for optional frontmatter fields.
 
-Raw HTML is disabled by default. Set `markdown.html` to true for trusted author content. Custom component templates are always trusted project code.
+## Add a component
+
+Components are Markdown directives. Place the opening directive, body, and closing fence on separate lines:
+
+```md
+:::note Before you start
+Keep your configuration file in the project root.
+:::
+```
+
+:::note Before you start
+Keep your configuration file in the project root.
+:::
+
+The [Components reference](/components/) has the source, rendered result, and customization options for each component. Directives such as `:::note` are miradocs syntax rather than standard Markdown.
+
+## Link to another page
+
+Use a source path relative to the current file, or a route relative to the site root:
+
+```md
+[Installation](../01-guides/01-installation.md)
+[Configuration](/reference/configuration/)
+[External guide](https://commonmark.org/help/tutorial/)
+```
+
+miradocs resolves links ending in `.md` to the generated URL. Root-relative links receive the configured `base` prefix. A missing internal page or fragment fails the build unless `strictLinks` is disabled.
+
+## Add an image
+
+Put the image in `public/` and reference its public URL. For example, `public/images/setup.png` is used like this:
+
+```md
+![The setup screen](/images/setup.png)
+```
+
+Keep the alternative text descriptive. You can use the same public folder for downloadable files.
+
+## Use HTML or other markup
+
+Use [HTML templates](/components/custom-components/) for reusable custom markup. Inline HTML in a page requires `markdown.html: true`. YAML frontmatter, HTML, and the other file formats used by a project are covered in [Content formats](/reference/content-formats/).
