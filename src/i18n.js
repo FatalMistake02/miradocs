@@ -1,0 +1,13 @@
+export const english = {
+  close:'Close', linkToSection:'Link to section',
+  search: 'Search documentation', searchPlaceholder: 'Search the docs…', searchEmpty: 'No results found. Try another search.', searchLoading: 'Loading search…', searchError: 'Search could not load. Try again.', searchNavigate: 'Navigate', searchSelect: 'Select', theme: 'Color theme', system: 'System', light: 'Light', dark: 'Dark', menu: 'Navigation', documentation: 'Documentation', outline: 'On this page', previous: 'Previous', next: 'Next', skip: 'Skip to content', copy: 'Copy code', copied: 'Copied', copyError: 'Unable to copy', edit: 'Edit this page', language: 'Language', notFound: 'Page not found', notFoundText: 'The page may have moved or the address may be incorrect.', home: 'Go to documentation', note: 'Note', tip: 'Tip', caution: 'Caution', danger: 'Danger'
+};
+const translations = {
+  es: { search:'Buscar documentación', searchPlaceholder:'Buscar en la documentación…', searchEmpty:'No se encontraron resultados.', searchLoading:'Cargando búsqueda…', searchError:'No se pudo cargar la búsqueda.', searchNavigate:'Navegar', searchSelect:'Seleccionar', theme:'Tema', system:'Sistema', light:'Claro', dark:'Oscuro', menu:'Navegación', documentation:'Documentación', outline:'En esta página', previous:'Anterior', next:'Siguiente', skip:'Ir al contenido', copy:'Copiar código', copied:'Copiado', copyError:'No se pudo copiar', edit:'Editar esta página', language:'Idioma', notFound:'Página no encontrada', notFoundText:'La página se ha movido o la dirección es incorrecta.', home:'Ir a la documentación', note:'Nota', tip:'Consejo', caution:'Precaución', danger:'Peligro' },
+  fr: { search:'Rechercher dans la documentation', searchPlaceholder:'Rechercher…', searchEmpty:'Aucun résultat.', searchLoading:'Chargement…', searchError:'Recherche indisponible.', searchNavigate:'Naviguer', searchSelect:'Sélectionner', theme:'Thème', system:'Système', light:'Clair', dark:'Sombre', menu:'Navigation', documentation:'Documentation', outline:'Sur cette page', previous:'Précédent', next:'Suivant', skip:'Aller au contenu', copy:'Copier le code', copied:'Copié', edit:'Modifier cette page', language:'Langue', notFound:'Page introuvable', home:'Retour à la documentation' }
+};
+export function messages(locale, options) {
+  const language = locale.split('-')[0];
+  const additions = { es:{close:'Cerrar',linkToSection:'Enlace a la sección'}, fr:{close:'Fermer',linkToSection:'Lien vers la section',copyError:'Impossible de copier',notFoundText:'Cette page a été déplacée ou son adresse est incorrecte.',note:'Note',tip:'Conseil',caution:'Attention',danger:'Danger'} };
+  return { ...english, ...translations[language], ...additions[language], ...options.ui };
+}
