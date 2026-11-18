@@ -1,4 +1,4 @@
-export function initializeClientComponents(signal, ui) {
+export function initializeClientComponents(signal, ui, loadModule = source => import(source)) {
   const disposers = new Set(), scheduled = new Set();
   const hosts = [...document.querySelectorAll('[data-component-src]')];
   const started = new WeakSet();
@@ -8,8 +8,9 @@ export function initializeClientComponents(signal, ui) {
     started.add(host);host.dataset.componentStatus='loading';
     const fallback = host.innerHTML;
     try {
-      const module = await import(host.dataset.componentSrc);
+      const module = await loadModule(host.dataset.componentSrc);
       if(signal.aborted || !host.isConnected)return;
+      host.replaceChildren();
       const dispose = await module.mount(host,JSON.parse(host.dataset.componentProps || '{}'),{signal});
       if(typeof dispose === 'function') {
         if(signal.aborted) await dispose();else disposers.add(dispose);

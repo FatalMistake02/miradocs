@@ -28,6 +28,8 @@ Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing s
     - installation.md
 - components/
   - Counter.jsx
+- public/
+  - logo.svg
 - **miradocs.config.json** — Site settings
 :::
 ```
