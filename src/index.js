@@ -70,6 +70,11 @@ export async function build(configPath = 'miradocs.config.json', options = {}) {
       }
     }
     for (const style of config.styles || []) if (!(await exists(path.join(stage,'theme',style)))) throw Error(`Theme stylesheet not found: ${style}`);
+    for(const asset of [config.logo,config.favicon,...(config.scripts || [])].filter(Boolean)) {
+      if(/^https?:/.test(asset)) continue;
+      const file = path.resolve(stage,asset.replace(/^\//,''));
+      if(!inside(stage,file) || !(await exists(file))) throw Error(`Configured asset not found: ${asset}`);
+    }
     for (const [locale, settings] of Object.entries(locales)) {
       const localized = pages.filter(p => p.locale === locale), ui = messages(locale, settings);
       if (!localized.length) throw Error(`No pages found for locale ${locale}.`);

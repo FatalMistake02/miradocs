@@ -1,37 +1,42 @@
 ---
 title: Writing content
-description: Write pages in Markdown, including tables, images, lists, and code.
+description: Use Markdown for headings, tables, images, lists, code, and references.
 ---
-## Markdown
+## Markdown syntax
 
-miradocs uses markdown-it with CommonMark syntax, tables, link detection, and typography. Use headings, nested lists, links, images, blockquotes, tables, and fenced code blocks. Raw HTML in Markdown is disabled; use trusted custom components for custom markup.
+miradocs uses markdown-it for CommonMark with tables, automatic links, task lists, and footnotes. Nested ordered and unordered lists work normally.
 
-```md
-## A heading
-
-![Diagram](/diagram.png)
-
-| Feature | Status |
+| Syntax | Example |
 | --- | --- |
-| Search | Included |
+| Emphasis | **bold**, *italic*, ~~strikethrough~~ |
+| Code | `inline code` |
+| Link | [Quick start](/getting-started/quick-start/) |
+
+- [x] Write content
+- [x] Preview changes
+- [ ] Publish the output
+
+## Links and images
+
+Links to Markdown sources are resolved to generated page URLs. Root-relative links and image paths receive the configured base prefix automatically. Use `../01-getting-started/01-quick-start.md` to link to another source page. Put images in `public/`, then reference `![Alternative text](/diagram.svg)`.
+
+## Code blocks
+
+Fenced code supports language highlighting, a copy button, and an optional title:
+
+```js title=example.js
+const message = 'Hello';
+console.log(message);
 ```
 
-Put static images and other files in `public/` to copy them to the site root. For sites hosted under a subpath, include that prefix in root-relative content links.
+Use four backticks around an example that contains triple backticks. Unknown languages are escaped and shown as plain text.
 
-## Callouts
+## Footnotes
 
-Use `note`, `tip`, `caution`, or `danger` directives:
+Use a footnote to keep supporting information out of the main paragraph.[^example]
 
-```md
-:::note Optional title
-This is a note.
-:::
-```
+[^example]: A footnote can contain additional Markdown.
 
-:::note Optional title
-This is a note.
-:::
+## HTML
 
-## Code
-
-Fenced code blocks support syntax highlighting when the language is known, and include a copy button. Unknown languages are displayed as plain text.
+Raw HTML is disabled by default. Set `markdown.html` to true for trusted author content. Custom component templates are always trusted project code.

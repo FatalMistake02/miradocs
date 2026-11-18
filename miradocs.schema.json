@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "miradocs configuration",
+  "type": "object",
+  "properties": {
+    "$schema": {"type":"string"},
+    "title": {"type":"string"},
+    "site": {"type":"string", "format":"uri"},
+    "base": {"type":"string", "default":"/"},
+    "content": {"type":"string", "default":"docs"},
+    "output": {"type":"string", "default":"site"},
+    "theme": {"type":"string", "default":"theme"},
+    "components": {"type":"string", "default":"components"},
+    "public": {"type":"string", "default":"public"},
+    "styles": {"type":"array", "items":{"type":"string"}},
+    "scripts": {"type":"array", "items":{"type":"string"}},
+    "logo": {"type":"string"},
+    "favicon": {"type":"string"},
+    "footer": {"type":"string"},
+    "editUrl": {"type":"string"},
+    "language": {"type":"string", "default":"en"},
+    "strictLinks": {"type":"boolean", "default":true},
+    "markdown": {"type":"object", "properties":{"html":{"type":"boolean", "default":false}}},
+    "search": {"oneOf":[{"const":false},{"type":"object", "properties":{"limit":{"type":"integer","minimum":1,"maximum":50},"threshold":{"type":"number","minimum":0,"maximum":1}}}]},
+    "links": {"type":"array","items":{"type":"object","required":["label","url"],"properties":{"label":{"type":"string"},"url":{"type":"string"},"icon":{"type":"string"},"newTab":{"type":"boolean"}}}},
+    "sidebar": {"$ref":"#/$defs/sidebar"},
+    "locales": {"type":"object","minProperties":1,"additionalProperties":{"type":"object","properties":{"label":{"type":"string"},"path":{"type":"string"},"dir":{"enum":["ltr","rtl"]},"sidebar":{"$ref":"#/$defs/sidebar"},"ui":{"type":"object","additionalProperties":{"type":"string"}}}}}
+  },
+  "$defs": {"sidebar":{"type":"array","items":{"type":"object","properties":{"label":{"type":"string"},"page":{"type":"string"},"link":{"type":"string"},"collapsed":{"type":"boolean"},"items":{"$ref":"#/$defs/sidebar"}}}}}
+}

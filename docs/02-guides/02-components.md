@@ -1,55 +1,87 @@
 ---
 title: Components
-description: Give everyday content a little more structure, or bring your own reusable pieces.
+description: Use built-in content components or add your own HTML templates.
 ---
+## Callouts
+
+:::note Note
+Add context without interrupting the page.
+:::
+:::tip Tip
+Use a short, specific title.
+:::
+:::caution Caution
+Explain a consequence readers need to understand.
+:::
+:::danger Danger
+Reserve this for destructive or irreversible actions.
+:::
+
+Write `:::note Optional title`, the body, then `:::`. All components can contain Markdown and nested components.
+
 ## Tabs
 
-Group related choices without making a page longer. Tabs support click and arrow-key navigation.
-
 :::tabs
-:::tab macOS / Linux
+:::tab npm
 ```sh
 npm run build
 ```
 :::
-:::tab Windows
-```powershell
-npm run build
+:::tab pnpm
+```sh
+pnpm build
+```
+:::
+:::tab Bun
+```sh
+bun run build
 ```
 :::
 :::
 
-Write tabs with nested directives:
+Wrap `:::tab Label` blocks in a `:::tabs` block. Tab selection supports click, arrow keys, Home, and End.
 
-```md
-:::tabs
-:::tab First option
-Content for the first option.
+## Disclosures
+
+:::details How do disclosures work?
+Use `:::details Your question` for a native disclosure. It remains functional without JavaScript.
 :::
-:::tab Second option
-Content for the second option.
+
+## Cards and actions
+
+:::cards
+:::card Navigation | /guides/navigation/
+Organize nested folders or define your own sidebar.
+:::
+:::card Theming | /guides/theming/
+Change semantic tokens without duplicating the layout.
 :::
 :::
-```
+
+Wrap `:::card Title | /path/` blocks in `:::cards`. The link is optional. Use `:::button Label | /path/` for an action link.
+
+## Steps
+
+:::steps
+### Install
+Install the project dependencies.
+### Configure
+Set the title and content directory.
+### Build
+Generate static files for your host.
+:::
+
+Use `:::steps` around level-three headings and their content. Other built-ins include `:::file-tree` around a nested list, and `:::badge Label` for a small status label.
 
 ## Custom components
 
-Add an HTML file to `components/` and invoke it by filename. The template can contain `{{title}}` for the directive argument and `{{content}}` for rendered Markdown inside it. Templates are trusted project files; only use code you trust.
+Add a file such as `components/example.html`:
 
 ```html
-<div class="feature-card">
+<section class="feature-card">
   <strong>{{title}}</strong>
   {{content}}
-</div>
+</section>
 ```
 
-Save this as `components/card.html`, then write:
-
-```md
-:::card A small idea
-This content is rendered as Markdown.
-:::
-```
-
-Style the component in your theme's CSS. The card on the introduction page uses this exact pattern.
-
+Invoke it with `:::example A title`, followed by Markdown and a closing `:::`. Templates must contain exactly one `{{content}}` placeholder. `{{title}}` is escaped automatically. Add component styles in your theme. A template with the same name as a card or button replaces that built-in.

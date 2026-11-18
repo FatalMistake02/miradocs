@@ -23,7 +23,8 @@ matchMedia('(min-width: 761px)').addEventListener('change', closeMenu);
 $$('.copy-code').forEach(button => button.addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(button.closest('.code-block').querySelector('pre code').textContent); button.textContent = ui.copied; }
   catch { button.textContent = ui.copyError; }
-  setTimeout(() => button.textContent = ui.copy,1800);
+  button.setAttribute('aria-label',button.textContent);
+  setTimeout(() => {button.textContent = ui.copy;button.setAttribute('aria-label',ui.copy);},1800);
 }));
 $$('.tabs').forEach(tabs => {
   const list = [...tabs.children].find(e => e.classList.contains('tab-list'));
@@ -80,7 +81,7 @@ if (trigger && dialog) {
       link.append(title,text); results.append(link);
       link.addEventListener('pointermove',()=>select(index));
     });
-    status.textContent = String(found.length); select(Math.min(selected,found.length-1));
+    status.textContent = ui.searchResults.replace('{count}',String(found.length)); select(Math.min(selected,found.length-1));
   }
   async function load() {
     if(fuse) return;

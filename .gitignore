@@ -3,3 +3,7 @@ site/
 .DS_Store
 __pycache__/
 *.py[cod]
+preview.jpg
+*.tgz
+site.tmp-*/
+site.previous-*/

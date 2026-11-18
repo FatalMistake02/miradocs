@@ -21,6 +21,7 @@ export function layout(ctx, page, pages, navigation, icons, ui, { dev = false, n
   return `<!doctype html><html lang="${e(page.locale)}" dir="${locale.dir === 'rtl' ? 'rtl' : 'ltr'}"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${e(page.description)}">
 <title>${e(page.title)} | ${e(siteName)}</title>${canonical ? `<link rel="canonical" href="${e(canonical)}"><meta property="og:url" content="${e(canonical)}">` : ''}
+${config.site ? pages.filter(p=>p.key === page.key).map(p=>`<link rel="alternate" hreflang="${e(p.locale)}" href="${e(new URL(p.url,config.site).href)}">`).join('') : ''}
 <meta property="og:title" content="${e(page.title)}"><meta property="og:description" content="${e(page.description)}"><meta property="og:type" content="article">
 ${config.favicon ? `<link rel="icon" href="${e(localUrl(base, config.favicon))}">` : ''}
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('miradocs-theme')||'system'}catch(e){}</script>

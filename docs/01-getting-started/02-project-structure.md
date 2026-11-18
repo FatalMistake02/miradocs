@@ -1,38 +1,41 @@
 ---
 title: Project structure
-description: A familiar folder structure that keeps content, presentation, and output easy to find.
+description: Keep content, theme overrides, and reusable components in separate folders.
 ---
-## Everything in its place
+:::file-tree
+- miradocs.config.json
+- docs/
+  - index.md
+  - 01-guides/
+    - 01-install.md
+- theme/
+  - tokens.css
+  - custom.css
+- components/
+- public/
+- site/ — generated output
+:::
 
-```text
-miradocs.config.json             Site settings
-docs/                 Markdown content
-  index.md            Home page
-  01-getting-started/ A navigation group
-theme/                Your tokens and custom CSS
-components/           Reusable HTML templates
-public/               Optional static files
-src/                  Generator
-assets/               Default styles and scripts
-site/                 Generated output
-```
+## Files and URLs
 
-Each subfolder becomes a navigation group. Files are sorted by their full path; use prefixes like `01-` and `02-` to choose their order. A page's `title` frontmatter controls its label. The generated URL comes from the file path, with numeric prefixes removed.
+Numeric prefixes control ordering and are removed from URLs. `docs/01-guides/01-install.md` becomes `/guides/install/`. An `index.md` page uses its folder's URL. Frontmatter `title` controls its navigation label.
 
 ## Page metadata
 
-Put a small frontmatter block at the top of each page:
-
-```md
+```yaml
 ---
-title: Your page title
-description: A short introduction to this page.
+title: Installation
+description: Install and configure the project.
+order: 1
+sidebar: true
+search: true
+draft: false
+layout: docs
 ---
 ```
 
-Descriptions appear below the title, in search results, and in the page's metadata. The `index.md` file in any folder becomes that folder's URL.
+Use `order` to override file order, `sidebar: false` to hide a page from navigation and pagination, and `search: false` to omit it from search. Drafts appear in development and are excluded from production builds. Use `layout: landing` for a page without sidebars.
 
-:::caution Keep output separate
-The output directory is rebuilt from scratch. Don't put your source files or anything you want to keep there.
+:::caution Output belongs to the generator
+Builds replace the generated output. miradocs only replaces an empty folder or an output folder carrying its marker file. Keep source files elsewhere.
 :::
-

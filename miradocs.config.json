@@ -1,1 +1,21 @@
-{"title":"miradocs","language":"en","base":"/","content":"docs","output":"site","theme":"theme","components":"components","styles":["tokens.css","custom.css"],"links":[{"label":"GitHub","url":"https://github.com/FatalMistake02/miradocs","icon":"github"}]}
+{
+  "title": "miradocs",
+  "language": "en",
+  "base": "/",
+  "content": "docs",
+  "output": "site",
+  "theme": "theme",
+  "components": "components",
+  "styles": [
+    "tokens.css",
+    "custom.css"
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/FatalMistake02/miradocs",
+      "icon": "github"
+    }
+  ],
+  "$schema": "./miradocs.schema.json"
+}

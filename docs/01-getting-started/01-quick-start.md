@@ -1,19 +1,30 @@
 ---
 title: Quick start
-description: Install dependencies, run the local preview, and build your site.
+description: Create a project, preview your pages, and produce a static build.
 ---
 ## Requirements
 
-Install Node.js 20 or newer. The project uses JavaScript; the generated site is static and needs no server runtime. You can install the dependencies with npm, pnpm, yarn, or another compatible package manager.
+Use Node.js 20.19 or newer. Install dependencies with npm, pnpm, yarn, or Bun. The built site needs no Node.js runtime.
 
-## Preview
+## Run this repository
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-Visit [localhost:8000](http://localhost:8000). The server builds at startup. Restart it after editing content or configuration.
+Open [localhost:8000](http://localhost:8000). Content, theme, component, and configuration changes rebuild and reload the preview automatically. Errors appear in the terminal and browser while the previous build stays available.
+
+## Create another site
+
+From this repository, run:
+
+```sh
+node bin/miradocs.js init ../my-docs
+node bin/miradocs.js dev --config ../my-docs/miradocs.config.json
+```
+
+The initializer creates content, configuration, and a theme. It refuses to overwrite existing files. You can also install the package from a local directory or a generated tarball, then use the installed `miradocs` command. This repository has not been published to the npm registry.
 
 ## Build
 
@@ -21,8 +32,4 @@ Visit [localhost:8000](http://localhost:8000). The server builds at startup. Res
 npm run build
 ```
 
-Deploy the contents of `site/` to a static host. You can also run `node bin/miradocs.js build` directly. Use `--config path/to/miradocs.config.json` to select a configuration file and `--port 3000` to select a preview port.
-
-## Add a page
-
-Create a Markdown file in `docs/`. Numeric prefixes set the order and are omitted from URLs. For example `docs/01-guides/02-install.md` becomes `/guides/install/`.
+The output is written to `site/`. Run `node bin/miradocs.js serve` for a preview without file watching. Both preview commands accept `--port 3000`. All commands accept `--config` except init.

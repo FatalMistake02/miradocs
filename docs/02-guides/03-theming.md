@@ -1,32 +1,42 @@
 ---
 title: Theming
-description: Start with a few design tokens, then make the details your own with CSS.
+description: Override semantic tokens, then add CSS for more detailed changes.
 ---
-## One layout, two palettes
+## Shared layout, separate palettes
 
-miradocs uses CSS custom properties throughout the shared layout. Override them in `theme/tokens.css` for the light palette and under `html[data-theme="dark"]` for dark mode. The theme button cycles through system, light, and dark preferences, remembering the choice locally.
+The default theme is neutral. Both color modes use the same layout. Put overrides in your theme folder and list the CSS files in `styles`. They load after the default stylesheet in the configured order.
 
 ```css
 :root {
-  --accent: #404040;
-  --accent-soft: #e9e9e9;
-  --radius: 10px;
+  --radius: 8px;
+  --sidebar-width: 248px;
+  --content-width: 780px;
 }
 html[data-theme="dark"] {
-  --accent: #ededed;
-  --accent-soft: #303030;
+  --bg: #141414;
+  --text: #e8e8e8;
 }
 ```
 
-Also override the system dark media query as shown in the included tokens file. That keeps system preference and explicit dark mode consistent.
+For a custom system-dark palette, add the same color overrides under `@media (prefers-color-scheme: dark)` with `html:not([data-theme=light]):not([data-theme=dark])`. The explicit and system palettes are independent of layout.
 
-## Go deeper
+## Semantic roles
 
-Use `theme/custom.css` for your own selectors and component styles. Stylesheets listed in `miradocs.config.json` load in order after the defaults. You can use another theme folder by changing `theme` in the config.
+| Role | Tokens |
+| --- | --- |
+| Surfaces | `--bg`, `--surface`, `--surface-raised`, `--hover`, `--selected` |
+| Text | `--text`, `--muted`, `--accent`, `--accent-text` |
+| Structure | `--border`, `--radius`, `--panel-radius`, `--header-height` |
+| Layout | `--sidebar-width`, `--outline-width`, `--content-width` |
+| Type | `--font`, `--mono` |
+| Code | `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, `--code-comment` |
+| Feedback | `--info`, `--warning`, `--danger` |
+| Motion | `--duration`, `--ease` |
 
-Useful tokens include `--bg`, `--surface`, `--surface-alt`, `--text`, `--muted`, `--line`, `--accent`, `--accent-soft`, `--code`, `--code-text`, `--radius`, `--font`, and `--mono`.
+## Scroll and motion
 
-:::tip Motion that respects readers
-The default theme uses small transitions and respects the operating system's reduced-motion preference.
-:::
+Navigation and long outlines have independent scroll areas with thin scrollbars. The outline stays pinned while the article scrolls. Controls use short transitions; reduced-motion preferences disable them.
 
+## Site identity
+
+Set `title`, `logo`, `favicon`, and optional `footer` in configuration. No framework credit or marketing text is inserted into pages. The docs site's identity is ordinary configuration.

@@ -1,20 +1,28 @@
 ---
 title: Deployment
-description: Build once and bring your documentation to the host that works for you.
+description: Generate static files for your chosen host.
 ---
-## Publish the output
-
-Run `npm run build`, then upload the contents of `site/` to any static host. Configure your host to serve directory index files such as `guide/index.html`. No server runtime is needed on the host.
+## Build and upload
 
 ```sh
+npm ci
 npm run build
 ```
 
-You can run that command in a CI pipeline, a container, or a local script with Node.js and the project dependencies installed.
+Upload the contents of `site/` to any static host. Configure the host to serve directory index files. No server runtime is required. Use its custom-error setting to serve `404.html` for missing pages.
 
-## Hosting under a path
+## Subpaths
 
-Set `base` in `miradocs.config.json` to your mount path, for example `/handbook/`. Generated navigation and assets will use that prefix. Mount the output directory at that path on your host. The preview server also serves the configured base path.
+For a site mounted at `/handbook/`, set `base` to `/handbook/`. Navigation, assets, root-relative Markdown links, and images receive the prefix. The preview server also serves the configured path.
 
-Content links written as root-relative URLs need the same prefix; miradocs does not rewrite links in Markdown.
+## Metadata
 
+Set `site` to the public origin, such as `https://docs.example.com`. Builds then include canonical URLs, a sitemap, and robots.txt. Use `favicon` for a public asset and `editUrl` for a repository folder URL.
+
+## Build behavior
+
+Output is prepared in a temporary sibling directory and replaced only after the build succeeds. A failed build preserves the last output. Existing nonempty directories without a miradocs output marker are rejected. Public files cannot override generated assets, pages, or search indexes.
+
+## Hosting options
+
+Use the build command and output directory with a static hosting service, copy the output with your own deployment script, or serve it from a conventional web server. Package-manager scripts are conveniences; the CLI can be called directly with Node.js. The included GitHub Actions workflow checks the framework and builds documentation on supported operating systems.

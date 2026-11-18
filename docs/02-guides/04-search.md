@@ -1,20 +1,21 @@
 ---
 title: Search
-description: Help readers find what they need with a fast, built-in search experience.
+description: Search documentation locally with keyboard navigation and typo tolerance.
 ---
-## Find anything
+## Open search
 
-Press `Ctrl K` or `⌘ K`, or select the search field in the header. Search runs in the browser using a generated index, with no external service or account. Use the arrow keys to navigate results, Enter to open one, and Escape to close the dialog.
+Use Ctrl K on Windows or Linux and Command K on Apple devices. The header displays the shortcut for the current platform. Arrow keys select results, Enter opens one, and Escape closes search and restores focus.
 
-## How it works
+## Index and ranking
 
-miradocs writes `search.json` at build time. Page titles, descriptions, and content are indexed; title matches rank higher. Search returns up to eight results.
+Each language has its own generated index. Search loads that index and the fuzzy search library when first opened. Titles and descriptions rank above body text. No external search service is required.
 
-## Customize the experience
+## Configuration
 
-The search interface uses the same theme variables as the rest of the site. Override its CSS classes in your custom stylesheet. The search behavior lives in `assets/app.js` if you need to go further.
+```json
+{
+  "search": { "limit": 10, "threshold": 0.35 }
+}
+```
 
-:::note Preview over HTTP
-Browsers may block loading the index from a local `file://` URL. Use `npm run dev` or any static web server.
-:::
-
+A smaller threshold requires closer matches. Set `search: false` to disable search site-wide. Use page frontmatter `search: false` to exclude a page. Search text and error states can be translated through locale `ui` settings. The interface uses the shared theme tokens.

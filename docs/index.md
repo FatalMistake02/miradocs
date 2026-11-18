@@ -1,22 +1,24 @@
 ---
-title: Introduction
-description: Build a static documentation site from Markdown files.
+title: Documentation that fits your project.
+description: Write in Markdown. Organize with folders. Customize the parts you need.
+layout: landing
+sidebar: false
 ---
-miradocs generates a documentation site from a directory of Markdown files. It includes navigation, search, a responsive layout, dark mode, syntax highlighting, and customizable styles.
+:::button Get started | /getting-started/quick-start/
+:::
 
-## Get started
+:::cards
+:::card Write and organize | /guides/writing-content/
+CommonMark, tables, task lists, footnotes, and highlighted code. Files and folders become your navigation.
+:::
+:::card Adjust the interface | /guides/theming/
+Shared layout tokens with independent light and dark palettes. Add your own styles and components.
+:::
+:::card Publish static files | /guides/deployment/
+Build once and serve from a static host, a CDN, or your own web server.
+:::
+:::
 
-Install dependencies and start the development server:
+## Included
 
-```sh
-npm install
-npm run dev
-```
-
-Open [localhost:8000](http://localhost:8000). Restart the server after changing files. To create static files for deployment, run `npm run build`.
-
-## How it works
-
-Pages live in `docs/`. Their filenames and folders determine URLs and navigation order. Configure the site in `miradocs.config.json`, override design tokens in `theme/`, and add reusable HTML templates in `components/`.
-
-Continue with [Quick start](/getting-started/quick-start/) or read about [theming](/guides/theming/).
+Keyboard search, collapsible nested navigation, a pinned page outline, translated interfaces, live preview updates, and accessible components are part of the default site. There is no client framework runtime.
