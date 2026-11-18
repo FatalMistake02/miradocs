@@ -124,7 +124,7 @@ def build(config_path):
     components_dir = root / config.get('components', 'components')
     components = {p.stem: p.read_text(encoding='utf-8') for p in components_dir.glob('*.html')} if components_dir.exists() else {}
     pages = []
-    for path in sorted(source.rglob('*.md')):
+    for path in sorted(source.rglob('*.md'), key=lambda p: (p.relative_to(source).as_posix() != 'index.md', p.relative_to(source).as_posix())):
         rel = path.relative_to(source); meta, body = parse_frontmatter(path.read_text(encoding='utf-8'))
         headings = []; content = render_markdown(body, components, headings)
         title = meta.get('title', clean_name(path.stem))
