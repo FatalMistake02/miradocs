@@ -1,7 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-export async function createStarter(directory, { version='^1.0.0',title='Documentation' } = {}) {
+const packageVersion = JSON.parse(await fs.readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
+const defaultVersion = packageVersion.includes('-') ? packageVersion : '^' + packageVersion;
+
+export async function createStarter(directory, { version=defaultVersion,title='Documentation' } = {}) {
   const root=path.resolve(directory);
   let entries=[];
   try{entries=await fs.readdir(root);}catch(error){if(error.code!=='ENOENT')throw error;}

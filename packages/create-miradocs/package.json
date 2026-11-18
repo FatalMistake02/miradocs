@@ -8,5 +8,6 @@
   "scripts": { "prepack": "node build.js" },
   "engines": { "node": ">=20.19" },
   "license": "MIT",
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "repository": { "type": "git", "url": "https://github.com/FatalMistake02/miradocs.git", "directory": "packages/create-miradocs" }
 }

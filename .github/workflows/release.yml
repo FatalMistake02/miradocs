@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  # Manual runs verify the release packages without publishing anything.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Set versions from the release tag
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            node scripts/release-version.js "$GITHUB_REF_NAME"
+          else
+            node scripts/release-version.js --current
+          fi
+      - run: npm ci
+      - name: Test and build documentation
+        run: |
+          npm run check
+          node bin/miradocs.js build --config examples/basic/miradocs.config.json
+      - name: Pack tested packages
+        run: |
+          mkdir -p dist/release
+          npm pack --pack-destination dist/release
+          npm pack ./packages/create-miradocs --pack-destination dist/release
+          cd dist/release
+          sha256sum ./*.tgz > SHA256SUMS
+      - name: Test the packed starter and framework
+        run: npm run test:install -- dist/release/miradocs-*.tgz dist/release/create-miradocs-*.tgz
+      - name: Save release packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: npm-packages-${{ steps.version.outputs.version }}
+          path: dist/release/*
+      - name: Publish both packages with trusted publishing
+        if: github.event_name == 'push'
+        run: npm run release:publish -- "$DIST_TAG" dist/release/miradocs-*.tgz dist/release/create-miradocs-*.tgz
+        env:
+          DIST_TAG: ${{ steps.version.outputs.dist-tag }}
+      - name: Create GitHub release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          PRERELEASE: ${{ steps.version.outputs.prerelease }}
+        run: |
+          if gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/release/* --clobber
+          else
+            flags=()
+            if [ "$PRERELEASE" = true ]; then flags+=(--prerelease); fi
+            gh release create "$RELEASE_TAG" dist/release/* --verify-tag --generate-notes --title "miradocs $RELEASE_TAG" "${flags[@]}"
+          fi

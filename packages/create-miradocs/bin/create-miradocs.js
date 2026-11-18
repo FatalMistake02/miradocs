@@ -11,7 +11,7 @@ try {
     if(positionals.length>1)throw Error('Provide one project directory.');
     let directory=positionals[0];
     if(!directory && process.stdin.isTTY){const input=createInterface({input:process.stdin,output:process.stdout});directory=(await input.question('Project directory (my-docs): ')).trim() || 'my-docs';input.close();}
-    const result=await createStarter(directory || 'my-docs',{version:values['miradocs-version'] || '^1.0.0',title:values.title || 'Documentation'});
+    const result=await createStarter(directory || 'my-docs',{version:values['miradocs-version'],title:values.title || 'Documentation'});
     const agent=process.env.npm_config_user_agent || '';
     const manager=agent.startsWith('pnpm')?'pnpm':agent.startsWith('yarn')?'yarn':agent.startsWith('bun')?'bun':'npm';
     if(values.install)await new Promise((resolve,reject)=>{const child=spawn(manager,['install'],{cwd:result.root,stdio:'inherit',shell:process.platform==='win32'});child.on('error',reject);child.on('exit',code=>code===0?resolve():reject(Error(`Dependency installation exited with ${code}. The generated project is still available.`)));});

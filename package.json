@@ -19,12 +19,18 @@
     "test": "node --test",
     "check": "npm test && npm run build",
     "pretest": "node packages/create-miradocs/build.js",
-    "pack:creator": "npm pack ./packages/create-miradocs"
+    "pack:creator": "npm pack ./packages/create-miradocs",
+    "test:install": "node scripts/check-install.js",
+    "release:publish": "node scripts/publish-release.js"
   },
   "engines": {
     "node": ">=20.19"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "chokidar": "^4.0.3",
     "esbuild": "^0.28.2",

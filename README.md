@@ -43,3 +43,5 @@ Configuration lives in `miradocs.config.json`. The `docs/` directory is the fram
 Run `npm test` for integration checks, or `npm run check` for tests and a production documentation build. GitHub Actions runs checks on Windows, macOS, and Linux with Node.js 20, 22, and 24.
 
 MIT licensed. Interface icons are from Lucide; brand icons are from Simple Icons and retain their respective trademark associations.
+
+Maintainers: see [RELEASING.md](RELEASING.md) for tag-based npm trusted publishing and the one-time npm setup.

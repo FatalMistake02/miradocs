@@ -83,10 +83,11 @@ test('development watcher rebuilds and notifies connected browsers',async t=>{
   } finally {clearTimeout(timer);await reader.cancel();}
 });
 
-test('CLI reports its version and rejects unknown options',()=>{
+test('CLI reports its version and rejects unknown options',async()=>{
   const cli=fileURLToPath(new URL('../bin/miradocs.js',import.meta.url));
   const version=spawnSync(process.execPath,[cli,'--version'],{encoding:'utf8'});
-  assert.equal(version.status,0);assert.match(version.stdout,/1\.0\.0/);
+  const pkg=JSON.parse(await fs.readFile(new URL('../package.json',import.meta.url),'utf8'));
+  assert.equal(version.status,0);assert.equal(version.stdout.trim(),pkg.version);
   const invalid=spawnSync(process.execPath,[cli,'--typo'],{encoding:'utf8'});
   assert.equal(invalid.status,1);assert.match(invalid.stderr,/Unknown option/);
 });
