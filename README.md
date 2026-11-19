@@ -32,7 +32,7 @@ The framework includes:
 - Light, dark, and system themes, semantic CSS tokens, custom styles, logos, and links.
 - Lazy-loaded fuzzy search with platform-aware keyboard shortcuts.
 - Locale folders, language switching, translated interface dictionaries, and RTL layout support.
-- Tabs, callouts, disclosures, cards, buttons, steps, badges, file trees, searchable lists, content groups, and custom HTML components.
+- Tabs, callouts, disclosures, cards, buttons, steps, badges, file trees, searchable lists and tables, content groups, and custom HTML components.
 - Optional React, Vue, Svelte, and browser module components with per-page bundles and navigation cleanup.
 - Landing pages without sidebars.
 - Static metadata, sitemap generation, 404 pages, drafts, and internal link checking.

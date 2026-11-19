@@ -5,6 +5,8 @@ description: Ajoutez des composants directement dans Markdown.
 Écrivez `:::nom`, le contenu et la fermeture `:::` sur des lignes séparées. Les composants configurables acceptent des objets comme `{ title: Guides, search: true }` : les clés et le texte simple n’exigent pas de guillemets. Séparez les options par des virgules et ajoutez un espace après chaque deux-points. Mettez entre guillemets les textes contenant des virgules ou signes particuliers. JSON reste accepté. Ajoutez `{.ma-classe}` pour personnaliser une seule instance.
 
 :::cards
+:::card Tableaux | /fr/components/tables/
+:::
 :::card Onglets | /fr/components/tabs/
 :::
 :::card Encadrés | /fr/components/callouts/

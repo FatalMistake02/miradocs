@@ -5,6 +5,8 @@ description: 在 Markdown 中直接使用组件。
 开始行 `:::name`、内容和结束行 `:::` 必须分别独占一行。可配置组件使用 `{ title: 指南, search: true }` 这样的对象，键名和简单文本无需引号。选项之间用逗号分隔，冒号后加空格。包含逗号或特殊符号的文本需要加引号，原有 JSON 仍然有效。添加 `{.my-class}` 可单独设置某个实例的样式。
 
 :::cards
+:::card 表格 | /zh-CN/components/tables/
+:::
 :::card 选项卡 | /zh-CN/components/tabs/
 :::
 :::card 提示框 | /zh-CN/components/callouts/

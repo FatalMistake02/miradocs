@@ -5,6 +5,8 @@ description: Añade componentes directamente en Markdown.
 Escribe la apertura `:::nombre`, el contenido y el cierre `:::` en líneas separadas. Los componentes con opciones aceptan objetos como `{ title: Guías, search: true }`: las claves y el texto sencillo no necesitan comillas. Separa las opciones con comas y deja un espacio después de cada dos puntos. Usa comillas para texto con comas o signos especiales. JSON también funciona. Añade `{.mi-clase}` para personalizar una sola instancia.
 
 :::cards
+:::card Tablas | /es/components/tables/
+:::
 :::card Pestañas | /es/components/tabs/
 :::
 :::card Avisos | /es/components/callouts/

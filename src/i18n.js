@@ -1,7 +1,7 @@
 import { localeMessages } from './locale-messages.js';
 
 export const english = {
-  links:'Links',pagination:'Pagination',
+  tableSearch:'Search rows…',links:'Links',pagination:'Pagination',
   listSearch:'Search this list…',listEmpty:'No matching items.',listResults:'{visible} of {total} items',
   fileTree:'File structure',componentError:'This component could not load.',
   close:'Close', linkToSection:'Link to section', searchResults:'{count} results', themeSwitch:'{current} theme. Switch to {next}.', searchClear:'Clear search',searchSuggested:'Suggested pages',searchResultsLabel:'Results',

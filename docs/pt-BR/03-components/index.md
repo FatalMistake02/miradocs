@@ -5,6 +5,8 @@ description: Adicione componentes diretamente ao Markdown.
 Escreva `:::nome`, o conteúdo e o fechamento `:::` em linhas separadas. Componentes com opções aceitam objetos como `{ title: Guias, search: true }`: chaves e textos simples não precisam de aspas. Separe as opções com vírgulas e coloque um espaço após cada dois-pontos. Use aspas em textos com vírgulas ou sinais especiais. JSON continua funcionando. Acrescente `{.minha-classe}` para personalizar uma única instância.
 
 :::cards
+:::card Tabelas | /pt-BR/components/tables/
+:::
 :::card Abas | /pt-BR/components/tabs/
 :::
 :::card Avisos | /pt-BR/components/callouts/

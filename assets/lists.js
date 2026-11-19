@@ -4,7 +4,8 @@ export function initializeLists(signal, ui) {
   for (const list of document.querySelectorAll('.content-list')) {
     const content = list.querySelector(':scope > .list-content');
     const items = content.firstElementChild;
-    const rows = [...items.children].map(element => ({ element, text: normalize(element.textContent) }));
+    const elements = items.tagName === 'TABLE' ? items.tBodies[0]?.rows || [] : items.children;
+    const rows = [...elements].map(element => ({ element, text: normalize(element.textContent) }));
     const alignments = list.dataset.listAlignments && JSON.parse(list.dataset.listAlignments);
     const alignColumns = () => {
       if (!alignments) return;

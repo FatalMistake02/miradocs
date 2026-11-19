@@ -5,6 +5,8 @@ description: Verwende Komponenten direkt in Markdown.
 Schreibe `:::name`, den Inhalt und das abschließende `:::` jeweils auf eigene Zeilen. Einstellungen verwenden Objekte wie `{ title: Anleitungen, search: true }`. Schlüssel und einfache Texte benötigen keine Anführungszeichen. Trenne Optionen mit Kommas und setze nach dem Doppelpunkt ein Leerzeichen. Texte mit Kommas oder Sonderzeichen stehen in Anführungszeichen. JSON funktioniert weiterhin. `{.meine-klasse}` gestaltet eine einzelne Instanz.
 
 :::cards
+:::card Tabellen | /de/components/tables/
+:::
 :::card Tabs | /de/components/tabs/
 :::
 :::card Hinweiskästen | /de/components/callouts/

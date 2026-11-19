@@ -1,4 +1,15 @@
 /* Lists */
+.content-list.content-table { --list-bg:var(--table-bg,var(--surface));--list-border:var(--table-border,var(--border));--list-radius:var(--table-radius,var(--panel-radius));--table-column-divider:var(--list-border);--table-row-divider:var(--list-border);--table-cell-padding:14px 18px }
+.content-table[data-table-columns="false"] { --table-column-divider:transparent }
+.content-table[data-table-rows="false"] { --table-row-divider:transparent }
+.table-scroll { overflow:auto;max-width:100%;scrollbar-gutter:stable }
+.table-scroll:focus-visible { outline-offset:-3px }
+.article .content-table table { display:table;width:100%;max-width:none;margin:0;border-collapse:collapse;font-size:14px }
+.article .content-table :is(th,td) { padding:var(--table-cell-padding);border:0;text-align:var(--table-cell-align,start);vertical-align:top;min-width:var(--table-column-min-width,130px);overflow-wrap:anywhere }
+.article .content-table :is(th,td) + :is(th,td) { border-inline-start:1px solid var(--table-column-divider) }
+.article .content-table th { background:var(--table-header-bg,var(--surface));font-weight:550;border-bottom:1px solid var(--table-row-divider);white-space:nowrap }
+.article .content-table tbody tr:not([hidden]) ~ tr:not([hidden]) td { border-top:1px solid var(--table-row-divider) }
+.content-table[data-table-striped] tbody tr:nth-child(even of :not([hidden])) { background:var(--table-stripe-bg,var(--hover)) }
 .search-trigger span { min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis }
 .search-trigger kbd { flex-shrink:0 }
 .content-list {

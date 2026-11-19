@@ -43,6 +43,8 @@ Single or double quotes work, and a trailing comma is allowed. Existing JSON opt
 ## Built-in components
 
 :::cards
+:::card Tables | /components/tables/
+:::
 :::card Content groups | /components/content-groups/
 Scope styles to a section of Markdown or nested components.
 :::

@@ -135,6 +135,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },
@@ -242,6 +245,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },
@@ -349,6 +355,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },
@@ -456,6 +465,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },
@@ -563,6 +575,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },
@@ -670,6 +685,9 @@
             },
             {
               "page": "components/lists"
+            },
+            {
+              "page": "components/tables"
             }
           ]
         },

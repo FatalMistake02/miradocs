@@ -5,6 +5,7 @@ import hljs from 'highlight.js';
 import { escape, slug, localUrl } from './utils.js';
 import { parseFileTree, renderFileTree } from './file-tree.js';
 import { renderList } from './list.js';
+import { renderTable } from './table.js';
 import { parseComponentOptions } from './component-options.js';
 
 function addClasses(html, classes = []) {
@@ -80,6 +81,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     if (kind === 'steps') return '<div class="steps">';
     if (kind === 'group') return '<div class="content-group">';
     if (kind === 'list') return renderList(tokens, i, env);
+    if (kind === 'table') return renderTable(tokens, i, env);
     if (kind === 'cards') return '<div class="cards">';
     if (kind === 'badge') return `<div class="badge">${title}`;
     if ((kind === 'card' || kind === 'button') && !components[kind]) {
