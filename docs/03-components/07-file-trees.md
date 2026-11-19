@@ -64,7 +64,7 @@ Use JSON options to set a title and the initial folder state:
 
 ```css
 .file-tree {
-  --tree-indent: 48px;
+  --tree-indent: 36px;
   --tree-row-height: 36px;
   --tree-guide: var(--border);
   --tree-icon: var(--muted);
