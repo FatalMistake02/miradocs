@@ -1,6 +1,6 @@
 ---
 title: miradocs
-description: A customizable documentation site, built from Markdown.
+description: Write your docs in Markdown. Make them look like yours.
 layout: landing
 sidebar: false
 ---
@@ -11,7 +11,29 @@ sidebar: false
 [GitHub](https://github.com/FatalMistake02/miradocs)
 :::
 
-:::cards
+:::home-preview Quick start
+```md title=docs/index.md
+## Quick start
+
+Write your first page in `docs/`.
+
+:::note Make it yours
+Change fonts, colors, and components in `theme/`.
+:::
+```
+
+:::home-result
+## Quick start
+
+Write your first page in `docs/`.
+
+:::note Make it yours
+Change fonts, colors, and components in `theme/`.
+:::
+:::
+:::
+
+:::cards {.home-guides}
 :::card Write your docs | /guides/writing-content/
 Pages, folders, Markdown, and code examples.
 :::

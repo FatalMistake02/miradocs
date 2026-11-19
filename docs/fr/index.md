@@ -1,21 +1,46 @@
 ---
 title: miradocs
-description: 'Une documentation simple, avec votre contenu et votre style.'
+description: Rédigez votre documentation en Markdown. Donnez-lui votre style.
 layout: landing
 sidebar: false
 ---
-:::group {.landing-actions}
+:::landing-actions
 :::button Commencer | /fr/getting-started/installation/ {.home-get-started}
 :::
 
 [GitHub](https://github.com/FatalMistake02/miradocs)
 :::
 
-:::cards
-:::card Installation | /fr/getting-started/installation/
+:::home-preview Premiers pas
+```md title=docs/index.md
+## Premiers pas
+
+Rédigez votre première page dans `docs/`.
+
+:::note À votre image
+Modifiez les polices, couleurs et composants dans `theme/`.
 :::
-:::card Utiliser les composants | /fr/components/
+```
+
+:::home-result
+## Premiers pas
+
+Rédigez votre première page dans `docs/`.
+
+:::note À votre image
+Modifiez les polices, couleurs et composants dans `theme/`.
 :::
-:::card Configuration | /fr/reference/configuration/
+:::
+:::
+
+:::cards {.home-guides}
+:::card Rédiger du contenu | /fr/guides/writing-content/
+Pages, dossiers, Markdown et exemples de code.
+:::
+:::card Personnaliser le site | /fr/guides/theming/
+Polices, couleurs, disposition et styles des composants.
+:::
+:::card Ajouter des composants | /fr/components/
+Composants intégrés et vos propres React, Vue ou Svelte.
 :::
 :::
