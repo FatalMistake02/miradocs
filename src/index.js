@@ -40,7 +40,7 @@ async function buildSite(ctx, options) {
   const client = await compileClientComponents(ctx);
   for(const name of Object.keys(client.components))if(Object.hasOwn(components,name))throw Error(`Component ${name} is registered as both HTML and a client component.`);
   const icons = {};
-  for (const name of ['book-open','search','sun','moon','menu','chevron-down','chevron-right','arrow-left','arrow-right','square-pen','languages','info','lightbulb','triangle-alert','octagon-alert','link','file-text','corner-down-left','x','folder','folder-open','folder-tree','file-code','file-json','file-image']) icons[name] = await icon(name, base);
+  for (const name of ['book-open','search','sun','moon','menu','chevron-down','chevron-right','arrow-left','arrow-right','square-pen','languages','info','lightbulb','triangle-alert','octagon-alert','link','file-text','corner-down-left','x','folder','folder-open','folder-tree','file-code','file-json','file-image','file-cog']) icons[name] = await icon(name, base);
   icons.note = icons.info; icons.tip = icons.lightbulb; icons.caution = icons['triangle-alert']; icons.danger = icons['octagon-alert'];
   for (const [i, link] of (config.links || []).entries()) icons['link' + i] = link.icon ? await icon(link.icon, base, true) : '';
   const render = createMarkdown(components, { base, rawHtml: config.markdown?.html === true, clientComponents:client.components });

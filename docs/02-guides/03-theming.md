@@ -138,7 +138,7 @@ For framework components, the instance class is attached to the mount container.
 | Text | `--text`, `--muted`, `--accent`, `--accent-text` |
 | Structure | `--border`, `--radius`, `--panel-radius`, `--header-height` |
 | Layout | `--sidebar-width`, `--outline-width`, `--content-width` |
-| Type | `--font`, `--mono`, `--brand-font-weight` |
+| Type | `--font`, `--mono`, `--brand-font-weight`, `--brand-font-size` |
 | Code | `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, `--code-comment` |
 | Feedback | `--info`, `--warning`, `--danger` |
 | Motion | `--duration`, `--ease` |
@@ -147,11 +147,12 @@ For framework components, the instance class is attached to the mount container.
 
 Set `title`, `logo`, `favicon`, and optional `footer` in configuration. Asset paths refer to files in the public folder.
 
-The header title uses regular weight (`400`) by default. Override `--brand-font-weight` in your theme to change it:
+The header title uses regular weight (`400`) and an `18px` font size by default. Override `--brand-font-weight` and `--brand-font-size` in your theme to change them:
 
 ```css
 :root {
   --brand-font-weight: 500;
+  --brand-font-size: 20px;
 }
 ```
 

@@ -45,7 +45,7 @@ export function renderFileTree(meta, md, env, base = '/') {
     const type = !folder && options.icons !== false ? fileTypeIcon(plainName) : null;
     const extension = '.'+plainName.split('.').at(-1).toLowerCase();
     const custom = !folder && options.icons && (Object.hasOwn(options.icons,plainName) ? options.icons[plainName] : Object.hasOwn(options.icons,extension) ? options.icons[extension] : null);
-    const graphic = custom ? `<img class="file-type-image" src="${escape(localUrl(base,safeUrl(custom)))}" alt="" loading="lazy" decoding="async">` : type?.svg || env.icons[icon];
+    const graphic = custom ? `<img class="file-type-image" src="${escape(localUrl(base,safeUrl(custom)))}" alt="" loading="lazy" decoding="async">` : (type?.lucide ? env.icons[type.lucide] : type?.svg) || env.icons[icon];
     const row = `<span class="file-tree-chevron">${node.children.length ? env.icons['chevron-down'] : ''}</span><span class="file-tree-icon"${type && !custom ? ` data-file-type="${type.type}" style="--file-icon-color:${type.color}"` : ''}>${graphic}${folder ? `<span class="file-tree-folder-open">${env.icons['folder-open']}</span>` : ''}</span><span class="file-tree-name">${md.renderInline(name)}</span>${description.length ? `<span class="file-tree-description">${md.renderInline(description.join(' — '))}</span>` : ''}`;
     return `<li class="file-tree-node ${folder ? 'is-folder' : 'is-file'}">${node.children.length ? `<details class="file-tree-directory" ${options.collapsed ? '' : 'open'}><summary class="file-tree-row">${row}</summary>${renderNodes(node.children)}</details>` : `<div class="file-tree-row">${row}</div>`}</li>`;
   }).join('')}</ul>`;

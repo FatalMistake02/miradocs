@@ -23,6 +23,7 @@ const cache = new Map();
 
 export function fileTypeIcon(filename) {
   const name = filename.toLowerCase();
+  if (/^miradocs\.config\.jsonc?$/.test(name)) return {type:'miradocs-config',lucide:'file-cog',color:'var(--tree-icon)'};
   let type = Object.hasOwn(filenames,name) ? filenames[name] : null;
   if (!type) {
     if (/^\.env(?:\.|$)/.test(name)) type = 'Dotenv';
