@@ -20,6 +20,24 @@ The component renders an anchor. Use it for navigation rather than submitting fo
 
 ## Customize
 
+Give one button a class after its URL, then style that class in your theme stylesheet:
+
+```md title=docs/index.md
+:::button Get started | /getting-started/quick-start/ {.hero-button}
+:::
+```
+
+```css title=theme/components.css
+.hero-button {
+  background: var(--accent-gradient);
+  color: white;
+  border: 0;
+  border-radius: 999px;
+}
+```
+
+The class is added to this button only. Other buttons keep their usual styles. The `{.class-name}` suffix also works on other component directives.
+
 The selector is `.action-button`. Its default colors use `--accent` and `--accent-text`.
 
 ```css

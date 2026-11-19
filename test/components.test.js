@@ -11,6 +11,20 @@ import {english} from '../src/i18n.js';
 import {icon} from '../src/icons.js';
 
 const workspace=fileURLToPath(new URL('../',import.meta.url));
+test('instance classes target one component and preserve its content and destination',()=>{
+ const render=createMarkdown({custom:"<section class='custom'>{{content}}</section>"},{clientComponents:{counter:{url:'/counter.js'}}});
+ const env={ui:english,icons:{note:''},usedComponents:new Set()};
+ const {content}=render(':::button Start | /start/ {.hero-button .wide}\n:::\n:::button Other | /other/\n:::\n:::note Example {.one-note}\n:::custom {.custom-instance}\nNested **content**.\n:::\n:::\n:::counter {"initial":2} {.one-counter}\nFallback\n:::\n:::file-tree Files {.one-tree}\n- index.md\n:::',env);
+ assert.match(content,/href="\/start\/" class="action-button hero-button wide"/);
+ assert.match(content,/href="\/other\/" class="action-button"/);
+ assert.match(content,/class="callout note one-note"/);
+ assert.match(content,/class='custom custom-instance'/);
+ assert.match(content,/<strong>content<\/strong>/);
+ assert.match(content,/class="client-component one-counter"/);
+ assert.match(content,/data-component-props="\{&quot;initial&quot;:2\}"/);
+ assert.match(content,/class="file-tree one-tree"/);
+ assert.doesNotMatch(content,/\{\.hero-button/);
+});
 test('file tree renders native folder disclosures, extension icons and descriptions',async()=>{
  const icons={};for(const key of ['folder','folder-open','folder-tree','file-code','file-json','file-text','chevron-down'])icons[key]=await icon(key);
  const render=createMarkdown({});const result=render(':::file-tree {"title":"Project","collapsed":true}\n- docs/\n  - index.md — Home page\n- Counter.jsx\n- config.json\n:::',{ui:english,icons});

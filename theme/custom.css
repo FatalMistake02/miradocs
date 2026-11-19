@@ -1,2 +1,23 @@
 /* Project-specific CSS loads after default styles and tokens. */
 .feature-card { border: 1px solid var(--border); border-radius: var(--panel-radius); padding: 20px; background: var(--surface); margin: 22px 0; }
+
+.landing-layout .main { padding-block: clamp(72px, 12vh, 144px) 80px; }
+.landing-layout h1 { font-size: clamp(52px, 7vw, 80px); font-weight: 500; letter-spacing: -.055em; margin-bottom: 18px; }
+.landing-layout .lede { max-width: 550px; font-size: clamp(18px, 2vw, 22px); line-height: 1.6; margin-bottom: 30px; }
+.landing-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.landing-actions > p { margin: 0; }
+.landing-actions a { display: inline-flex !important; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 11px 18px; border-radius: var(--radius); text-decoration: none; font-size: 14px; line-height: 1.5; }
+.home-get-started { margin: 0; border: 0; background: var(--accent-gradient); color: var(--landing-action-text, #fff) !important; font-weight: 500; box-shadow: 0 2px 5px #0001; }
+.home-get-started::after { content: ''; width: 17px; height: 17px; background: currentColor; mask: url('../icons/arrow-right.svg') center / contain no-repeat; }
+.landing-actions > p > a { color: var(--muted); border: 1px solid var(--border); transition: color var(--duration) var(--ease), background var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+.landing-actions > p > a::before { content: ''; width: 17px; height: 17px; background: currentColor; mask: url('../icons/github.svg') center / contain no-repeat; }
+.landing-actions > p > a:hover { color: var(--text); background: var(--surface); border-color: var(--muted); }
+.landing-layout .cards { margin-top: clamp(48px, 8vh, 88px); gap: 18px; }
+.landing-layout .content-card { min-height: 0; padding: 22px; background: transparent; }
+.landing-layout .content-card strong { font-size: 14px; font-weight: 500; }
+.landing-layout .content-card p { margin-top: 10px; line-height: 1.7; }
+@media (max-width: 760px) {
+  .landing-layout .main { padding-inline: 24px; }
+  .landing-layout .cards { gap: 12px; }
+  .landing-layout .content-card { padding: 20px; }
+}

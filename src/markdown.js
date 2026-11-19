@@ -5,6 +5,17 @@ import hljs from 'highlight.js';
 import { escape, slug, localUrl } from './utils.js';
 import { parseFileTree, renderFileTree } from './file-tree.js';
 
+function addClasses(html, classes = []) {
+  if (!classes.length) return html;
+  return html.replace(/<([a-z][a-z0-9-]*)\b([^>]*)>/i, (tag, name, attributes) => {
+    const value = classes.join(' ');
+    const classAttribute = /(\s)class=(["'])(.*?)\2/i;
+    return classAttribute.test(attributes)
+      ? `<${name}${attributes.replace(classAttribute, (_, space, quote, current) => `${space}class=${quote}${current} ${value}${quote}`)}>`
+      : `<${name}${attributes} class="${value}">`;
+  });
+}
+
 export function createMarkdown(components, { base = '/', rawHtml = false, clientComponents = {} } = {}) {
   const md = new MarkdownIt({ html: rawHtml, linkify: true, typographer: true }).use(footnote).use(taskLists, { label: true });
   md.block.ruler.before('fence', 'component', (state, start, end, silent) => {
@@ -12,6 +23,10 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     const match = line(start).match(/^:::([\w-]+)(?:\s+(.*))?$/);
     if (!match) return false;
     if (silent) return true;
+    let title = match[2] || '';
+    const attributes = title.match(/\s*\{((?:\.[A-Za-z_][\w-]*\s*)+)\}\s*$/);
+    const classes = attributes ? attributes[1].trim().split(/\s+/).map(value => value.slice(1)) : [];
+    if (attributes) title = title.slice(0, attributes.index).trimEnd();
     let depth = 0, next = start + 1, fence;
     for (; next < end; next++) {
       const value = line(next), marker = value.match(/^\s*(`{3,}|~{3,})/);
@@ -23,11 +38,11 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     if (next === end) throw Error(`Unclosed ${match[1]} component near line ${start + 1}.`);
     if(match[1] === 'file-tree') {
       const token = state.push('file_tree','div',0);
-      token.meta = {title:match[2] || '',nodes:parseFileTree(state.getLines(start+1,next,state.blkIndent,true),state.md)};
+      token.meta = {title,classes,nodes:parseFileTree(state.getLines(start+1,next,state.blkIndent,true),state.md)};
       token.block = true;state.line = next+1;return true;
     }
     const open = state.push('component_open', 'div', 1);
-    open.meta = { name: match[1], title: match[2] || '' }; open.block = true;
+    open.meta = { name: match[1], title, classes }; open.block = true;
     const oldMax = state.lineMax, oldParent = state.parentType;
     state.lineMax = next; state.parentType = 'container';
     state.md.block.tokenize(state, start + 1, next);
@@ -35,7 +50,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     state.lineMax = oldMax; state.parentType = oldParent; state.line = next + 1;
     return true;
   }, { alt: ['paragraph', 'reference', 'blockquote', 'list'] });
-  md.renderer.rules.file_tree = (tokens,i,options,env) => renderFileTree(tokens[i].meta,md,env);
+  md.renderer.rules.file_tree = (tokens,i,options,env) => addClasses(renderFileTree(tokens[i].meta,md,env),tokens[i].meta.classes);
 
   md.renderer.rules.fence = (tokens, i, options, env) => {
     const token = tokens[i], [language = '', ...rest] = token.info.trim().split(/\s+/);
@@ -82,6 +97,8 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     meta.templateEnd = parts[1].replaceAll('{{title}}', title);
     return parts[0].replaceAll('{{title}}', title);
   };
+  const renderComponent = md.renderer.rules.component_open;
+  md.renderer.rules.component_open = (tokens,i,...args) => addClasses(renderComponent(tokens,i,...args),tokens[i].meta.classes);
   md.renderer.rules.component_close = (tokens, i) => {
     const meta = tokens[i].meta;
     if (['note', 'tip', 'caution', 'danger'].includes(meta.name)) return '</aside>\n';

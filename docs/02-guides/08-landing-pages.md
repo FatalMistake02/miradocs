@@ -17,4 +17,4 @@ sidebar: false
 
 ## Content
 
-Use ordinary Markdown, action links, and card grids. Landing pages get a wider content area and larger introductory type; all theme tokens still apply. The [home page](/) is an example built entirely from Markdown and frontmatter.
+Use ordinary Markdown, action links, card grids, and custom components. Landing pages get a wider content area and larger introductory type; all theme tokens still apply. The [home page](/) combines Markdown with a custom action-group template and theme CSS.
