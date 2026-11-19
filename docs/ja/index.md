@@ -1,6 +1,6 @@
 ---
 title: miradocs
-description: Markdown で書いて、自分らしいドキュメントに。
+description: Markdown を中心にしたドキュメントフレームワーク。
 layout: landing
 sidebar: false
 ---
@@ -17,8 +17,8 @@ sidebar: false
 
 最初のページを作成する場所： `docs/`.
 
-:::note 自分のスタイルに
-フォント、色、コンポーネントの変更場所： `theme/`.
+:::note 公開の準備
+サイトをビルドして、静的ファイルを公開します。
 :::
 ```
 
@@ -27,8 +27,8 @@ sidebar: false
 
 最初のページを作成する場所： `docs/`.
 
-:::note 自分のスタイルに
-フォント、色、コンポーネントの変更場所： `theme/`.
+:::note 公開の準備
+サイトをビルドして、静的ファイルを公開します。
 :::
 :::
 :::
@@ -37,8 +37,8 @@ sidebar: false
 :::card コンテンツの作成 | /ja/guides/writing-content/
 ページ、フォルダー、Markdown、コードの例。
 :::
-:::card サイトのカスタマイズ | /ja/guides/theming/
-フォント、色、レイアウト、コンポーネントのスタイル。
+:::card サイトの公開 | /ja/guides/deployment/
+ビルド、プレビュー、ドキュメントの公開。
 :::
 :::card コンポーネントの追加 | /ja/components/
 標準コンポーネントと独自の React、Vue、Svelte。

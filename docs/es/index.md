@@ -1,6 +1,6 @@
 ---
 title: miradocs
-description: Escribe tus documentos en Markdown. Dales tu propio estilo.
+description: Un framework de documentación basado en Markdown.
 layout: landing
 sidebar: false
 ---
@@ -17,8 +17,8 @@ sidebar: false
 
 Escribe tu primera página en `docs/`.
 
-:::note A tu manera
-Cambia fuentes, colores y componentes en `theme/`.
+:::note Listo para publicar
+Compila tu sitio y publica los archivos estáticos.
 :::
 ```
 
@@ -27,8 +27,8 @@ Cambia fuentes, colores y componentes en `theme/`.
 
 Escribe tu primera página en `docs/`.
 
-:::note A tu manera
-Cambia fuentes, colores y componentes en `theme/`.
+:::note Listo para publicar
+Compila tu sitio y publica los archivos estáticos.
 :::
 :::
 :::
@@ -37,8 +37,8 @@ Cambia fuentes, colores y componentes en `theme/`.
 :::card Escribir contenido | /es/guides/writing-content/
 Páginas, carpetas, Markdown y ejemplos de código.
 :::
-:::card Personalizar el sitio | /es/guides/theming/
-Fuentes, colores, diseño y estilos de componentes.
+:::card Publicar el sitio | /es/guides/deployment/
+Compila, revisa y publica tu documentación.
 :::
 :::card Añadir componentes | /es/components/
 Componentes integrados y tus propios React, Vue o Svelte.
