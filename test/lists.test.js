@@ -21,6 +21,7 @@ test('lists preserve Markdown semantics, links, nesting and per-instance styles 
   assert.equal(lists[0].querySelectorAll('li li').length, 2);
   assert.equal(lists[0].querySelector('strong').textContent, 'Theming');
   assert.equal(lists[0].querySelector('.list-filter').hidden, true);
+  assert.equal(lists[0].querySelector('.list-filter').parentElement.className, 'list-header');
   assert.equal(lists[0].querySelectorAll('li[hidden]').length, 0);
   assert.equal(lists[1].querySelector('.list-filter'), null);
   assert.equal(lists[1].querySelector('ol').getAttribute('start'), '3');
@@ -32,12 +33,26 @@ test('list options escape content and reject invalid options or non-list bodies'
   assert.match(escaped, /&lt;script&gt;/);
   assert.match(escaped, /&quot;&lt;input&gt;/);
   assert.doesNotMatch(escaped, /<script>|<img>/);
-  for (const options of ['{"search":"yes"}', '{"title":1}', '{"empty":false}', '{"unknown":true}', '{invalid}']) {
+  for (const options of ['{"search":"yes"}', '{"title":1}', '{"empty":false}', '{"unknown":true}', '{"columns":0}', '{"columns":7}', '{"columns":1.5}', '{"columns":"2"}', '{invalid}']) {
     assert.throws(() => render(`:::list ${options}\n- Item\n:::`, env), /list:/);
   }
   for (const body of ['', 'A paragraph', '- Item\n\nParagraph', '- Item\n\n1. Another list']) {
     assert.throws(() => render(`:::list\n${body}\n:::`, env), /one Markdown list/);
   }
+});
+
+test('column lists preserve source order, numbered starts and independent nested lists', () => {
+  const source = ':::list {"title":"Resources","search":true,"columns":3}\n4. First\n5. Second\n   - Nested\n6. Third\n:::\n:::list Plain\n- Single column\n:::';
+  const dom = new JSDOM(render(source, env).content);
+  const [columns, plain] = dom.window.document.querySelectorAll('.content-list');
+  assert.equal(columns.dataset.listColumns, '3');
+  assert.equal(plain.dataset.listColumns, '1');
+  assert.equal(columns.querySelector('ol').getAttribute('start'), '4');
+  assert.deepEqual([...columns.querySelectorAll('.list-content > ol > li')].map(row => row.textContent.replace(/\s+/g, ' ').trim()), ['First', 'Second Nested', 'Third']);
+  assert.equal(columns.querySelectorAll('li > ul > li').length, 1);
+  assert.equal(columns.querySelector('.list-header > .list-title').textContent, 'Resources');
+  assert(columns.querySelector('.list-header > .list-filter input'));
+  dom.window.close();
 });
 
 test('search filters rows independently, keeps nested items, announces results and resets with Escape or clear', t => {
@@ -52,6 +67,7 @@ test('search filters rows independently, keeps nested items, announces results a
   const visible = list => [...list.querySelector('.list-content').firstElementChild.children].filter(row => !row.hidden);
   const search = value => { input.value = value; input.dispatchEvent(new w.Event('input')); };
   assert.equal(first.querySelector('.list-filter').hidden, false);
+  assert.equal(second.querySelector('.list-header').hidden, false);
   assert.equal(first.querySelector('.list-status').textContent, '');
   search('SETUP cafe');
   assert.equal(visible(first).length, 1);

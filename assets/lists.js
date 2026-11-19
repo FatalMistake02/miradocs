@@ -2,7 +2,8 @@ const normalize = value => value.normalize('NFKD').replace(/\p{M}/gu, '').toLoca
 
 export function initializeLists(signal, ui) {
   for (const list of document.querySelectorAll('.content-list[data-list-search]')) {
-    const filter = list.querySelector(':scope > .list-filter');
+    const header = list.querySelector(':scope > .list-header');
+    const filter = header.querySelector(':scope > .list-filter');
     const input = filter.querySelector('input');
     const clear = filter.querySelector('.list-clear');
     const content = list.querySelector(':scope > .list-content');
@@ -28,5 +29,6 @@ export function initializeLists(signal, ui) {
     clear.addEventListener('click', reset, { signal });
     update(false);
     filter.hidden = false;
+    header.hidden = false;
   }
 }
