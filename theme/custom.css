@@ -1,6 +1,9 @@
 /* Project-specific CSS loads after default styles and tokens. */
 .feature-card { border: 1px solid var(--border); border-radius: var(--panel-radius); padding: 20px; background: var(--surface); margin: 22px 0; }
 
+.article h2 { font-size: 26px; }
+.article h3 { font-size: 18px; }
+
 .landing-layout .main { padding-block: clamp(72px, 12vh, 144px) 80px; }
 .landing-layout h1 { font-size: clamp(52px, 7vw, 80px); font-weight: 500; letter-spacing: -.055em; margin-bottom: 18px; }
 .landing-layout .lede { max-width: 550px; font-size: clamp(18px, 2vw, 22px); line-height: 1.6; margin-bottom: 30px; }

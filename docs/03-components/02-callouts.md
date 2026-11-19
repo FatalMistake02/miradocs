@@ -1,42 +1,45 @@
 ---
 title: Callouts
-description: Highlight contextual information with a title and body.
+description: Add a note, tip, caution, or warning to a page.
 ---
 ## Examples
 
-:::note Note
-Provide supporting information that applies to this section.
+:::note
+Your theme styles load after the default CSS.
 :::
-:::tip Tip
-Suggest an optional improvement or a shorter procedure.
+:::tip
+Add a class to style one component without changing the others.
 :::
-:::caution Caution
-Explain a consequence the reader should consider before continuing.
+:::caution
+Changes made directly in `site/` are replaced by the next build.
 :::
-:::danger Danger
-Identify a destructive action or a serious failure condition.
+:::danger
+Deleting your source folder removes the pages used to build the site.
 :::
 
-## Usage
+## Add a callout
 
-Choose `note`, `tip`, `caution`, or `danger`. The title is optional. Without a title, the component uses a translated default label.
+Choose `note`, `tip`, `caution`, or `danger`. Add an optional title after the directive name:
 
 ```md
-:::note Optional title
-The body supports **Markdown**, links, and other components.
+:::note Before you start {.setup-note}
+Keep your configuration file in the project root.
 :::
 ```
+
+Leave the title out to use the default label for the current language. The body supports Markdown and other components.
 
 ## Customize
 
-All variants use `.callout` and `.callout-title`. The variant name is an additional class. The local `--callout-color` property controls the border and icon.
+Use `--callout-color` to change the border and icon color for one instance:
 
-```css
-.callout { border-radius: 12px; padding: 20px; }
-.callout.note { --callout-color: var(--info); }
-.callout.caution { --callout-color: var(--warning); }
-.callout.danger { --callout-color: var(--danger); }
-.callout-title { font-size: 14px; }
+```css title=theme/components.css
+.setup-note {
+  --callout-color: var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+}
+.setup-note .callout-title { font-size: 14px; }
 ```
 
-Use the shared color tokens for palettes that work in both light and dark modes. The Lucide icon and text label distinguish variants in addition to color.
+All callouts use `.callout` and `.callout-title`. The variant is also a class, such as `.callout.caution`.

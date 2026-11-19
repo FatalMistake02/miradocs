@@ -13,7 +13,7 @@ description: Install dependencies and run the project locally.
 Run these commands from the project root:
 
 ```sh
-npm ci
+npm install
 npm run dev
 ```
 
@@ -23,4 +23,4 @@ Use `npm run build` when you are ready to generate static files.
 
 ## Configure the site
 
-Continue with the [configuration reference](../02-reference/01-configuration.md).
+Continue with [Configuration](../02-reference/01-configuration.md).

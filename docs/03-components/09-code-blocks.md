@@ -1,6 +1,6 @@
 ---
 title: Code blocks
-description: Display highlighted code with an optional filename and copy control.
+description: Show code with syntax highlighting, a filename, and a copy button.
 ---
 ## Example
 
@@ -9,9 +9,9 @@ const options = { theme: 'system' };
 console.log(options);
 ```
 
-## Usage
+## Add a code block
 
-Use a standard fenced code block. Put the language after the opening fence. Add `title=filename` to replace the language label with a filename.
+Put a language after the opening code fence. Add `title=filename` to show a filename above the code:
 
 ````md
 ```js title=example.js
@@ -19,16 +19,18 @@ const options = { theme: 'system' };
 ```
 ````
 
-Known languages use highlight.js. Unknown language names produce escaped plain text. Copying uses the original code text without syntax markup. The copy control reports success or failure.
+Recognized languages receive syntax highlighting. Other language labels display plain code.
 
 ## Customize
 
-The wrapper uses `.code-block`, the header uses `.code-top`, and the copy control uses `.copy-code`.
+Use `.code-block` for the container, `.code-top` for its header, and `.copy-code` for the copy button:
 
-```css
+```css title=theme/components.css
 .code-block { border-radius: 14px; }
 .code-block pre { font-size: 13px; line-height: 1.8; }
 .code-top { padding: 12px 16px; }
 ```
 
-Use `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, and `--code-comment` to change the palette. Override those tokens separately for dark mode.
+Change the palette with `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, and `--code-comment`.
+
+To style one code example, wrap its fence in a [content group](/components/content-groups/) and target that group's `.code-block`.

@@ -1,52 +1,37 @@
 ---
 title: Buttons
-description: Style a navigation link as a button.
+description: Give a navigation link the appearance of a button.
 ---
 ## Example
 
-:::button Installation | /getting-started/installation/
+:::button Get started | /getting-started/installation/
 :::
 
-## Usage
+## Add a button
 
-Provide the label and URL in the directive title, separated by ` | `. Keep the body empty.
+Use `button` with a label and URL separated by ` | `. Leave the body empty.
 
 ```md
-:::button Installation | /getting-started/installation/
+:::button Get started | /getting-started/installation/ {.start-button}
 :::
 ```
 
-The component renders an anchor. Use it for navigation rather than submitting forms or running application actions. Root-relative URLs receive the site's configured base prefix.
+This creates a link, so use it to navigate to another page. For a control that submits a form or runs JavaScript, use a [custom component](/components/custom-components/).
 
 ## Customize
 
-Give one button a class after its URL, then style that class in your theme stylesheet:
-
-```md title=docs/index.md
-:::button Get started | /getting-started/installation/ {.hero-button}
-:::
-```
+Style the instance class in your theme stylesheet:
 
 ```css title=theme/components.css
-.hero-button {
+.start-button {
   background: var(--accent-gradient);
-  color: white;
+  --accent-text: white;
   border: 0;
   border-radius: 999px;
-}
-```
-
-The class is added to this button only. Other buttons keep their usual styles. The `{.class-name}` suffix also works on other component directives.
-
-The selector is `.action-button`. Its default colors use `--accent` and `--accent-text`.
-
-```css
-.action-button {
-  border-radius: 999px;
   padding: 12px 22px;
-  background: var(--text);
-  color: var(--bg);
 }
 ```
 
-A `components/button.html` file can replace the markup. The title passed to a custom template is the full directive argument.
+Use `.action-button` to style all button links. Default colors use `--accent` and `--accent-text`.
+
+For different markup, add a `components/button.html` [template](/components/custom-components/). Its `{{title}}` value contains the label and URL argument.

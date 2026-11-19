@@ -1,47 +1,48 @@
 ---
 title: Cards
-description: Display related pages or content in a grid.
+description: Link to related pages or group short pieces of content.
 ---
 ## Example
 
-:::cards
+:::cards {.guide-cards}
 :::card Installation | /getting-started/installation/
-Install the dependencies and start the preview.
+Create a project and start your preview.
 :::
 :::card Theming | /guides/theming/
-Override shared tokens or add custom CSS.
+Change fonts, colors, and component styles.
 :::
 :::
 
-## Usage
+## Add cards
 
-Use `cards` for the grid and `card` for each item. Separate a title from its optional URL with ` | `.
+Wrap `card` directives in `cards` to create a grid. Separate a card's title and optional URL with ` | `.
 
 ```md
-:::cards
+:::cards {.guide-cards}
 :::card Installation | /getting-started/installation/
-Install the dependencies and start the preview.
+Create a project and start your preview.
 :::
 :::card A card without a link
-This card contains supporting content.
+Add supporting content here.
 :::
 :::
 ```
 
-Cards support Markdown in the body. Linked cards have a stretched title link, so the card surface is clickable. Links in the body remain independently usable.
+Card bodies support Markdown. A linked card is clickable across its surface; links inside the body still open their own destinations.
 
 ## Customize
 
-The container uses `.cards`; individual cards use `.content-card`. The default grid has two columns in documentation pages, three in landing pages, and one on narrow screens.
+The grid uses `.cards`, and each card uses `.content-card`. By default, grids have two columns on documentation pages, three on landing pages, and one on small screens.
 
-```css
-.cards { gap: 20px; }
-.content-card { padding: 28px; border-radius: 16px; }
-.content-card strong { font-size: 17px; }
-.content-card p { color: var(--muted); }
+```css title=theme/components.css
+.guide-cards { gap: 20px; }
+.guide-cards .content-card {
+  padding: 24px;
+  border-radius: 12px;
+}
 @media (min-width: 900px) {
-  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .guide-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 ```
 
-A `components/card.html` template replaces the built-in card renderer. Use that when changing the markup rather than its appearance.
+Add a class to a `card` directive to style just that card. For different markup, add a `components/card.html` [template](/components/custom-components/).

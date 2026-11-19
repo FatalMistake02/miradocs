@@ -1,14 +1,26 @@
 ---
-title: Overview
-description: Built-in components, usage examples, and customization.
+title: Using components
+description: Add components to Markdown and style individual instances.
 ---
-Components use fenced directives: an opening line such as `:::note Title`, Markdown content, and a closing `:::`. Components can be nested, except that a tab must be a direct child of a tabs group.
+Components are written as directives inside Markdown. Each guide below includes an example, the Markdown to create it, and styling options.
 
-Every component accepts instance classes: `:::note Title {.my-note}`. Put the matching CSS in your theme stylesheet. Use `.my-note` to style that instance, or `.my-note a` to style links inside it. See [Theming](/guides/theming/#style-one-instance) for examples across component types and [Groups](/components/content-groups/) for styling ordinary Markdown.
+## Add a component
+
+Put the opening line, content, and closing `:::` on separate lines:
+
+```md
+:::note Before you start
+Keep your configuration file in the project root.
+:::
+```
+
+Components can contain Markdown and other components. A `tab` must be directly inside a `tabs` group.
+
+## Built-in components
 
 :::cards
-:::card Groups | /components/content-groups/
-Wrap any Markdown or components to style a particular section.
+:::card Content groups | /components/content-groups/
+Scope styles to a section of Markdown or nested components.
 :::
 :::card Tabs | /components/tabs/
 Switch between related blocks of content.
@@ -22,8 +34,8 @@ Expandable content using native details elements.
 :::card Cards | /components/cards/
 Link to related pages in a responsive grid.
 :::
-:::card Action links | /components/buttons/
-Present a link as an action button.
+:::card Buttons | /components/buttons/
+Give a navigation link the appearance of a button.
 :::
 :::card Steps | /components/steps/
 Number a sequence of instructions.
@@ -45,6 +57,21 @@ Create a reusable HTML template.
 :::
 :::
 
-## Shared customization
+## Customize a component
 
-List CSS files in the configuration's `styles` array. Those files load after the default theme. Use [theme tokens](/guides/theming/) to change shared colors and geometry. Each component page lists the selectors for changes limited to that component.
+Append `{.class-name}` to the opening line to style one instance:
+
+```md
+:::note Before you start {.setup-note}
+Keep your configuration file in the project root.
+:::
+```
+
+```css title=theme/components.css
+.setup-note { border-radius: 12px; }
+.setup-note a { text-decoration-color: var(--accent); }
+```
+
+Put the CSS in a theme stylesheet and list it in the configuration's `styles` array. See [Theming](/guides/theming/#component-styles) for setup, shared variables, and more examples.
+
+Instance classes work on every directive. Use a [content group](/components/content-groups/) to target ordinary Markdown, including a single heading, image, or code block.

@@ -1,49 +1,42 @@
 ---
 title: Disclosures
-description: Show optional content in an expandable section.
+description: Keep optional details in an expandable section.
 ---
 ## Example
 
 :::details Which files are generated?
-The build writes HTML pages, styles, scripts, search indexes, and optional sitemap metadata into the output directory.
+The build writes pages, styles, scripts, and search indexes to `site/`.
 :::
 
-:::details Can I change the appearance?
-Add a class to this instance and style it in your theme CSS. Its content supports Markdown, including [links](/guides/theming/), lists, and code blocks.
+:::details Can I use my own styles?
+Yes. Put CSS in your theme folder and add a class to target one instance. See [Theming](/guides/theming/).
 :::
 
-## Usage
+## Add a disclosure
 
-The directive title becomes the summary. The body can contain paragraphs, lists, code, and other components.
+Use `details` with a title. The content can include paragraphs, lists, code blocks, and other components.
 
 ```md
-:::details Which files are generated?
-The build writes files into the output directory.
+:::details Which files are generated? {.output-details}
+The build writes pages, styles, scripts, and search indexes to `site/`.
 :::
 ```
 
-Disclosures use native `details` and `summary` elements. They start closed and work without JavaScript. Enter or Space toggles a focused summary.
+Disclosures start closed. Readers can click the title or focus it and press Enter or Space to toggle the content.
 
 ## Customize
 
-Set the disclosure's variables in your theme CSS. Use `.details` for all disclosures, or add a class to target one:
+Set variables on the instance class:
 
-```md
-:::details More information {.extra-info}
-Additional content goes here.
-:::
-```
-
-```css
-.extra-info {
+```css title=theme/components.css
+.output-details {
   --details-radius: 12px;
   --details-padding: 20px;
   --details-bg: var(--surface);
+  --details-border: var(--border);
   --details-header-hover: var(--hover);
 }
-.extra-info .details-title { font-weight: 500; }
-.extra-info .details-content { font-size: 14px; }
+.output-details .details-content { font-size: 14px; }
 ```
 
-The main selectors are `.details`, `.details-title`, `.details-indicator`, and `.details-content`. The `[open]` attribute identifies the expanded state.
-
+The selectors are `.details`, `.details-title`, `.details-indicator`, and `.details-content`. Use `[open]` to target the expanded state.

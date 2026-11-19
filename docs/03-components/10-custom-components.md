@@ -1,16 +1,18 @@
 ---
 title: Custom components
-description: Add reusable markup, styles, and optional client-side behavior.
+description: Create reusable HTML templates with Markdown content.
 ---
+Use a template when you need markup that is not provided by a built-in component. For React, Vue, or Svelte, see [Framework components](/components/framework-components/).
+
 ## Example
 
-:::example Example component
-This component comes from `components/example.html`. Its body is rendered Markdown.
+:::example Release notes
+Add a short summary, a list of changes, or a link to the full release.
 :::
 
 ## Create a template
 
-Add an HTML file to the configured components directory. Its filename becomes the directive name.
+Add an HTML file to `components/`. Its filename becomes the directive name:
 
 ```html title=components/example.html
 <section class="feature-card">
@@ -19,49 +21,55 @@ Add an HTML file to the configured components directory. Its filename becomes th
 </section>
 ```
 
-Templates must contain exactly one `{{content}}` placeholder. It receives the rendered body. `{{title}}` receives the escaped directive argument and can appear more than once.
+`{{title}}` receives the text after the directive name. `{{content}}` receives the rendered Markdown body. Include exactly one `{{content}}` placeholder.
 
-## Use the component
+### Use it in a page
 
 ```md
-:::example Example component
-This body supports **Markdown**.
+:::example Release notes {.release-summary}
+Add a short summary, a list of changes, or a link to the full release.
 :::
 ```
 
+The instance class is added to the template's outer element.
+
 ## Add styles
 
-Put CSS in a file under the theme folder and include it in the configuration's `styles` array.
+Put CSS in your theme folder and list the file in the configuration's `styles` array. See [Theming](/guides/theming/#add-your-styles) for setup.
 
-```css
+```css title=theme/components.css
 .feature-card {
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: var(--panel-radius);
   padding: 24px;
 }
+.release-summary { border-inline-start: 3px solid var(--accent); }
 ```
 
 ## Add JavaScript
 
-Put a JavaScript module in `public/` and list its URL in the configuration's `scripts` array. The module loads once. Initialize the component on the first page and after the `miradocs:navigate` event.
+For optional behavior, put a module in `public/` and add it to `scripts`:
 
-```json
-{ "scripts": ["/example.js"] }
+```json title=miradocs.config.json
+{
+  "scripts": ["/example.js"]
+}
 ```
 
-Templates and scripts are trusted project code. Use raw HTML in Markdown only when all content authors are trusted. Raw HTML is disabled by default.
+Scripts load once. Initialize your component when the script first loads and after `miradocs:navigate`, so it also works after switching pages:
 
-```js
+```js title=public/example.js
 function initializeExample() {
   document.querySelectorAll(".feature-card").forEach(card => {
     if (card.dataset.initialized) return;
     card.dataset.initialized = "true";
-    // Attach component behavior here.
+    // Set up the behavior for this card.
   });
 }
+
 initializeExample();
 document.addEventListener("miradocs:navigate", initializeExample);
 ```
 
-For React, Vue, Svelte, or an external component library, use [Framework components](/components/framework-components/) instead of managing mounts manually.
+Use [framework components](/components/framework-components/) when your component needs its own mount and cleanup functions.

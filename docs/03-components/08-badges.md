@@ -1,29 +1,29 @@
 ---
 title: Badges
-description: Display a short status or category label.
+description: Add a short status or category label.
 ---
 ## Example
 
-:::badge Stable
+:::badge Beta
 :::
 
-## Usage
+## Add a badge
 
-Put a short label after the directive name and leave the body empty.
+Put the label after `badge` and leave the body empty:
 
 ```md
-:::badge Stable
+:::badge Beta {.release-badge}
 :::
 ```
 
-Badges are block directives rendered as compact inline-block elements. They do not accept Markdown inside the label.
+Labels are plain text. Keep them short, such as “Beta” or “Optional”.
 
 ## Customize
 
-Use the `.badge` selector. Keep text contrast readable in both themes.
+Style one instance with its class, or use `.badge` for all badges:
 
-```css
-.badge {
+```css title=theme/components.css
+.release-badge {
   border-radius: 999px;
   background: var(--selected);
   color: var(--text);

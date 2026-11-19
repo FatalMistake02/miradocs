@@ -21,11 +21,9 @@ description: Display files and folders from a nested Markdown list.
 - **miradocs.config.json** — Site settings
 :::
 
-## Usage
+## Add a file tree
 
-Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing slash identifies a folder even when it has no children. Filenames and extensions select recognizable language and tool icons. Specific names such as `package.json`, `tsconfig.json`, and `.gitignore` take priority over the extension. Unknown types use a generic file icon.
-
-Items keep the order you write them in. Place folder entries before file entries to show folders first.
+Put a nested Markdown list inside `file-tree`. Indentation creates the hierarchy. Use a trailing slash for an empty folder.
 
 ```md
 :::file-tree Project
@@ -46,11 +44,11 @@ Items keep the order you write them in. Place folder entries before file entries
 :::
 ```
 
-Add a description after ` — `. Names support inline code, emphasis, and links. Folder rows can be toggled with a click or with Enter or Space while focused.
+Add a description after ` — `. Names support inline code, emphasis, and links. Items keep the order you write them in, so put folders first if that is the order you want.
 
-## Start with folders closed
+### Start with folders closed
 
-Use JSON options to set a title and the initial folder state:
+Use JSON options to set a title and close folders initially:
 
 ```md
 :::file-tree {"title":"Project","collapsed":true}
@@ -68,11 +66,13 @@ Use JSON options to set a title and the initial folder state:
   - tokens.css
 :::
 
-## Customize
+## File icons
 
-File-type icons use language and tool colors. Set `--tree-file-icon-color` to override all their colors, or target a type such as `[data-file-type="typescript"]`.
+Filenames and extensions select language and tool icons. Names such as `package.json`, `tsconfig.json`, and `.gitignore` take priority over the extension. Unknown types use a generic file icon.
 
-Supply your own images for exact filenames or extensions in the tree options. Put local images in `public/`:
+### Custom icons
+
+Map an exact filename or extension to your own image. Put local images in `public/`:
 
 ```md
 :::file-tree {"title":"Project","icons":{".mira":"/icons/mira.svg","special.config":"/icons/config.svg"}}
@@ -81,11 +81,17 @@ Supply your own images for exact filenames or extensions in the tree options. Pu
 :::
 ```
 
-Use `"icons": false` to use the neutral Lucide file icons. Folder controls keep their Lucide icons in either mode.
+Set `"icons": false` to use neutral Lucide file icons instead.
 
-`--tree-indent` sets nesting depth, `--tree-row-height` controls row spacing, `--tree-guide` colors connector lines, and `--tree-icon` colors the icons. Other colors use the shared theme tokens.
+### Icon colors
 
-```css
+File-type icons use their language or tool colors. Set `--tree-file-icon-color` on the tree to override them all. For one type, target a selector such as `[data-file-type="typescript"]`.
+
+## Customize
+
+Use the component variables to change spacing, guide lines, and the color of folders and fallback icons:
+
+```css title=theme/components.css
 .file-tree {
   --tree-indent: 20px;
   --tree-row-height: 36px;
@@ -95,4 +101,4 @@ Use `"icons": false` to use the neutral Lucide file icons. Folder controls keep 
 .file-tree-description { font-size: 12px; }
 ```
 
-The main selectors are `.file-tree-row`, `.file-tree-name`, `.file-tree-description`, and `.file-tree-directory`. Keep the folder disclosure element when customizing its markup or focus styles.
+The selectors are `.file-tree-row`, `.file-tree-name`, `.file-tree-description`, and `.file-tree-directory`. Add an [instance class](/guides/theming/#style-one-instance) to limit your changes to one tree.

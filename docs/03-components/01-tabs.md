@@ -1,10 +1,10 @@
 ---
 title: Tabs
-description: Group related content into selectable panels.
+description: Show related examples in separate panels.
 ---
 ## Example
 
-:::tabs
+:::tabs Build commands {.build-tabs}
 :::tab npm
 ```sh
 npm run build
@@ -22,37 +22,48 @@ bun run build
 :::
 :::
 
-## Usage
+## Add tabs
 
-Nest `tab` directives inside `tabs`. Each tab needs a label and a closing fence. The first tab is selected initially.
+Put a `tab` directive inside `tabs` for each panel. Give each tab a label and its own closing `:::`.
 
-```md
-:::tabs
+````md
+:::tabs Build commands {.build-tabs}
 :::tab npm
-Run the npm command.
+```sh
+npm run build
+```
 :::
 :::tab pnpm
-Run the pnpm command.
-:::
-:::
+```sh
+pnpm build
 ```
+:::
+:::tab Bun
+```sh
+bun run build
+```
+:::
+:::
+````
 
-Use an optional title after `:::tabs` to name the tab group for assistive technology. Panels can contain Markdown and other components.
+The first tab starts selected. Panels can contain Markdown and nested components. The optional title after `:::tabs` names the group for assistive technology.
 
-## Keyboard behavior
+### Keyboard controls
 
-Tab moves focus to the selected tab. Left and Right select adjacent tabs; Home and End select the first and last tabs. Tab then moves into the selected panel. Other panels are hidden after initialization.
+Press Tab to focus the selected tab, then Left or Right to change tabs. Home and End select the first and last tabs. Press Tab again to move into the panel.
 
 ## Customize
 
-The group uses `.tabs`, the row uses `.tab-list`, and each panel uses `.tab-panel`. Selection is exposed through `aria-selected`.
+Use the instance class to change one group:
 
-```css
-.tabs { border-radius: 16px; }
-.tab-list { gap: 28px; background: var(--surface); }
-.tab-list button[aria-selected="true"] {
+```css title=theme/components.css
+.build-tabs { border-radius: 16px; }
+.build-tabs .tab-list { gap: 28px; }
+.build-tabs .tab-panel { padding: 12px 24px; }
+.build-tabs [role="tab"][aria-selected="true"] {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
-.tab-panel { padding: 12px 24px; }
 ```
+
+The shared selectors are `.tabs`, `.tab-list`, and `.tab-panel`. See [Theming](/guides/theming/#component-styles) for stylesheet setup.

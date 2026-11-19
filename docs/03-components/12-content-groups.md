@@ -1,16 +1,18 @@
 ---
 title: Content groups
-description: Scope CSS to any section of Markdown or nested components.
+description: Style a section of Markdown without changing the rest of the page.
 ---
-## Usage
+A content group adds a plain container around Markdown or nested components. Use it to style a section, a particular heading, or a single image.
 
-A group adds a plain container around its content. Give it a class to style one heading, image, table, code example, or section without changing other content.
+## Add a group
+
+Give the group a class and put the content inside:
 
 ```md title=docs/example.md
 :::group {.setup-section}
 ## Installation
 
-Read the [setup guide](/getting-started/installation/).
+Read the [Installation guide](/getting-started/installation/).
 
 :::note Requirements {.requirements-note}
 Install Node.js before continuing.
@@ -18,23 +20,23 @@ Install Node.js before continuing.
 :::
 ```
 
+Groups have no default visual treatment. Add your styles in a [theme stylesheet](/guides/theming/#add-your-styles):
+
 ```css title=theme/components.css
 .setup-section h2 { font-weight: 500; }
 .setup-section a { text-decoration-color: var(--accent); }
 .setup-section .requirements-note { border-radius: 12px; }
 ```
 
-List your stylesheet in the configuration's `styles` array. See [Theming](/guides/theming/) for setup.
-
 ## Example
 
 :::group {.group-example}
 ### A grouped section
 
-This paragraph and its [link](/guides/theming/) share a container. The group has no default visual treatment.
+This paragraph and its [link](/guides/theming/) share one container.
 :::
 
-## Target one element
+## Style one element
 
 Wrap just the element you want to change:
 
@@ -51,6 +53,4 @@ Wrap just the element you want to change:
 }
 ```
 
-## Other components
-
-The `{.class-name}` suffix also works directly on tabs, callouts, disclosures, cards, action links, steps, badges, file trees, custom templates, and framework component containers. Use a group when you want to scope styles across several elements or ordinary Markdown.
+For a component that already has a directive, add a class directly to its opening line. See [Theming](/guides/theming/#style-one-instance).
