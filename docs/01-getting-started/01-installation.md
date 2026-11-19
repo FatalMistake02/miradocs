@@ -43,10 +43,6 @@ bun run dev
 :::
 :::
 
-:::note Before the first release
-The npm packages have not been published yet. Use the [local package setup](#use-a-local-package) below until they are available.
-:::
-
 Open the address printed in your terminal, usually `http://localhost:8000`. The preview updates when you save your files.
 
 The starter gives you a small project:
@@ -112,49 +108,3 @@ bun run preview
 :::
 
 The build writes your site to `site/`. The preview serves those files locally. When you are ready to put the site online, follow [Deployment](/guides/deployment/).
-
-## Use a local package
-
-Before the npm release, you can create a site from a checkout of this repository. Install dependencies and pack the framework:
-
-```sh
-npm ci
-npm pack
-node packages/create-miradocs/build.js
-```
-
-Generate your project, replacing the package path with the absolute path to the tarball created by `npm pack`:
-
-```sh
-node packages/create-miradocs/bin/create-miradocs.js ../my-docs --miradocs-version file:/absolute/path/to/miradocs-1.0.0.tgz
-cd ../my-docs
-```
-
-Install dependencies and start your site:
-
-:::tabs Package manager
-:::tab npm
-```sh
-npm install
-npm run dev
-```
-:::
-:::tab pnpm
-```sh
-pnpm install
-pnpm run dev
-```
-:::
-:::tab Yarn
-```sh
-yarn install
-yarn run dev
-```
-:::
-:::tab Bun
-```sh
-bun install
-bun run dev
-```
-:::
-:::

@@ -4,7 +4,7 @@ A static documentation framework built in JavaScript. Write pages in Markdown, o
 
 Requires Node.js 20.19 or newer.
 
-Create a documentation site with the separate `create-miradocs` package. After registry publication:
+Create a documentation site with the `create-miradocs` starter:
 
 ```sh
 npm create miradocs@latest my-docs
@@ -13,9 +13,9 @@ npm install
 npm run dev
 ```
 
-The npm packages have not been published yet. To run this repository's documentation site locally, use `npm ci` and `npm run dev`.
+To run this repository’s documentation site locally, use `npm ci` and `npm run dev`.
 
-The starter creates your content folder, configuration, and theme stylesheet. miradocs is installed as a dependency. See [Installation](docs/01-getting-started/01-installation.md) for package manager tabs and local package setup before publication.
+The starter creates your content folder, configuration, and theme stylesheet. miradocs is installed as a dependency. See [Installation](docs/01-getting-started/01-installation.md) for setup instructions with npm, pnpm, Yarn, and Bun.
 
 Open http://localhost:8000. Development mode watches content, configuration, theme, and component files and reloads the browser after successful builds.
 
