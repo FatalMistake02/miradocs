@@ -1,53 +1,123 @@
 ---
 title: Configuration
-description: Site settings, file paths, and commands.
+description: Site settings, defaults, and command-line options.
 ---
-## Site settings
+Site settings live in `miradocs.config.json`. File paths resolve relative to that configuration file.
 
-Configuration lives in `miradocs.config.json`. Paths resolve relative to that file.
+## Basic configuration
 
-```json
+```json title=miradocs.config.json
 {
+  "$schema": "./node_modules/miradocs/miradocs.schema.json",
   "title": "Project docs",
-  "site": "https://docs.example.com",
-  "base": "/",
   "content": "docs",
   "output": "site",
   "theme": "theme",
-  "components": "components",
-  "public": "public",
-  "styles": ["tokens.css", "custom.css"],
-  "links": [{"label": "GitHub", "url": "https://github.com", "icon": "github"}],
-  "search": {"limit": 10, "threshold": 0.35},
-  "language": "en"
+  "styles": ["tokens.css", "components.css"]
 }
 ```
 
-Other settings include `sidebar`, `locales`, `logo`, `favicon`, `footer`, `editUrl`, and `markdown.html`. Output must be a separate directory inside the project. Source directories cannot overlap output.
+The schema adds completion and validation in editors that support JSON Schema. Each stylesheet listed in `styles` must exist in the theme folder.
 
-## Icons
+## Site settings
 
-Interface icons use Lucide. Link icons accept a Simple Icons slug such as `github` or `discord`, a Lucide name such as `book-open`, or `custom:/my-icon.svg` for a public image. Unknown names fail with a useful error. Set `newTab: true` on a header link to open it in another tab.
+### Name, links, and metadata
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `title` | `"Documentation"` | Site name shown in the header and browser titles |
+| `site` | Unset | Public origin used for canonical URLs, the sitemap, and `robots.txt` |
+| `base` | `"/"` | URL path where the site is hosted, such as `/handbook/` |
+| `logo` | Book icon | Image URL for the header logo |
+| `favicon` | Unset | Image URL for the browser tab icon |
+| `links` | `[]` | Header links with `label`, `url`, and optional `icon` and `newTab` |
+| `footer` | Unset | Text shown below page content |
+| `editUrl` | Unset | Repository folder URL used to build an edit link for each page |
+
+Put local images in `public/` and use URLs such as `/logo.svg`.
+
+### Project folders
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `content` | `"docs"` | Markdown pages |
+| `output` | `"site"` | Generated site |
+| `theme` | `"theme"` | Custom stylesheets |
+| `components` | `"components"` | HTML component templates |
+| `public` | `"public"` | Images, fonts, downloads, and scripts |
+| `styles` | `[]` | Stylesheets to load from the theme folder, in order |
+
+Keep `output` separate from your source folders and inside the project directory.
+
+### Navigation, search, and languages
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `sidebar` | Built from folders | Custom page links and groups; see [Navigation](/guides/navigation/) |
+| `search` | Enabled | An options object or `false`; see [Search](/guides/search/) |
+| `language` | `"en"` | Language code for a single-language site |
+| `locales` | One locale from `language` | Language folders, labels, interface text, and direction; see [Localization](/guides/localization/) |
+| `clientNavigation` | `true` | Switch between pages without reloading the document |
+
+Search options are `limit` (default `10`, range `1–50`) and `threshold` (default `0.35`, range `0–1`).
+
+### Content and extensions
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `strictLinks` | Enabled | Fail the build for missing internal pages, assets, and heading fragments |
+| `markdown.html` | `false` | Allow raw HTML in Markdown pages |
+| `scripts` | `[]` | Public module-script URLs to load on the site |
+| `clientComponents` | `{}` | Registered React, Vue, Svelte, and browser module components |
+
+See [Content formats](/reference/content-formats/), [Custom components](/components/custom-components/), and [Framework components](/components/framework-components/) for examples.
+
+## Header links and icons
+
+```json title=miradocs.config.json
+{
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/your-name/your-project",
+      "icon": "github",
+      "newTab": true
+    },
+    {
+      "label": "Community",
+      "url": "https://example.com/community",
+      "icon": "custom:/icons/community.svg"
+    }
+  ]
+}
+```
+
+Use a Simple Icons slug such as `github`, a Lucide name such as `book-open`, or `custom:/path.svg` for your own image. Interface controls use Lucide icons.
 
 ## Commands
 
-| Command | Behavior |
+The generated project includes scripts for the usual tasks:
+
+| Command | What it does |
 | --- | --- |
-| `miradocs init [directory]` | Create a new documentation project |
-| `miradocs dev` | Build, watch, and live reload |
-| `miradocs build` | Build production output |
-| `miradocs serve` | Build and preview without watching |
+| `npm run dev` | Build, watch your files, and refresh the preview |
+| `npm run build` | Generate the production site |
+| `npm run preview` | Build and preview without watching |
 
-Use `--config path` to select a config and `--port number` to select a preview port. From this checkout, replace `miradocs` with `node bin/miradocs.js`.
+### Run the CLI directly
 
-## Validation and extensions
+For a project with miradocs installed, use `npx miradocs`:
 
-Set `strictLinks: false` to opt out of internal link and fragment checking. By default, missing pages and assets fail the build. Add `scripts` as an array of public module-script URLs to initialize custom interactive components. The `miradocs.schema.json` file provides editor completion and validation through a `$schema` reference.
+```sh
+npx miradocs build --config miradocs.config.json
+npx miradocs dev --port 8001
+npx miradocs serve --port 8001
+```
 
-## Client navigation
+`--config` selects a configuration file. `--port` changes the preview port from `8000`. Use `--help` for commands and `--version` for the installed version.
 
-`clientNavigation` defaults to true. Set it to false to use standard page loads. Custom scripts can listen for `miradocs:navigate` after a page is rendered. The event includes the destination in `event.detail.url`. Add `data-no-router` to a custom anchor to use normal browser navigation for that link.
+`npx miradocs init my-docs` creates a project from an existing installation. For a new project, start with [Installation](/getting-started/installation/).
 
-## Framework components
+### Client navigation hooks
 
-Register entries in `clientComponents` with a `src` module and a `framework` value of `react`, `vue`, `svelte`, or `module`. Set `load` to `visible`, `idle`, or `eager`. See [Framework components](/components/framework-components/) for complete source and Markdown examples.
+Custom scripts can listen for `miradocs:navigate` after a page has loaded. The destination URL is in `event.detail.url`. Add `data-no-router` to an anchor to use a normal page load for that link. See [Custom components](/components/custom-components/#add-javascript) for an initialization example.

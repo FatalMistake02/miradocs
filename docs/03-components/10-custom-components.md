@@ -42,7 +42,7 @@ Put CSS in a file under the theme folder and include it in the configuration's `
 }
 ```
 
-## Add behavior
+## Add JavaScript
 
 Put a JavaScript module in `public/` and list its URL in the configuration's `scripts` array. The module loads once. Initialize the component on the first page and after the `miradocs:navigate` event.
 

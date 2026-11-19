@@ -1,10 +1,12 @@
 ---
 title: Localization
-description: Give each language its own content, navigation, and interface text.
+description: Add languages and translate your site's interface.
 ---
-## Locale folders
+## Add a language
 
-```json
+Set `locales` in your configuration. Give each language a label and a content path:
+
+```json title=miradocs.config.json
 {
   "locales": {
     "en": { "label": "English", "path": "" },
@@ -13,21 +15,52 @@ description: Give each language its own content, navigation, and interface text.
 }
 ```
 
-The root locale reads `docs/` and Spanish reads `docs/es/`. The root locale excludes other language folders. Keep equivalent source routes in each language so the switcher can open the corresponding page. When a translation is missing, it opens that language's home page.
+An empty path uses `docs/`. The Spanish locale reads `docs/es/` and uses `/es/` in its URLs.
 
-## Interface text
+:::file-tree docs
+- index.md — English home page
+- guides/
+  - installation.md
+- es/
+  - index.md — Spanish home page
+  - guides/
+    - installation.md
+:::
 
-English, Spanish, and French interface dictionaries are included. Other languages fall back to English. Override any text through a locale's `ui` object. Set `dir: rtl` for right-to-left content. Search indexes are separated by locale.
+### Match translated pages
 
-```json
+Use the same relative filename in each language. In this example, the language switcher connects `/guides/installation/` with `/es/guides/installation/`.
+
+When a matching translation is missing, the switcher opens that language's home page. Each language has its own search index.
+
+## Translate the interface
+
+English, Spanish, and French interface text is included. Override individual labels in a locale's `ui` object. Other languages use English for labels you have not supplied.
+
+```json title=miradocs.config.json
 {
   "locales": {
     "de": {
-      "label": "Deutsch", "path": "",
-      "ui": { "search": "Dokumentation durchsuchen", "outline": "Auf dieser Seite" }
+      "label": "Deutsch",
+      "path": "",
+      "ui": {
+        "search": "Dokumentation durchsuchen",
+        "searchPlaceholder": "Suchen…",
+        "outline": "Auf dieser Seite",
+        "previous": "Zurück",
+        "next": "Weiter"
+      }
     }
   }
 }
 ```
 
-See `src/i18n.js` for the complete list of interface keys.
+Common keys include `search`, `searchPlaceholder`, `outline`, `menu`, `previous`, `next`, `copy`, and `copied`. The full list is in the installed package's `src/i18n.js`.
+
+### Right-to-left languages
+
+Set `"dir": "rtl"` on the locale. Use logical CSS properties such as `padding-inline-start` in your custom styles so they follow the reading direction.
+
+## Translate navigation
+
+Folders build a separate sidebar for each language. For a custom arrangement, add a `sidebar` array to the locale. It replaces the site's global sidebar for that language. See [Navigation](/guides/navigation/).

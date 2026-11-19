@@ -1,28 +1,53 @@
 ---
 title: Deployment
-description: Generate static files for your chosen host.
+description: Build your site and put it online.
 ---
-## Build and upload
+miradocs generates static HTML, CSS, and JavaScript. You can upload the output to a static host or serve it from your own web server.
+
+## Build and preview
+
+Run these commands in your project:
 
 ```sh
-npm ci
 npm run build
+npm run preview
 ```
 
-Upload the contents of `site/` to any static host. Configure the host to serve directory index files. No server runtime is required. Use its custom-error setting to serve `404.html` for missing pages.
+Check the preview before uploading the contents of `site/`.
 
-## Subpaths
+## Configure your host
 
-For a site mounted at `/handbook/`, set `base` to `/handbook/`. Navigation, assets, root-relative Markdown links, and images receive the prefix. The preview server also serves the configured path.
+Use these settings on a service that builds from your repository:
 
-## Metadata
+| Setting | Value |
+| --- | --- |
+| Install command | `npm ci` when you have a committed npm lockfile |
+| Build command | `npm run build` |
+| Output directory | `site` |
 
-Set `site` to the public origin, such as `https://docs.example.com`. Builds then include canonical URLs, a sitemap, and robots.txt. Use `favicon` for a public asset and `editUrl` for a repository folder URL.
+Use the equivalent install and build commands if you use another package manager. For a manual deployment, upload the files already generated in `site/`.
 
-## Build behavior
+Your host should serve `index.html` for directory URLs. Configure its custom 404 page to use `404.html`.
 
-Output is prepared in a temporary sibling directory and replaced only after the build succeeds. A failed build preserves the last output. Existing nonempty directories without a miradocs output marker are rejected. Public files cannot override generated assets, pages, or search indexes.
+### Deploy under a subpath
 
-## Hosting options
+If the site lives at `https://example.com/handbook/`, set `base`:
 
-Use the build command and output directory with a static hosting service, copy the output with your own deployment script, or serve it from a conventional web server. Package-manager scripts are conveniences; the CLI can be called directly with Node.js. The included GitHub Actions workflow checks the framework and builds documentation on supported operating systems.
+```json title=miradocs.config.json
+{
+  "site": "https://example.com",
+  "base": "/handbook/"
+}
+```
+
+Navigation, assets, and root-relative Markdown links receive the `/handbook/` prefix. The local preview uses the same path.
+
+### Set the site URL
+
+Set `site` to your public origin, such as `https://docs.example.com`. Builds then include canonical URLs, a sitemap, and `robots.txt`.
+
+## If a build fails
+
+Read the reported filename and error. Missing internal links, missing assets, duplicate page URLs, and invalid configuration stop the build. The last successful output is kept until a new build succeeds.
+
+Keep your source files outside `site/`; a successful build replaces its contents.

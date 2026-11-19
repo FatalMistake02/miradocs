@@ -1,21 +1,47 @@
 ---
 title: Search
-description: Search documentation locally with keyboard navigation and typo tolerance.
+description: Configure search results and choose which pages are included.
 ---
-## Open search
+Search works with your generated pages and does not need an external service. Each language has its own index.
 
-Use Ctrl K on Windows or Linux and Command K on Apple devices. The header displays the shortcut for the current platform. Arrow keys select results, Enter opens one, and Escape closes search and restores focus.
+## Use search
 
-## Index and ranking
+Open search from the header, or press **Ctrl K** on Windows and Linux or **Command K** on macOS. Use the arrow keys to select a result, Enter to open it, and Escape to close search.
 
-Each language has its own generated index. Search loads that index and the fuzzy search library when first opened. Titles and descriptions rank above body text. No external search service is required.
+Titles and descriptions carry more weight than body text when ranking results.
 
-## Configuration
+## Configure results
 
-```json
+Add search options to your configuration:
+
+```json title=miradocs.config.json
 {
-  "search": { "limit": 10, "threshold": 0.35 }
+  "search": {
+    "limit": 10,
+    "threshold": 0.35
+  }
 }
 ```
 
-A smaller threshold requires closer matches. Set `search: false` to disable search site-wide. Use page frontmatter `search: false` to exclude a page. Search text and error states can be translated through locale `ui` settings. The interface uses the shared theme tokens.
+`limit` sets the maximum number of results. A lower `threshold` requires a closer match; a higher value allows more variation in spelling.
+
+### Exclude a page
+
+Set `search: false` in the page's frontmatter:
+
+```yaml
+---
+title: Internal notes
+search: false
+---
+```
+
+### Disable search
+
+Set `"search": false` in `miradocs.config.json` to remove search from the site.
+
+## Customize search
+
+Search uses the shared [theme variables](/guides/theming/). For specific CSS changes, target `.search-dialog`, `.search-input-wrap`, or `.search-result` in your theme stylesheet.
+
+Translate the interface through a locale's `ui` settings. See [Localization](/guides/localization/).

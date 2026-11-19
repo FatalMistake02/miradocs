@@ -5,7 +5,7 @@ description: Display related pages or content in a grid.
 ## Example
 
 :::cards
-:::card Installation | /getting-started/quick-start/
+:::card Installation | /getting-started/installation/
 Install the dependencies and start the preview.
 :::
 :::card Theming | /guides/theming/
@@ -19,7 +19,7 @@ Use `cards` for the grid and `card` for each item. Separate a title from its opt
 
 ```md
 :::cards
-:::card Installation | /getting-started/quick-start/
+:::card Installation | /getting-started/installation/
 Install the dependencies and start the preview.
 :::
 :::card A card without a link

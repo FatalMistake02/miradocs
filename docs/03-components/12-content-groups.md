@@ -1,5 +1,5 @@
 ---
-title: Groups
+title: Content groups
 description: Scope CSS to any section of Markdown or nested components.
 ---
 ## Usage
@@ -10,7 +10,7 @@ A group adds a plain container around its content. Give it a class to style one 
 :::group {.setup-section}
 ## Installation
 
-Read the [setup guide](/getting-started/quick-start/).
+Read the [setup guide](/getting-started/installation/).
 
 :::note Requirements {.requirements-note}
 Install Node.js before continuing.

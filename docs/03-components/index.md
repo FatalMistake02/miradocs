@@ -4,10 +4,10 @@ description: Built-in components, usage examples, and customization.
 ---
 Components use fenced directives: an opening line such as `:::note Title`, Markdown content, and a closing `:::`. Components can be nested, except that a tab must be a direct child of a tabs group.
 
-Every component accepts instance classes: `:::note Title {.my-note}`. Put the matching CSS in your theme stylesheet. Use `.my-note` to style that instance, or `.my-note a` to style links inside it. See [Theming](/guides/theming/#style-one-instance) for examples across component types and [Groups](/components/groups/) for styling ordinary Markdown.
+Every component accepts instance classes: `:::note Title {.my-note}`. Put the matching CSS in your theme stylesheet. Use `.my-note` to style that instance, or `.my-note a` to style links inside it. See [Theming](/guides/theming/#style-one-instance) for examples across component types and [Groups](/components/content-groups/) for styling ordinary Markdown.
 
 :::cards
-:::card Groups | /components/groups/
+:::card Groups | /components/content-groups/
 Wrap any Markdown or components to style a particular section.
 :::
 :::card Tabs | /components/tabs/
@@ -22,7 +22,7 @@ Expandable content using native details elements.
 :::card Cards | /components/cards/
 Link to related pages in a responsive grid.
 :::
-:::card Action links | /components/action-links/
+:::card Action links | /components/buttons/
 Present a link as an action button.
 :::
 :::card Steps | /components/steps/

@@ -1,20 +1,12 @@
 ---
 title: Page examples
-description: Complete Markdown files for a landing page, guide, and reference page.
+description: Copy complete Markdown files for a small documentation site.
 ---
-## Run the example site
-
-The repository includes these files in `examples/basic/`. To preview them, run this from the repository root:
-
-```sh
-node bin/miradocs.js dev --config examples/basic/miradocs.config.json --port 8001
-```
-
-Open [localhost:8001](http://localhost:8001). To use the files in your own site, copy `examples/basic/docs/` into your configured content directory and replace the sample text.
+These three files work together as a small site. Copy them into your project's `docs/` folder, then replace the sample text and commands with your own.
 
 ## Landing page
 
-Save as `docs/index.md`. The landing layout omits the documentation sidebars. The links below match the guide and reference files shown later on this page.
+Save this as `docs/index.md`. Its links point to the guide and reference page below.
 
 ````md title=docs/index.md
 ---
@@ -41,7 +33,7 @@ Project settings and an example configuration file.
 
 ## Guide page
 
-Save as `docs/01-guides/01-installation.md`. The numbered folder creates a Guides group and the numbered filename controls its order.
+Save this as `docs/01-guides/01-installation.md`. The folder creates a Guides sidebar group; numbered prefixes set the default order.
 
 ````md title=docs/01-guides/01-installation.md
 ---
@@ -59,7 +51,7 @@ description: Install dependencies and run the project locally.
 Run these commands from the project root:
 
 ```sh
-npm ci
+npm install
 npm run dev
 ```
 
@@ -69,12 +61,12 @@ Use `npm run build` when you are ready to generate static files.
 
 ## Configure the site
 
-Continue with the [configuration reference](../02-reference/01-configuration.md).
+Continue with [Configuration](../02-reference/01-configuration.md).
 ````
 
 ## Reference page
 
-Save as `docs/02-reference/01-configuration.md`. This example combines a table, a JSON code block, and an optional disclosure.
+Save this as `docs/02-reference/01-configuration.md`.
 
 ````md title=docs/02-reference/01-configuration.md
 ---
@@ -107,6 +99,12 @@ Configured file paths resolve relative to the configuration file.
 [Return to installation](../01-guides/01-installation.md)
 ````
 
-## Adapt the examples
+## Preview the example site
 
-Change the frontmatter titles and descriptions, replace the commands and prose, and update any links when renaming files. Keep component directives outside code fences to render them. Put them inside code fences when documenting the syntax itself.
+These files are also included in the repository under `examples/basic/docs/`. From a repository checkout, preview them with:
+
+```sh
+node bin/miradocs.js dev --config examples/basic/miradocs.config.json --port 8001
+```
+
+Open [localhost:8001](http://localhost:8001). Update links when renaming files in your own copy.

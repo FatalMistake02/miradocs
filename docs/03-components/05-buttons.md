@@ -1,10 +1,10 @@
 ---
-title: Action links
+title: Buttons
 description: Style a navigation link as a button.
 ---
 ## Example
 
-:::button Installation | /getting-started/quick-start/
+:::button Installation | /getting-started/installation/
 :::
 
 ## Usage
@@ -12,7 +12,7 @@ description: Style a navigation link as a button.
 Provide the label and URL in the directive title, separated by ` | `. Keep the body empty.
 
 ```md
-:::button Installation | /getting-started/quick-start/
+:::button Installation | /getting-started/installation/
 :::
 ```
 
@@ -23,7 +23,7 @@ The component renders an anchor. Use it for navigation rather than submitting fo
 Give one button a class after its URL, then style that class in your theme stylesheet:
 
 ```md title=docs/index.md
-:::button Get started | /getting-started/quick-start/ {.hero-button}
+:::button Get started | /getting-started/installation/ {.hero-button}
 :::
 ```
 

@@ -1,41 +1,44 @@
 ---
 title: Project structure
-description: Keep content, theme overrides, and reusable components in separate folders.
+description: Where to put pages, styles, components, and public files.
 ---
-:::file-tree
-- miradocs.config.json
-- docs/
+The starter includes `docs/`, `theme/`, and a configuration file. Add the other folders when you need them.
+
+:::file-tree Project
+- docs/ — Markdown pages
   - index.md
   - 01-guides/
-    - 01-install.md
-- theme/
+    - 01-installation.md
+- theme/ — your styles
   - tokens.css
-  - custom.css
-- components/
-- public/
+  - components.css
+- components/ — reusable components
+- public/ — images, fonts, and downloads
+- miradocs.config.json
+- package.json
 - site/ — generated output
 :::
 
-## Files and URLs
+## Pages and URLs
 
-Numeric prefixes control ordering and are removed from URLs. `docs/01-guides/01-install.md` becomes `/guides/install/`. An `index.md` page uses its folder's URL. Frontmatter `title` controls its navigation label.
+Each Markdown file becomes a page. An `index.md` file uses its folder's URL. Numbered prefixes control the default order and are left out of URLs.
 
-## Page metadata
+| File | URL |
+| --- | --- |
+| `docs/index.md` | `/` |
+| `docs/01-guides/index.md` | `/guides/` |
+| `docs/01-guides/01-installation.md` | `/guides/installation/` |
 
-```yaml
----
-title: Installation
-description: Install and configure the project.
-order: 1
-sidebar: true
-search: true
-draft: false
-layout: docs
----
-```
+Set the page's `title` in frontmatter to choose its heading and sidebar label. See [Page metadata](/reference/page-metadata/) for the available fields, and [Navigation](/guides/navigation/) for sidebar ordering.
 
-Use `order` to override file order, `sidebar: false` to hide a page from navigation and pagination, and `search: false` to omit it from search. Drafts appear in development and are excluded from production builds. Use `layout: landing` for a page without sidebars.
+## Styles and components
 
-:::caution Output belongs to the generator
-Builds replace the generated output. miradocs only replaces an empty folder or an output folder carrying its marker file. Keep source files elsewhere.
-:::
+Put your CSS in `theme/` and list the files in the configuration's `styles` array. You can change shared variables or style one component. See [Theming](/guides/theming/).
+
+Use `components/` for [HTML templates](/components/custom-components/) and [framework components](/components/framework-components/).
+
+## Public files
+
+Files in `public/` are copied into the site's root. For example, `public/images/logo.svg` is available at `/images/logo.svg`.
+
+Keep source files out of `site/`. Builds replace that directory.

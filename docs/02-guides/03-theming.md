@@ -1,28 +1,76 @@
 ---
 title: Theming
-description: Override semantic tokens, then add CSS for more detailed changes.
+description: Change fonts, colors, layout, and individual components with CSS.
 ---
-## Shared layout, separate palettes
+Your styles live in `theme/`. Start with variables for site-wide changes, then use CSS selectors for the details.
 
-The default theme is neutral. Both color modes use the same layout. Put overrides in your theme folder and list the CSS files in `styles`. They load after the default stylesheet in the configured order.
+## Add your styles
 
-```css
+Create a stylesheet and list it in `miradocs.config.json`. Paths in `styles` are relative to the theme folder, and files load in the order listed, after the default CSS.
+
+```json title=miradocs.config.json
+{
+  "theme": "theme",
+  "styles": ["tokens.css", "components.css"]
+}
+```
+
+Keep your changes in these source files. The generated `site/` directory is replaced on each build.
+
+## Colors and layout
+
+Override variables in `theme/tokens.css`:
+
+```css title=theme/tokens.css
 :root {
-  --radius: 8px;
+  --radius: 10px;
   --sidebar-width: 248px;
-  --content-width: 780px;
+  --content-width: 820px;
+  --accent: #9c2472;
+}
+```
+
+### Light and dark themes
+
+Set shared layout values once in `:root`. Override colors for each theme as needed:
+
+```css title=theme/tokens.css
+:root {
+  --bg: #ffffff;
+  --text: #202020;
 }
 html[data-theme="dark"] {
   --bg: #141414;
   --text: #e8e8e8;
 }
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg: #141414;
+    --text: #e8e8e8;
+  }
+}
 ```
 
-For a custom system-dark palette, add the same color overrides under `@media (prefers-color-scheme: dark)` with `html:not([data-theme=light]):not([data-theme=dark])`. The explicit and system palettes are independent of layout.
+The media query applies your dark palette when the reader uses the system theme. If you only need the default palettes, leave these color overrides out.
 
-## Fonts
+### Header accent
 
-Set `--font` for the interface and article text, and `--mono` for code. Put these overrides in `theme/tokens.css`:
+Define a gradient with `--accent-gradient`. Set `--header-divider` to use it for the line under the header:
+
+```css title=theme/tokens.css
+:root {
+  --accent-gradient: linear-gradient(110deg, #ff0951b8, #f50983);
+  --header-divider: var(--accent-gradient);
+}
+```
+
+Use `--header-divider: var(--border)` for the default solid line.
+
+## Typography
+
+### Change fonts
+
+Set `--font` for the interface and article text, and `--mono` for code:
 
 ```css title=theme/tokens.css
 :root {
@@ -31,7 +79,9 @@ Set `--font` for the interface and article text, and `--mono` for code. Put thes
 }
 ```
 
-To use your own font, add its file to `public/fonts/` and load it from your theme stylesheet. This example uses a variable WOFF2 font:
+### Load your own font
+
+Put the font in `public/fonts/` and load it from your stylesheet. This example uses a variable WOFF2 font:
 
 ```css title=theme/tokens.css
 @font-face {
@@ -46,39 +96,26 @@ To use your own font, add its file to `public/fonts/` and load it from your them
 }
 ```
 
+### Header title
+
+The header title defaults to `22px` and regular weight (`400`). Change either value through your theme:
+
+```css title=theme/tokens.css
+:root {
+  --brand-font-size: 24px;
+  --brand-font-weight: 500;
+}
+```
+
 ## Component styles
 
-Edit your own stylesheets under `theme/`. List them in configuration so they load after the default CSS:
-
-```json title=miradocs.config.json
-{
-  "theme": "theme",
-  "styles": ["tokens.css", "components.css"]
-}
-```
-
-Target a component's class to change just that component, or set its variables locally:
-
-```css title=theme/components.css
-.tabs {
-  border-radius: 16px;
-}
-.callout {
-  padding: 20px 24px;
-}
-.file-tree {
-  --tree-row-height: 36px;
-  --tree-icon: var(--accent);
-}
-```
-
-Each [component page](/components/) lists its selectors and customization examples. For different markup, add a [custom component template](/components/custom-components/). Keep your changes in source files; `site/` is replaced on each build.
+A component's default class applies to every instance. For example, `.tabs` targets all tab groups. Add your own class to style just one.
 
 ### Style one instance
 
-Append `{.class-name}` to any component's opening line to give that instance a class. You can add more than one class, such as `{.install-tabs .wide}`. Classes work on built-in components, your HTML templates, and framework component containers.
+Append `{.class-name}` to the opening directive. You can use several classes, such as `{.install-tabs .wide}`.
 
-```md title=docs/index.md
+```md title=docs/example.md
 :::note Before you begin {.setup-note}
 Install the required tools.
 :::
@@ -109,17 +146,23 @@ Additional configuration.
 .project-files { --tree-row-height: 36px; }
 ```
 
-Each selector above affects only the named instance. A descendant selector such as `.install-tabs .tab-list` targets part of that instance. The component's default classes remain available alongside your own.
+Classes work on built-in components, custom HTML templates, and framework component containers. The default classes stay in place alongside your own.
+
+### Target part of a component
+
+Use a descendant selector to reach an element inside your instance. `.install-tabs .tab-list`, for example, changes the tab row inside that group. Each [component guide](/components/) lists its main selectors.
+
+For React, Vue, or Svelte components, style the mount container or pass CSS variables and props. Framework-scoped styles and shadow DOM keep their own styling boundaries.
 
 ### Style ordinary Markdown
 
-Wrap any Markdown in a [group](/components/groups/) to scope styles to its headings, paragraphs, links, images, tables, code blocks, or nested components:
+Wrap a section in a [content group](/components/content-groups/) to target its headings, paragraphs, links, images, tables, or code blocks:
 
 ```md
 :::group {.installation-section}
 ## Installation
 
-Read the [setup guide](/getting-started/quick-start/).
+Read the [Installation guide](/getting-started/installation/).
 :::
 ```
 
@@ -128,41 +171,17 @@ Read the [setup guide](/getting-started/quick-start/).
 .installation-section a { text-decoration-color: var(--accent); }
 ```
 
-For framework components, the instance class is attached to the mount container. Style its exposed elements or pass CSS variables and props; scoped framework styles and shadow DOM keep their own styling boundaries.
+## Theme variables
 
-## Semantic roles
-
-| Role | Tokens |
+| Area | Variables |
 | --- | --- |
 | Surfaces | `--bg`, `--surface`, `--surface-raised`, `--hover`, `--selected` |
 | Text | `--text`, `--muted`, `--accent`, `--accent-text` |
-| Structure | `--border`, `--radius`, `--panel-radius`, `--header-height` |
-| Layout | `--sidebar-width`, `--outline-width`, `--content-width` |
-| Type | `--font`, `--mono`, `--brand-font-weight`, `--brand-font-size` |
+| Borders and shape | `--border`, `--radius`, `--panel-radius` |
+| Layout | `--header-height`, `--sidebar-width`, `--outline-width`, `--content-width` |
+| Typography | `--font`, `--mono`, `--brand-font-weight`, `--brand-font-size` |
 | Code | `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, `--code-comment` |
 | Feedback | `--info`, `--warning`, `--danger` |
 | Motion | `--duration`, `--ease` |
 
-## Site identity
-
-Set `title`, `logo`, `favicon`, and optional `footer` in configuration. Asset paths refer to files in the public folder.
-
-The header title uses regular weight (`400`) and a `22px` font size by default. Override `--brand-font-weight` and `--brand-font-size` in your theme to change them:
-
-```css
-:root {
-  --brand-font-weight: 500;
-  --brand-font-size: 20px;
-}
-```
-
-## Header accent
-
-Set `--accent-gradient` to a CSS gradient and `--header-divider` to use it for the header border. Set `--header-divider: var(--border)` for a solid line.
-
-```css
-:root {
-  --accent-gradient: linear-gradient(110deg, #ff0951b8, #f50983);
-  --header-divider: var(--accent-gradient);
-}
-```
+Component-specific variables are listed on their component pages.

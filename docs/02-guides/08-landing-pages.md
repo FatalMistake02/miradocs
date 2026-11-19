@@ -1,20 +1,49 @@
 ---
 title: Landing pages
-description: Use the same content system for pages without documentation sidebars.
+description: Create a home page without documentation sidebars.
 ---
-## Page layout
+## Set the layout
 
-Add `layout: landing` to frontmatter. The header stays available, while navigation and the page outline are omitted. Use `sidebar: false` to exclude the page from documentation navigation.
+Add `layout: landing` to the page's frontmatter. Set `sidebar: false` to keep the landing page out of documentation navigation.
 
-```yaml
+```md title=docs/index.md
 ---
-title: Your project
-description: A concise explanation of what it does.
+title: My project
+description: What the project does and who it is for.
 layout: landing
 sidebar: false
 ---
+
+:::button Get started | /guides/installation/
+:::
+
+:::cards
+:::card Installation | /guides/installation/
+Set up the project and run it locally.
+:::
+:::card Configuration | /reference/configuration/
+Choose the settings for your project.
+:::
+:::
 ```
 
-## Content
+Replace the sample links with pages that exist in your project.
 
-Use ordinary Markdown, action links, card grids, and custom components. Landing pages get a wider content area and larger introductory type; all theme tokens still apply. The [home page](/) combines Markdown with a custom action-group template and theme CSS.
+## Add content
+
+Landing pages support the same Markdown and components as documentation pages. Use [buttons](/components/buttons/), [cards](/components/cards/), or your own components to guide readers to the next page.
+
+## Change the appearance
+
+Landing pages use the same theme variables, with a wider content area and a larger page title. Target `.landing-layout` in your theme CSS for changes limited to these pages:
+
+```css title=theme/custom.css
+.landing-layout .main {
+  max-width: 1100px;
+}
+.landing-layout h1 {
+  font-size: clamp(40px, 7vw, 72px);
+}
+```
+
+For a custom section within the page, add a class to a component or wrap the content in a [content group](/components/content-groups/).

@@ -5,7 +5,7 @@ layout: landing
 sidebar: false
 ---
 :::landing-actions
-:::button Get started | /getting-started/quick-start/ {.home-get-started}
+:::button Get started | /getting-started/installation/ {.home-get-started}
 :::
 
 [GitHub](https://github.com/FatalMistake02/miradocs)
