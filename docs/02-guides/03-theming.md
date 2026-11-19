@@ -76,22 +76,59 @@ Each [component page](/components/) lists its selectors and customization exampl
 
 ### Style one instance
 
-Append `{.class-name}` to a component's opening line to give that instance a class. You can add more than one class, such as `{.hero-button .wide}`.
+Append `{.class-name}` to any component's opening line to give that instance a class. You can add more than one class, such as `{.install-tabs .wide}`. Classes work on built-in components, your HTML templates, and framework component containers.
 
 ```md title=docs/index.md
-:::button Get started | /getting-started/quick-start/ {.hero-button}
+:::note Before you begin {.setup-note}
+Install the required tools.
+:::
+
+:::tabs Install {.install-tabs}
+:::tab npm
+Run `npm install`.
+:::
+:::tab pnpm
+Run `pnpm install`.
+:::
+:::
+
+:::details More options {.advanced-options}
+Additional configuration.
+:::
+
+:::file-tree Project {.project-files}
+- docs/
+  - index.md
 :::
 ```
 
 ```css title=theme/components.css
-.hero-button {
-  background: var(--accent-gradient);
-  color: white;
-  border: 0;
-}
+.setup-note { border-inline-start-width: 4px; }
+.install-tabs .tab-list { gap: 28px; }
+.advanced-options { --details-radius: 14px; }
+.project-files { --tree-row-height: 36px; }
 ```
 
-The same suffix works for tabs, callouts, file trees, custom templates, and framework component containers. Targeting `.action-button` styles every button; targeting `.hero-button` styles only instances with that class.
+Each selector above affects only the named instance. A descendant selector such as `.install-tabs .tab-list` targets part of that instance. The component's default classes remain available alongside your own.
+
+### Style ordinary Markdown
+
+Wrap any Markdown in a [group](/components/groups/) to scope styles to its headings, paragraphs, links, images, tables, code blocks, or nested components:
+
+```md
+:::group {.installation-section}
+## Installation
+
+Read the [setup guide](/getting-started/quick-start/).
+:::
+```
+
+```css title=theme/components.css
+.installation-section h2 { font-weight: 500; }
+.installation-section a { text-decoration-color: var(--accent); }
+```
+
+For framework components, the instance class is attached to the mount container. Style its exposed elements or pass CSS variables and props; scoped framework styles and shadow DOM keep their own styling boundaries.
 
 ## Semantic roles
 

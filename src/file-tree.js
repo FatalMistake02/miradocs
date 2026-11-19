@@ -1,4 +1,5 @@
-import { escape } from './utils.js';
+import { escape, localUrl, safeUrl } from './utils.js';
+import { fileTypeIcon } from './file-icons.js';
 
 function readList(tokens, start) {
   const nodes = [];
@@ -29,19 +30,24 @@ export function parseFileTree(source, md) {
   return result.nodes;
 }
 
-export function renderFileTree(meta, md, env) {
+export function renderFileTree(meta, md, env, base = '/') {
   let options = { title:meta.title, collapsed:false };
   if(meta.title.startsWith('{')) {
     try { options = JSON.parse(meta.title); } catch { throw Error('file-tree options must be valid JSON.'); }
     if(!options || Array.isArray(options) || typeof options !== 'object' || (options.title !== undefined && typeof options.title !== 'string') || (options.collapsed !== undefined && typeof options.collapsed !== 'boolean')) throw Error('file-tree accepts a title string and a collapsed boolean.');
   }
+  if (options.icons !== undefined && options.icons !== false && (!options.icons || Array.isArray(options.icons) || typeof options.icons !== 'object' || Object.values(options.icons).some(value=>typeof value !== 'string'))) throw Error('file-tree icons must be false or an object mapping filenames and extensions to image URLs.');
   const renderNodes = nodes => `<ul class="file-tree-list">${nodes.map(node => {
     const [name,...description] = node.label.split(/\s+[—–]\s+/);
     const plainName = md.parseInline(name,{})[0].children.filter(token=>['text','code_inline'].includes(token.type)).map(token=>token.content).join('');
     const folder = node.children.length > 0 || plainName.endsWith('/');
     let icon = folder ? 'folder' : /\.(?:svg|png|jpe?g|gif|webp|avif|ico)$/i.test(plainName) ? 'file-image' : /\.(?:jsx?|tsx?|vue|svelte|html|css|sh|py|rs|go)$/i.test(plainName) ? 'file-code' : /\.(?:json|ya?ml|toml)$/i.test(plainName) ? 'file-json' : 'file-text';
-    const row = `<span class="file-tree-chevron">${node.children.length ? env.icons['chevron-down'] : ''}</span><span class="file-tree-icon">${env.icons[icon]}${folder ? `<span class="file-tree-folder-open">${env.icons['folder-open']}</span>` : ''}</span><span class="file-tree-name">${md.renderInline(name)}</span>${description.length ? `<span class="file-tree-description">${md.renderInline(description.join(' — '))}</span>` : ''}`;
+    const type = !folder && options.icons !== false ? fileTypeIcon(plainName) : null;
+    const extension = '.'+plainName.split('.').at(-1).toLowerCase();
+    const custom = !folder && options.icons && (Object.hasOwn(options.icons,plainName) ? options.icons[plainName] : Object.hasOwn(options.icons,extension) ? options.icons[extension] : null);
+    const graphic = custom ? `<img class="file-type-image" src="${escape(localUrl(base,safeUrl(custom)))}" alt="" loading="lazy" decoding="async">` : type?.svg || env.icons[icon];
+    const row = `<span class="file-tree-chevron">${node.children.length ? env.icons['chevron-down'] : ''}</span><span class="file-tree-icon"${type && !custom ? ` data-file-type="${type.type}" style="--file-icon-color:${type.color}"` : ''}>${graphic}${folder ? `<span class="file-tree-folder-open">${env.icons['folder-open']}</span>` : ''}</span><span class="file-tree-name">${md.renderInline(name)}</span>${description.length ? `<span class="file-tree-description">${md.renderInline(description.join(' — '))}</span>` : ''}`;
     return `<li class="file-tree-node ${folder ? 'is-folder' : 'is-file'}">${node.children.length ? `<details class="file-tree-directory" ${options.collapsed ? '' : 'open'}><summary class="file-tree-row">${row}</summary>${renderNodes(node.children)}</details>` : `<div class="file-tree-row">${row}</div>`}</li>`;
   }).join('')}</ul>`;
-  return `<div class="file-tree" role="group" aria-label="${escape(options.title || env.ui.fileTree)}">${options.title ? `<div class="file-tree-title">${env.icons['folder-tree']}<span>${escape(options.title)}</span></div>` : ''}<div class="file-tree-content">${renderNodes(meta.nodes)}</div></div>\n`;
+  return `<div class="file-tree" role="group" aria-label="${escape(options.title || env.ui.fileTree)}">${options.title ? `<div class="file-tree-title"><span>${escape(options.title)}</span></div>` : ''}<div class="file-tree-content">${renderNodes(meta.nodes)}</div></div>\n`;
 }

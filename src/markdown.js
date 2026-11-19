@@ -50,7 +50,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     state.lineMax = oldMax; state.parentType = oldParent; state.line = next + 1;
     return true;
   }, { alt: ['paragraph', 'reference', 'blockquote', 'list'] });
-  md.renderer.rules.file_tree = (tokens,i,options,env) => addClasses(renderFileTree(tokens[i].meta,md,env),tokens[i].meta.classes);
+  md.renderer.rules.file_tree = (tokens,i,options,env) => addClasses(renderFileTree(tokens[i].meta,md,env,base),tokens[i].meta.classes);
 
   md.renderer.rules.fence = (tokens, i, options, env) => {
     const token = tokens[i], [language = '', ...rest] = token.info.trim().split(/\s+/);
@@ -76,8 +76,9 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
       return `<div class="tabs"><div class="tab-list" role="tablist" aria-label="${title || 'Content options'}">${tabs.map((tab, n) => `<button type="button" id="${tab.id}-tab" role="tab" aria-controls="${tab.id}" aria-selected="${n === 0}" tabindex="${n ? -1 : 0}">${escape(tab.title)}</button>`).join('')}</div>`;
     }
     if (kind === 'tab') return `<section class="tab-panel" role="tabpanel" id="${meta.id}" aria-labelledby="${meta.id}-tab" tabindex="0">`;
-    if (kind === 'details') return `<details class="details"><summary>${title}</summary><div>`;
+    if (kind === 'details') return `<details class="details"><summary><span class="details-title">${title}</span><span class="details-indicator">${env.icons['chevron-down'] || ''}</span></summary><div class="details-content">`;
     if (kind === 'steps') return '<div class="steps">';
+    if (kind === 'group') return '<div class="content-group">';
     if (kind === 'cards') return '<div class="cards">';
     if (kind === 'badge') return `<div class="badge">${title}`;
     if ((kind === 'card' || kind === 'button') && !components[kind]) {

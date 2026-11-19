@@ -11,14 +11,19 @@ description: Display files and folders from a nested Markdown list.
     - installation.md
 - components/
   - Counter.jsx
+  - App.vue
+  - App.svelte
 - public/
   - logo.svg
+- package.json
+- tsconfig.json
+- .gitignore
 - **miradocs.config.json** — Site settings
 :::
 
 ## Usage
 
-Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing slash identifies a folder even when it has no children. File extensions select the icon.
+Write a list inside `file-tree`. Indentation defines the hierarchy. A trailing slash identifies a folder even when it has no children. Filenames and extensions select recognizable language and tool icons. Specific names such as `package.json`, `tsconfig.json`, and `.gitignore` take priority over the extension. Unknown types use a generic file icon.
 
 Items keep the order you write them in. Place folder entries before file entries to show folders first.
 
@@ -30,8 +35,13 @@ Items keep the order you write them in. Place folder entries before file entries
     - installation.md
 - components/
   - Counter.jsx
+  - App.vue
+  - App.svelte
 - public/
   - logo.svg
+- package.json
+- tsconfig.json
+- .gitignore
 - **miradocs.config.json** — Site settings
 :::
 ```
@@ -60,11 +70,24 @@ Use JSON options to set a title and the initial folder state:
 
 ## Customize
 
+File-type icons use language and tool colors. Set `--tree-file-icon-color` to override all their colors, or target a type such as `[data-file-type="typescript"]`.
+
+Supply your own images for exact filenames or extensions in the tree options. Put local images in `public/`:
+
+```md
+:::file-tree {"title":"Project","icons":{".mira":"/icons/mira.svg","special.config":"/icons/config.svg"}}
+- index.mira
+- special.config
+:::
+```
+
+Use `"icons": false` to use the neutral Lucide file icons. Folder controls keep their Lucide icons in either mode.
+
 `--tree-indent` sets nesting depth, `--tree-row-height` controls row spacing, `--tree-guide` colors connector lines, and `--tree-icon` colors the icons. Other colors use the shared theme tokens.
 
 ```css
 .file-tree {
-  --tree-indent: 36px;
+  --tree-indent: 20px;
   --tree-row-height: 36px;
   --tree-guide: var(--border);
   --tree-icon: var(--muted);

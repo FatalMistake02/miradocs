@@ -8,6 +8,10 @@ description: Show optional content in an expandable section.
 The build writes HTML pages, styles, scripts, search indexes, and optional sitemap metadata into the output directory.
 :::
 
+:::details Can I change the appearance?
+Add a class to this instance and style it in your theme CSS. Its content supports Markdown, including [links](/guides/theming/), lists, and code blocks.
+:::
+
 ## Usage
 
 The directive title becomes the summary. The body can contain paragraphs, lists, code, and other components.
@@ -22,12 +26,24 @@ Disclosures use native `details` and `summary` elements. They start closed and w
 
 ## Customize
 
-Target `.details`, `.details summary`, and the open attribute.
+Set the disclosure's variables in your theme CSS. Use `.details` for all disclosures, or add a class to target one:
+
+```md
+:::details More information {.extra-info}
+Additional content goes here.
+:::
+```
 
 ```css
-.details { border-radius: 12px; background: var(--surface); }
-.details summary { padding: 18px 22px; }
-.details[open] summary { color: var(--accent); }
-.details > div { padding: 4px 22px 16px; }
+.extra-info {
+  --details-radius: 12px;
+  --details-padding: 20px;
+  --details-bg: var(--surface);
+  --details-header-hover: var(--hover);
+}
+.extra-info .details-title { font-weight: 500; }
+.extra-info .details-content { font-size: 14px; }
 ```
+
+The main selectors are `.details`, `.details-title`, `.details-indicator`, and `.details-content`. The `[open]` attribute identifies the expanded state.
 

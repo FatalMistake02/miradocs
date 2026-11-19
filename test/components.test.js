@@ -9,6 +9,7 @@ import {createMarkdown} from '../src/markdown.js';
 import {createStarter} from '../src/starter.js';
 import {english} from '../src/i18n.js';
 import {icon} from '../src/icons.js';
+import {fileTypeIcon} from '../src/file-icons.js';
 
 const workspace=fileURLToPath(new URL('../',import.meta.url));
 test('instance classes target one component and preserve its content and destination',()=>{
@@ -28,8 +29,19 @@ test('instance classes target one component and preserve its content and destina
 test('file tree renders native folder disclosures, extension icons and descriptions',async()=>{
  const icons={};for(const key of ['folder','folder-open','folder-tree','file-code','file-json','file-text','chevron-down'])icons[key]=await icon(key);
  const render=createMarkdown({});const result=render(':::file-tree {"title":"Project","collapsed":true}\n- docs/\n  - index.md — Home page\n- Counter.jsx\n- config.json\n:::',{ui:english,icons});
- assert.match(result.content,/class="file-tree-directory" >/);assert.match(result.content,/lucide-folder/);assert.match(result.content,/lucide-file-code/);assert.match(result.content,/lucide-file-json/);assert.match(result.content,/file-tree-description/);assert.match(result.content,/Home page/);
+ assert.match(result.content,/class="file-tree-directory" >/);assert.match(result.content,/lucide-folder/);assert.match(result.content,/data-file-type="react"/);assert.match(result.content,/data-file-type="json"/);assert.match(result.content,/file-tree-description/);assert.match(result.content,/Home page/);assert.doesNotMatch(result.content,/lucide-folder-tree/);
  assert.throws(()=>render(':::file-tree\nNot a list\n:::',{ui:english,icons}),/nested Markdown list/);
+});
+
+test('file icons distinguish languages, named config files, custom mappings and fallbacks',()=>{
+ for(const [file,type] of [['index.ts','typescript'],['main.js','javascript'],['Counter.tsx','react'],['App.vue','vuedotjs'],['App.svelte','svelte'],['package.json','npm'],['pnpm-lock.yaml','pnpm'],['tsconfig.build.json','typescript'],['.gitignore','git'],['.env.local','dotenv'],['Dockerfile','docker']])assert.equal(fileTypeIcon(file).type,type);
+ assert.equal(fileTypeIcon('unknown.xyz'),null);
+ assert.equal(fileTypeIcon('constructor'),null);assert.equal(fileTypeIcon('__proto__'),null);
+ const render=createMarkdown({},{base:'/manual/'}),env={ui:english,icons:{'file-text':'<svg class="fallback"></svg>'}};
+ const custom=render(':::file-tree {"icons":{".mira":"/icons/mira.svg"}}\n- index.mira\n- unknown.xyz\n:::',env).content;
+ assert.match(custom,/src="\/manual\/icons\/mira.svg"/);assert.match(custom,/class="fallback"/);
+ const plain=render(':::file-tree {"icons":false}\n- index.js\n:::',env).content;assert.doesNotMatch(plain,/data-file-type/);
+ assert.throws(()=>render(':::file-tree {"icons":{".js":"javascript:alert(1)"}}\n- index.js\n:::',env),/URL/i);
 });
 
 test('registered React, Vue, Svelte and module components bundle with props and page CSS',async t=>{
