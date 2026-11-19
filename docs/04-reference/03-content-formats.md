@@ -27,6 +27,10 @@ miradocs supports CommonMark syntax and these additions:
 
 Learn the basics with the [CommonMark tutorial](https://commonmark.org/help/tutorial/). The [Markdown Guide](https://www.markdownguide.org/extended-syntax/) covers the extended syntax. For complete page files, see [Page examples](/guides/page-examples/).
 
+## Component options
+
+Component options use a compact object syntax with optional quotes. See [Component options](/components/#component-options) for examples.
+
 ## Page metadata
 
 Put YAML frontmatter at the start of a page:

@@ -48,10 +48,10 @@ Add a description after ` — `. Names support inline code, emphasis, and links.
 
 ### Start with folders closed
 
-Use JSON options to set a title and close folders initially:
+Use an options object to set a title and close folders initially:
 
 ```md
-:::file-tree {"title":"Project","collapsed":true}
+:::file-tree { title: Project, collapsed: true }
 - docs/
   - index.md
 - theme/
@@ -59,7 +59,7 @@ Use JSON options to set a title and close folders initially:
 :::
 ```
 
-:::file-tree {"title":"Project","collapsed":true}
+:::file-tree { title: Project, collapsed: true }
 - docs/
   - index.md
 - theme/
@@ -75,13 +75,13 @@ Filenames and extensions select language and tool icons. Names such as `package.
 Map an exact filename or extension to your own image. Put local images in `public/`:
 
 ```md
-:::file-tree {"title":"Project","icons":{".mira":"/icons/mira.svg","special.config":"/icons/config.svg"}}
+:::file-tree { title: Project, icons: { .mira: /icons/mira.svg, special.config: /icons/config.svg } }
 - index.mira
 - special.config
 :::
 ```
 
-Set `"icons": false` to use neutral Lucide file icons instead.
+Set `icons: false` to use neutral Lucide file icons instead.
 
 ### Icon colors
 

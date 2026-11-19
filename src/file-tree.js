@@ -1,5 +1,6 @@
 import { escape, localUrl, safeUrl } from './utils.js';
 import { fileTypeIcon } from './file-icons.js';
+import { parseComponentOptions } from './component-options.js';
 
 function readList(tokens, start) {
   const nodes = [];
@@ -33,7 +34,7 @@ export function parseFileTree(source, md) {
 export function renderFileTree(meta, md, env, base = '/') {
   let options = { title:meta.title, collapsed:false };
   if(meta.title.startsWith('{')) {
-    try { options = JSON.parse(meta.title); } catch { throw Error('file-tree options must be valid JSON.'); }
+    options = parseComponentOptions(meta.title, 'file-tree');
     if(!options || Array.isArray(options) || typeof options !== 'object' || (options.title !== undefined && typeof options.title !== 'string') || (options.collapsed !== undefined && typeof options.collapsed !== 'boolean')) throw Error('file-tree accepts a title string and a collapsed boolean.');
   }
   if (options.icons !== undefined && options.icons !== false && (!options.icons || Array.isArray(options.icons) || typeof options.icons !== 'object' || Object.values(options.icons).some(value=>typeof value !== 'string'))) throw Error('file-tree icons must be false or an object mapping filenames and extensions to image URLs.');

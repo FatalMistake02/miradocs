@@ -5,6 +5,7 @@ import hljs from 'highlight.js';
 import { escape, slug, localUrl } from './utils.js';
 import { parseFileTree, renderFileTree } from './file-tree.js';
 import { renderList } from './list.js';
+import { parseComponentOptions } from './component-options.js';
 
 function addClasses(html, classes = []) {
   if (!classes.length) return html;
@@ -63,9 +64,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
   md.renderer.rules.component_open = (tokens, i, options, env) => {
     const meta = tokens[i].meta, title = escape(meta.title), kind = meta.name;
     if(Object.hasOwn(clientComponents,kind)) {
-      let props;
-      try{props=JSON.parse(meta.title || '{}');}catch{throw Error(`${kind}: component props must be a JSON object.`);}
-      if(!props || Array.isArray(props) || typeof props !== 'object')throw Error(`${kind}: component props must be a JSON object.`);
+      const props = parseComponentOptions(meta.title || '{}', kind);
       const component=clientComponents[kind];env.usedComponents?.add(kind);
       return `<div class="client-component" data-component="${kind}" data-component-src="${escape(component.url)}" data-component-load="${component.load || 'visible'}" data-component-props="${escape(JSON.stringify(props))}">`;
     }

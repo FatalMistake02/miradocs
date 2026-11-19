@@ -6,7 +6,7 @@ Use a list to group resources, options, or reference entries. Add search when re
 
 ## Example
 
-:::list {"title":"Guides","search":true,"columns":2,"placeholder":"Find a guide…"} {.guide-list}
+:::list { title: Guides, search: true, columns: 2, placeholder: Find a guide… } {.guide-list}
 - [Installation](/getting-started/installation/)  
   Create a project and start the local preview.
 - [Writing content](/guides/writing-content/)  
@@ -39,10 +39,10 @@ Use `1.` instead of `-` for a numbered list. Rows can contain links, emphasis, c
 
 ## Add search
 
-Pass a JSON object with `"search": true`:
+Pass an options object with `search: true`:
 
 ```md
-:::list {"title":"Guides","search":true,"columns":2,"placeholder":"Find a guide…"} {.guide-list}
+:::list { title: Guides, search: true, columns: 2, placeholder: Find a guide… } {.guide-list}
 - [Installation](/getting-started/installation/)  
   Create a project and start the local preview.
 - [Writing content](/guides/writing-content/)  
@@ -61,7 +61,7 @@ The search field appears on the right of the list header. Search matches words a
 Set `columns` to the number of columns you want, from `1` to `6`. Entries fill across each row in the order you write them. The list uses fewer columns when space is limited.
 
 ```md
-:::list {"title":"Resources","columns":2}
+:::list { title: Resources, columns: 2 }
 - Installation
 - Configuration
 - Theming

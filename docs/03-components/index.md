@@ -16,6 +16,30 @@ Keep your configuration file in the project root.
 
 Components can contain Markdown and other components. A `tab` must be directly inside a `tabs` group.
 
+## Component options
+
+Components with settings accept an object after the directive name. Keys and simple text values do not need quotes:
+
+```md
+:::list { title: Guides, search: true, columns: 2 }
+- Installation
+- Theming
+:::
+```
+
+Separate options with commas and put a space after each colon. Use `true` and `false` for booleans, numbers for numeric settings, and brackets for arrays. Objects can contain other objects.
+
+Quote text containing commas, braces, brackets, or a colon followed by a space. Also quote text such as `"true"`, `"null"`, or `"123"` when you want a string:
+
+```md
+:::list { title: "Setup: Windows, macOS, and Linux", search: true }
+- Installation
+- Configuration
+:::
+```
+
+Single or double quotes work, and a trailing comma is allowed. Existing JSON options still work. The same syntax is used for [list options](/components/lists/#options), [file-tree options](/components/file-trees/#start-with-folders-closed), and [framework component props](/components/framework-components/#use-it-in-markdown).
+
 ## Built-in components
 
 :::cards

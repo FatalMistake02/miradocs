@@ -24,14 +24,14 @@ Use a local source file or an installed package export for `src`. Choose `react`
 
 ### Use it in Markdown
 
-Pass props as a JSON object after the directive name:
+Pass props as an options object after the directive name. Keys and simple text values do not need quotes:
 
 ```md title=docs/example.md
 ---
 title: Counter example
 ---
 
-:::counter {"initial":2} {.demo-counter}
+:::counter { initial: 2 } {.demo-counter}
 Interactive counter.
 :::
 ```
@@ -83,7 +83,7 @@ export default function Counter({ initial = 0 }) {
 }
 ```
 
-:::react-counter {"initial":2}
+:::react-counter { initial: 2 }
 Interactive React counter.
 :::
 
@@ -135,7 +135,7 @@ const count = ref(props.initial);
 </template>
 ```
 
-:::vue-counter {"initial":3}
+:::vue-counter { initial: 3 }
 Interactive Vue counter.
 :::
 
@@ -184,7 +184,7 @@ Set `framework` to `"svelte"` and `src` to `"./components/Counter.svelte"`.
 </div>
 ```
 
-:::svelte-counter {"initial":4}
+:::svelte-counter { initial: 4 }
 Interactive Svelte counter.
 :::
 
@@ -267,7 +267,7 @@ export function mount(element, { initial = 0 }) {
 }
 ```
 
-:::web-counter {"initial":1}
+:::web-counter { initial: 1 }
 Interactive web component.
 :::
 

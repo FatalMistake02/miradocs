@@ -79,6 +79,8 @@ Set `--font` for the interface and article text, and `--mono` for code:
 }
 ```
 
+Use `--sidebar-font-size`, `--sidebar-group-font-size`, and `--outline-font-size` to change the navigation and page outline text sizes.
+
 ### Load your own font
 
 Put the font in `public/fonts/` and load it from your stylesheet. This example uses a variable WOFF2 font:

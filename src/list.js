@@ -1,13 +1,12 @@
 import { escape } from './utils.js';
+import { parseComponentOptions } from './component-options.js';
 
 export function renderList(tokens, index, env) {
   const title = tokens[index].meta.title;
   let options = { title };
   if (title.startsWith('{')) {
-    try { options = JSON.parse(title); }
-    catch { throw Error('list: options must be a JSON object.'); }
+    options = parseComponentOptions(title, 'list');
   }
-  if (!options || Array.isArray(options) || typeof options !== 'object') throw Error('list: options must be a JSON object.');
   for (const [key, value] of Object.entries(options)) {
     if (key === 'columns') {
       if (!Number.isInteger(value) || value < 1 || value > 6) throw Error('list: columns must be an integer from 1 to 6.');

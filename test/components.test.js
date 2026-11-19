@@ -56,7 +56,7 @@ test('registered React, Vue, Svelte and module components bundle with props and 
  for(const name of Object.keys(clientComponents))assert.match(html,new RegExp(`data-component="${name}"`));
  assert.match(html,/data-component-props="\{&quot;initial&quot;:3\}"/);assert.match(html,/data-miradocs-component-style/);assert.doesNotMatch(plain,/data-miradocs-component-style/);
  const files=await fs.readdir(path.join(root,'site/assets/components'));assert(files.some(file=>file.endsWith('.css')));assert(files.filter(file=>file.endsWith('.js')).length>=4);
- await fs.writeFile(path.join(root,'docs/index.md'),':::react invalid props\nFallback\n:::');await assert.rejects(build(path.join(root,'miradocs.config.json')),/JSON object/);
+ await fs.writeFile(path.join(root,'docs/index.md'),':::react invalid props\nFallback\n:::');await assert.rejects(build(path.join(root,'miradocs.config.json')),/options must be an object/);
 });
 
 test('starter generates only project files and protects existing directories',async t=>{
