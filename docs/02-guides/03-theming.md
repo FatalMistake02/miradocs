@@ -187,7 +187,7 @@ Read the [Installation guide](/getting-started/installation/).
 | Text | `--text`, `--muted`, `--accent`, `--accent-text` |
 | Borders and shape | `--border`, `--radius`, `--panel-radius` |
 | Layout | `--header-height`, `--sidebar-width`, `--outline-width`, `--content-width` |
-| Typography | `--font`, `--mono`, `--brand-font-weight`, `--brand-font-size` |
+| Typography | `--font`, `--mono`, `--brand-font-weight`, `--brand-font-size`, `--sidebar-font-size`, `--sidebar-group-font-size`, `--outline-font-size` |
 | Code | `--code-bg`, `--code-text`, `--code-keyword`, `--code-string`, `--code-number`, `--code-comment` |
 | Feedback | `--info`, `--warning`, `--danger` |
 | Motion | `--duration`, `--ease` |

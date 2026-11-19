@@ -28,16 +28,17 @@ ${config.favicon ? `<link rel="icon" href="${e(localUrl(base, config.favicon))}"
 <link rel="stylesheet" href="${base}assets/style.css">${styles}</head>
 <body data-base="${e(base)}"><a class="skip-link" href="#main">${e(ui.skip)}</a>
 <header class="topbar"><a class="brand" href="${home}">${config.logo ? `<img class="logo" src="${e(localUrl(base, config.logo))}" alt="">` : icons['book-open']}<span>${e(siteName)}</span></a>
-<div class="top-actions"><nav class="header-links" aria-label="Links">${links}</nav>${languages}
+<div class="top-actions"><nav class="header-links" aria-label="${e(ui.links)}">${links}</nav>
 ${config.search !== false ? `<button class="search-trigger" type="button" aria-label="${e(ui.search)}" aria-haspopup="dialog">${icons.search}<span>${e(ui.search)}</span><kbd>Ctrl K</kbd></button>` : ''}
 <button class="theme-toggle icon-button" type="button" aria-label="${e(ui.theme)}" title="${e(ui.theme)}"><span data-theme-icon="light">${icons.sun}</span><span data-theme-icon="dark">${icons.moon}</span></button>
+${languages}
 <button class="menu-toggle icon-button" type="button" aria-label="${e(ui.menu)}" aria-expanded="false" aria-controls="sidebar">${icons.menu}</button></div></header>
-<div class="layout ${landing ? 'landing-layout' : ''}">${!landing ? `<aside class="sidebar" id="sidebar"><div class="sidebar-inner"><nav aria-label="${e(ui.documentation)}">${navigationHtml(navigation, page.url, icons['chevron-down'])}</nav><nav class="mobile-header-links" aria-label="Links">${links}</nav></div></aside>` : ''}
+<div class="layout ${landing ? 'landing-layout' : ''}">${!landing ? `<aside class="sidebar" id="sidebar"><div class="sidebar-inner"><nav aria-label="${e(ui.documentation)}">${navigationHtml(navigation, page.url, icons['chevron-down'])}</nav><nav class="mobile-header-links" aria-label="${e(ui.links)}">${links}</nav></div></aside>` : ''}
 <main id="main" class="main" tabindex="-1">
 <h1>${e(page.title)}</h1>${page.description ? `<p class="lede">${e(page.description)}</p>` : ''}${toc ? `<details class="mobile-toc"><summary>${e(ui.outline)}</summary>${toc}</details>` : ''}
 <article class="article">${page.content}</article>
 ${config.editUrl && !notFound ? `<a class="edit-link" href="${e(config.editUrl.replace(/\/$/, '') + '/' + page.rel.split('/').map(encodeURIComponent).join('/'))}">${icons['square-pen']}${e(ui.edit)}</a>` : ''}
-${!notFound && !landing ? `<nav class="pagination" aria-label="Pagination">${pager(previous, ui.previous, icons['arrow-left'], 'previous')}${pager(next, ui.next, icons['arrow-right'], 'next')}</nav>` : ''}
+${!notFound && !landing ? `<nav class="pagination" aria-label="${e(ui.pagination)}">${pager(previous, ui.previous, icons['arrow-left'], 'previous')}${pager(next, ui.next, icons['arrow-right'], 'next')}</nav>` : ''}
 ${config.footer ? `<footer>${e(config.footer)}</footer>` : ''}</main>
 ${!landing ? `<aside class="toc" aria-label="${e(ui.outline)}"><div class="toc-inner">${toc ? `<div class="toc-title">${e(ui.outline)}</div>${toc}` : ''}</div></aside>` : ''}</div>
 ${config.search !== false ? `<dialog class="search-dialog" aria-label="${e(ui.search)}"><div class="search-box"><div class="search-input-wrap">${icons.search}<input type="search" placeholder="${e(ui.searchPlaceholder)}" aria-label="${e(ui.search)}" autocomplete="off" aria-controls="search-results"><button class="search-clear icon-button" aria-label="${e(ui.searchClear)}" type="button" hidden>${icons.x}</button><button class="search-close" aria-label="${e(ui.close)}" type="button"><kbd>Esc</kbd></button></div><div class="search-status sr-only" role="status" aria-live="polite"></div><div class="search-results-label">${e(ui.searchSuggested)}</div><div class="search-results" id="search-results"></div><div class="search-footer"><span><kbd>↑</kbd><kbd>↓</kbd> ${e(ui.searchNavigate)}</span><span><kbd>↵</kbd> ${e(ui.searchSelect)}</span></div></div><template id="search-document-icon">${icons['file-text']}</template><template id="search-return-icon">${icons['corner-down-left']}</template></dialog>` : ''}

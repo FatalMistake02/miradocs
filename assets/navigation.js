@@ -63,7 +63,7 @@ export function enableNavigation(initializePage) {
       document.querySelector('dialog[open]')?.close();
       document.dispatchEvent(new CustomEvent('miradocs:before-navigate'));
       document.body.classList.remove('menu-open');
-      for (const selector of ['.topbar', '.layout', '.search-dialog', '#miradocs-data']) {
+      for (const selector of ['.skip-link', '.topbar', '.layout', '.search-dialog', '#miradocs-data']) {
         const current = document.querySelector(selector), next = page.querySelector(selector);
         if (current && next) current.replaceWith(document.importNode(next, true));
         else if (current) current.remove();

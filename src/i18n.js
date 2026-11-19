@@ -1,4 +1,7 @@
+import { localeMessages } from './locale-messages.js';
+
 export const english = {
+  links:'Links',pagination:'Pagination',
   listSearch:'Search this list…',listEmpty:'No matching items.',listResults:'{visible} of {total} items',
   fileTree:'File structure',componentError:'This component could not load.',
   close:'Close', linkToSection:'Link to section', searchResults:'{count} results', themeSwitch:'{current} theme. Switch to {next}.', searchClear:'Clear search',searchSuggested:'Suggested pages',searchResultsLabel:'Results',
@@ -12,5 +15,5 @@ export function messages(locale, options) {
   const language = locale.split('-')[0];
   const lists = { es: { listSearch:'Buscar en esta lista…',listEmpty:'No hay elementos coincidentes.',listResults:'{visible} de {total} elementos' }, fr: { listSearch:'Rechercher dans cette liste…',listEmpty:'Aucun élément correspondant.',listResults:'{visible} éléments sur {total}' } };
   const additions = { es:{themeSwitch:'Tema {current}. Cambiar a {next}.',searchClear:'Borrar búsqueda',searchSuggested:'Páginas sugeridas',searchResultsLabel:'Resultados',close:'Cerrar',linkToSection:'Enlace a la sección',searchResults:'{count} resultados'}, fr:{themeSwitch:'Thème {current}. Passer à {next}.',searchClear:'Effacer la recherche',searchSuggested:'Pages suggérées',searchResultsLabel:'Résultats',close:'Fermer',linkToSection:'Lien vers la section',searchResults:'{count} résultats',copyError:'Impossible de copier',notFoundText:'Cette page a été déplacée ou son adresse est incorrecte.',note:'Note',tip:'Conseil',caution:'Attention',danger:'Danger'} };
-  return { ...english, ...translations[language], ...additions[language], ...lists[language], ...options.ui };
+  return { ...english, ...translations[language], ...additions[language], ...lists[language], ...localeMessages[language], ...options.ui };
 }

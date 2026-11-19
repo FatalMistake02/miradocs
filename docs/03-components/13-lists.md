@@ -71,6 +71,28 @@ Set `columns` to the number of columns you want, from `1` to `6`. Entries fill a
 
 Columns also work with numbered lists and with search. Filtering moves matching entries together without leaving empty spaces.
 
+### Dividers and alignment
+
+Set `columnDividers: false` to hide the vertical lines. Use `align` to choose an alignment for each column:
+
+:::list { title: Resources, columns: 2, columnDividers: false, align: [start, end] } {.resource-list}
+- Installation
+- Configuration
+- Theming
+- Deployment
+:::
+
+```md
+:::list { title: Resources, columns: 2, columnDividers: false, align: [start, end] }
+- Installation
+- Configuration
+- Theming
+- Deployment
+:::
+```
+
+Alignments are `start`, `center`, `end`, `left`, and `right`. `start` and `end` follow the reading direction. A single value such as `align: center` applies to every column. Missing values use `start`. When the list filters or uses fewer columns, alignment follows the visible column positions.
+
 ## Options
 
 | Option | Purpose | Default |
@@ -78,6 +100,8 @@ Columns also work with numbered lists and with search. Filtering moves matching 
 | `title` | Heading above the rows | No heading |
 | `search` | Show a search field | `false` |
 | `columns` | Maximum number of columns, from `1` to `6` | `1` |
+| `columnDividers` | Show vertical lines between columns | `true` |
+| `align` | One alignment, or an array of alignments by column | `start` |
 | `placeholder` | Search field text and accessible label | “Search this list…” |
 | `empty` | Message when no rows match | “No matching items.” |
 
@@ -95,6 +119,7 @@ Target one list with its instance class:
   --list-padding: 20px;
   --list-column-min-width: 220px;
   --list-search-width: 220px;
+  --list-column-divider: transparent;
 }
 .guide-list .list-title { font-size: 16px; }
 .guide-list .list-content a { text-decoration-color: var(--accent); }

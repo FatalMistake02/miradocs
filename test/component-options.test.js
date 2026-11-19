@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 import { parseComponentOptions } from '../src/component-options.js';
 import { createMarkdown } from '../src/markdown.js';
-import { english } from '../src/i18n.js';
+import { english, messages } from '../src/i18n.js';
+import { localeMessages } from '../src/locale-messages.js';
 
 test('component options accept bare keys and text, quoted punctuation, nested values and trailing commas', () => {
   const source = `{ title: Project guides, search: true, columns: 2, placeholder: 'Find: a guide', empty: "Nothing, yet", tags: [one, two], options: { initial: 3, enabled: false, value: null }, }`;
@@ -40,4 +41,16 @@ test('all option-bearing components use the shared syntax and retain instance cl
   assert.equal(doc.querySelector('.project-tree img').getAttribute('src'), '/manual/icons/mira.svg');
   assert.deepEqual(JSON.parse(doc.querySelector('.demo-counter').dataset.componentProps), { initial: 2, label: 'Click me', tags: ['one', 'two'], options: { enabled: true } });
   dom.window.close();
+});
+
+test('new interface dictionaries cover every message and resolve regional locale codes', () => {
+  for (const language of ['de', 'pt', 'ja', 'zh']) {
+    assert.deepEqual(Object.keys(localeMessages[language]).sort(), Object.keys(english).sort(), language);
+    for (const key of Object.keys(english)) {
+      assert.equal(typeof localeMessages[language][key], 'string');
+      assert.deepEqual([...localeMessages[language][key].matchAll(/\{\w+\}/g)].map(match => match[0]).sort(), [...english[key].matchAll(/\{\w+\}/g)].map(match => match[0]).sort(), `${language}.${key}`);
+    }
+  }
+  assert.equal(messages('pt-BR', {}).search, localeMessages.pt.search);
+  assert.equal(messages('zh-CN', {}).search, localeMessages.zh.search);
 });

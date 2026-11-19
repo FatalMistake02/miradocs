@@ -40,6 +40,14 @@ test('custom sidebar, base paths, source links, public assets, metadata and draf
   await build(f.configPath,{drafts:true});assert.equal(JSON.parse(await f.read('search.json')).length,3);
 });
 
+test('search sections use translated custom navigation labels',async t=>{
+  const f=await fixture(t,{locales:{en:{label:'English',path:''},fr:{label:'Français',path:'fr',sidebar:[{label:'Composants',items:[{label:'Exemples',items:[{page:'components/tabs'}]}]}]}}},{'docs/index.md':'---\ntitle: Home\n---\nHome','docs/fr/03-components/tabs.md':'---\ntitle: Onglets\n---\nContenu'});
+  await build(f.configPath);
+  const index=JSON.parse(await f.read('search-fr.json'));
+  assert.equal(index[0].section,'Composants / Exemples');
+  assert.equal(index[0].url,'/fr/components/tabs/');
+});
+
 test('failed builds preserve last output and reject unsafe output replacement',async t=>{
   const f=await fixture(t,{}, {'docs/index.md':'---\ntitle: Good\n---\nGood content'});
   await build(f.configPath);const previous=await f.read('index.html');

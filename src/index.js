@@ -102,6 +102,14 @@ async function buildSite(ctx, options) {
       if (!localized.length) throw Error(`No pages found for locale ${locale}.`);
       const sidebar = settings.sidebar || config.sidebar;
       const navigation = sidebar ? resolveNavigation(sidebar, localized, base) : autoNavigation(localized);
+      const sectionByUrl = new Map();
+      function collectSections(items, parents = []) {
+        for (const item of items) {
+          if (item.items) collectSections(item.items, [...parents, item.label]);
+          else if (!sectionByUrl.has(item.url)) sectionByUrl.set(item.url, parents.join(' / ') || ui.documentation);
+        }
+      }
+      collectSections(navigation);
       for (const page of localized) {
         const destination = path.join(stage, page.url.slice(base.length), 'index.html');
         await fs.mkdir(path.dirname(destination), { recursive: true });
@@ -109,7 +117,7 @@ async function buildSite(ctx, options) {
       }
       const index = localized.filter(p => p.search !== false).flatMap(p => {
         const text = p.content.replace(/<[^>]*>/g,' ').replace(/&(?:amp|lt|gt|quot|#39);/g, s => ({'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&#39;':"'"})[s]).replace(/\s+/g,' ').trim();
-        return [{ title: p.title, description: p.description, url: p.url, section: p.relative.split('/').slice(0,-1).map(label).join(' / ') || ui.documentation, text }];
+        return [{ title: p.title, description: p.description, url: p.url, section: sectionByUrl.get(p.url) ?? (p.relative.split('/').slice(0,-1).map(label).join(' / ') || ui.documentation), text }];
       });
       await fs.writeFile(path.join(stage, `search-${locale}.json`), JSON.stringify(index));
       if (locale === Object.keys(locales)[0]) await fs.writeFile(path.join(stage, 'search.json'), JSON.stringify(index));

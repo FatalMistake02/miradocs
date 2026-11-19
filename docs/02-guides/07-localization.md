@@ -35,7 +35,7 @@ When a matching translation is missing, the switcher opens that language's home 
 
 ## Translate the interface
 
-English, Spanish, and French interface text is included. Override individual labels in a locale's `ui` object. Other languages use English for labels you have not supplied.
+English, Spanish, French, German, Portuguese, Japanese, and Simplified Chinese interface text is included. Override individual labels in a locale's `ui` object. Other languages use English for labels you have not supplied.
 
 ```json title=miradocs.config.json
 {

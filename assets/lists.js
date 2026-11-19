@@ -1,13 +1,32 @@
 const normalize = value => value.normalize('NFKD').replace(/\p{M}/gu, '').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
 
 export function initializeLists(signal, ui) {
-  for (const list of document.querySelectorAll('.content-list[data-list-search]')) {
+  for (const list of document.querySelectorAll('.content-list')) {
+    const content = list.querySelector(':scope > .list-content');
+    const items = content.firstElementChild;
+    const rows = [...items.children].map(element => ({ element, text: normalize(element.textContent) }));
+    const alignments = list.dataset.listAlignments && JSON.parse(list.dataset.listAlignments);
+    const alignColumns = () => {
+      if (!alignments) return;
+      const columns = getComputedStyle(items).gridTemplateColumns.split(/\s+/).filter(track => Number.parseFloat(track) > 0).length || Number(list.dataset.listColumns);
+      let index = 0;
+      for (const { element } of rows) {
+        if (element.hidden) continue;
+        const alignment = Array.isArray(alignments) ? alignments[index++ % columns] ?? 'start' : alignments;
+        if (element.dataset.listAlign !== alignment) element.dataset.listAlign = alignment;
+      }
+    };
+    alignColumns();
+    if (alignments && typeof ResizeObserver === 'function') {
+      const observer = new ResizeObserver(alignColumns);
+      observer.observe(items);
+      signal.addEventListener('abort', () => observer.disconnect(), { once: true });
+    }
+    if (!list.hasAttribute('data-list-search')) continue;
     const header = list.querySelector(':scope > .list-header');
     const filter = header.querySelector(':scope > .list-filter');
     const input = filter.querySelector('input');
     const clear = filter.querySelector('.list-clear');
-    const content = list.querySelector(':scope > .list-content');
-    const rows = [...content.firstElementChild.children].map(element => ({ element, text: normalize(element.textContent) }));
     const empty = list.querySelector(':scope > .list-empty');
     const status = list.querySelector(':scope > .list-status');
     const update = (announce = true) => {
@@ -18,6 +37,7 @@ export function initializeLists(signal, ui) {
         if (!row.element.hidden) visible++;
       }
       clear.hidden = !input.value;
+      alignColumns();
       empty.hidden = visible !== 0;
       if (announce) status.textContent = visible ? ui.listResults.replace('{visible}', String(visible)).replace('{total}', String(rows.length)) : empty.textContent;
     };

@@ -33,12 +33,37 @@ test('list options escape content and reject invalid options or non-list bodies'
   assert.match(escaped, /&lt;script&gt;/);
   assert.match(escaped, /&quot;&lt;input&gt;/);
   assert.doesNotMatch(escaped, /<script>|<img>/);
-  for (const options of ['{"search":"yes"}', '{"title":1}', '{"empty":false}', '{"unknown":true}', '{"columns":0}', '{"columns":7}', '{"columns":1.5}', '{"columns":"2"}', '{invalid}']) {
+  for (const options of ['{"search":"yes"}', '{"title":1}', '{"empty":false}', '{"unknown":true}', '{"columns":0}', '{"columns":7}', '{"columns":1.5}', '{"columns":"2"}', '{ columnDividers: none }', '{ align: middle }', '{ align: [] }', '{ columns: 2, align: [start, end, center] }', '{invalid}']) {
     assert.throws(() => render(`:::list ${options}\n- Item\n:::`, env), /list:/);
   }
   for (const body of ['', 'A paragraph', '- Item\n\nParagraph', '- Item\n\n1. Another list']) {
     assert.throws(() => render(`:::list\n${body}\n:::`, env), /one Markdown list/);
   }
+});
+
+test('column dividers and alignments render and follow filtering and responsive column counts', t => {
+  const html = render(':::list { columns: 2, search: true, columnDividers: false, align: [start, end] }\n- Alpha\n- Beta\n- Gamma\n- Delta\n:::\n:::list { columns: 2, align: center }\n- One\n- Two\n:::', env).content;
+  const dom = new JSDOM(html, { runScripts: 'outside-only' });
+  t.after(() => dom.window.close());
+  const w = dom.window, controller = new w.AbortController(), observers = [];
+  w.ResizeObserver = class {
+    constructor(callback) { this.callback = callback; observers.push(this); }
+    observe() {}
+    disconnect() { this.disconnected = true; }
+  };
+  const [list, plain] = w.document.querySelectorAll('.content-list');
+  const items = list.querySelector('ul'); items.style.gridTemplateColumns = '200px 200px';
+  assert.equal(list.dataset.listColumnDividers, 'false');
+  const visibleAlignments = () => [...items.children].filter(row => !row.hidden).map(row => row.dataset.listAlign);
+  assert.deepEqual(visibleAlignments(), ['start', 'end', 'start', 'end']);
+  w.eval(runtime + '\nwindow.initializeLists = initializeLists;');
+  w.initializeLists(controller.signal, english);
+  assert.equal(plain.querySelector('li').dataset.listAlign, 'center');
+  const input = list.querySelector('input'); input.value = 'ta'; input.dispatchEvent(new w.Event('input'));
+  assert.deepEqual(visibleAlignments(), ['start', 'end']);
+  items.style.gridTemplateColumns = '300px'; observers[0].callback();
+  assert.deepEqual(visibleAlignments(), ['start', 'start']);
+  controller.abort(); assert(observers.every(observer => observer.disconnected));
 });
 
 test('column lists preserve source order, numbered starts and independent nested lists', () => {

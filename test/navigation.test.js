@@ -57,3 +57,14 @@ test('a link to the current page clears its old fragment without fetching',async
   click(w,'#top');
   assert.equal(w.location.hash,'');assert.equal(requests.length,0);
 });
+
+test('language changes update the skip link, language and reading direction without reloading',async t=>{
+  const {w}=await setup(t),original=w.document;
+  const skip=w.document.createElement('a');skip.className='skip-link';skip.href='#main';skip.textContent='Skip to content';w.document.body.prepend(skip);
+  w.fetch=async url=>({ok:true,url:String(url),headers:{get:()=> 'text/html'},text:async()=>html('日本語').replace('lang="en"','lang="ja" dir="ltr"').replace('<body data-base="/">','<body data-base="/"><a class="skip-link" href="#main">本文へ移動</a>')});
+  await nextNavigation(w,()=>w.document.dispatchEvent(new w.CustomEvent('miradocs:visit',{detail:{url:'/ja/'}})));
+  assert.equal(w.document,original);
+  assert.equal(w.document.documentElement.lang,'ja');
+  assert.equal(w.document.documentElement.dir,'ltr');
+  assert.equal(w.document.querySelector('.skip-link').textContent,'本文へ移動');
+});
