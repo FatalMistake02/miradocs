@@ -147,7 +147,7 @@ For framework components, the instance class is attached to the mount container.
 
 Set `title`, `logo`, `favicon`, and optional `footer` in configuration. Asset paths refer to files in the public folder.
 
-The header title uses regular weight (`400`) and an `18px` font size by default. Override `--brand-font-weight` and `--brand-font-size` in your theme to change them:
+The header title uses regular weight (`400`) and a `22px` font size by default. Override `--brand-font-weight` and `--brand-font-size` in your theme to change them:
 
 ```css
 :root {

@@ -7,7 +7,7 @@
   --info:#526fa5; --warning:#946b1e; --danger:#b14646; --scrollbar:#ccc;
   --font:Inter,"Segoe UI",system-ui,-apple-system,sans-serif; --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
   --brand-font-weight:400;
-  --brand-font-size:18px;
+  --brand-font-size:22px;
   --radius:8px; --panel-radius:12px; --header-height:64px; --sidebar-width:248px; --outline-width:212px; --content-width:780px;
   --shadow:0 16px 64px #0002; --duration:160ms; --ease:cubic-bezier(.2,.8,.2,1);
 }
