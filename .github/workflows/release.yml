@@ -18,6 +18,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    outputs:
+      pages-artifact: github-pages-${{ github.run_attempt }}
     permissions:
       contents: write
       id-token: write
@@ -61,6 +63,7 @@ jobs:
         if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v4
         with:
+          name: github-pages-${{ github.run_attempt }}
           path: site
       - name: Save release packages
         uses: actions/upload-artifact@v7
@@ -105,3 +108,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ needs.release.outputs.pages-artifact }}
