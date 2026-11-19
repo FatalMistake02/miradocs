@@ -15,3 +15,4 @@ packages/create-miradocs/lib/
 packages/create-miradocs/LICENSE
 .miradocs-test-*/
 dist/
+.miradocs-pages.config.json

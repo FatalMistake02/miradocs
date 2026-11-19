@@ -53,6 +53,15 @@ jobs:
           sha256sum ./*.tgz > SHA256SUMS
       - name: Test the packed starter and framework
         run: npm run test:install -- dist/release/miradocs-*.tgz dist/release/create-miradocs-*.tgz
+      - name: Build documentation for GitHub Pages
+        run: node scripts/build-pages.js "$DOCS_SITE_URL"
+        env:
+          DOCS_SITE_URL: ${{ vars.DOCS_SITE_URL || 'https://fatalmistake02.github.io/miradocs/' }}
+      - name: Save documentation for deployment
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
       - name: Save release packages
         uses: actions/upload-artifact@v7
         with:
@@ -78,3 +87,21 @@ jobs:
             if [ "$PRERELEASE" = true ]; then flags+=(--prerelease); fi
             gh release create "$RELEASE_TAG" dist/release/* --verify-tag --generate-notes --title "miradocs $RELEASE_TAG" "${flags[@]}"
           fi
+
+  docs:
+    name: Deploy documentation
+    needs: release
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

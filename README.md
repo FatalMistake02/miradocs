@@ -2,6 +2,10 @@
 
 A static documentation framework built in JavaScript. Write pages in Markdown, organize navigation with folders, and customize the interface through CSS variables and reusable components.
 
+[Documentation and live examples](https://fatalmistake02.github.io/miradocs/)
+
+The documentation site is built with miradocs and includes working examples of its components.
+
 Requires Node.js 20.19 or newer.
 
 Create a documentation site with the `create-miradocs` starter:
