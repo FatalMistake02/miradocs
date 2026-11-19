@@ -1,3 +1,37 @@
+/* Lists */
+.content-list {
+  --list-bg:var(--surface);
+  --list-border:var(--border);
+  --list-radius:var(--panel-radius);
+  --list-padding:18px;
+  margin-block:24px;
+  border:1px solid var(--list-border);
+  border-radius:var(--list-radius);
+  background:var(--list-bg);
+  overflow:hidden;
+}
+.list-title { padding:16px var(--list-padding);font-weight:550;font-size:14px;border-bottom:1px solid var(--list-border) }
+.list-filter { display:flex;align-items:center;gap:8px;margin:12px var(--list-padding);padding-inline:12px 4px;border:1px solid var(--list-border);border-radius:var(--radius);background:var(--bg) }
+.list-filter:focus-within { border-color:var(--accent) }
+.list-search { display:flex;align-items:center;gap:10px;flex:1;min-width:0;color:var(--muted) }
+.list-search svg { width:16px;height:16px }
+.list-search input { width:100%;min-width:0;min-height:44px;border:0;outline:0;background:transparent;color:var(--text);font-size:14px }
+.list-search input::placeholder { color:var(--muted);opacity:1 }
+.list-search input::-webkit-search-cancel-button { display:none }
+.list-clear { display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;border:0;border-radius:var(--radius);background:transparent;color:var(--muted) }
+.list-clear:hover { background:var(--hover);color:var(--text) }
+.list-clear svg { width:16px;height:16px }
+.article .list-content > :is(ul,ol) { margin:0;padding:0;list-style:none }
+.article .list-content > :is(ul,ol) > li { margin:0;padding:14px var(--list-padding);overflow-wrap:anywhere }
+.list-content > :is(ul,ol) > li:not([hidden]) ~ li:not([hidden]) { border-top:1px solid var(--list-border) }
+.article .list-content > :is(ul,ol) > li > p { margin:0 }
+.article .list-content > :is(ul,ol) > li > p + p { margin-top:8px }
+.article .list-content > ol { list-style:decimal;padding-inline-start:calc(var(--list-padding) + 20px) }
+.article .list-content > ol > li { padding-inline-start:4px }
+.list-content > ol > li::marker { color:var(--muted);font-size:12px }
+.article .list-empty { margin:0;padding:24px var(--list-padding);color:var(--muted);font-size:14px }
+@media(max-width:760px) { .list-search input { font-size:16px }.list-clear { width:44px;height:44px } }
+
 /* Colors change independently of layout. Override these roles in your theme. */
 :root {
   color-scheme:light;

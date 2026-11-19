@@ -33,7 +33,7 @@ export async function loadConfig(configPath = 'miradocs.config.json') {
   if (config.styles && (!Array.isArray(config.styles) || config.styles.some(s => typeof s !== 'string' || s.includes('..') || path.isAbsolute(s)))) throw Error('styles must contain paths inside the theme folder.');
   if(config.scripts && (!Array.isArray(config.scripts) || config.scripts.some(s=>typeof s !== 'string'))) throw Error('scripts must be an array of URLs.');
   for(const script of config.scripts || []) safeUrl(script,'script');
-  const reserved = new Set(['note','tip','caution','danger','tabs','tab','details','steps','group','cards','card','button','file-tree','badge','constructor','prototype']);
+  const reserved = new Set(['note','tip','caution','danger','tabs','tab','details','steps','group','list','cards','card','button','file-tree','badge','constructor','prototype']);
   if(config.clientComponents && (typeof config.clientComponents !== 'object' || Array.isArray(config.clientComponents))) throw Error('clientComponents must be an object.');
   for(const [name,component] of Object.entries(config.clientComponents || {})) {
     if(!/^[a-z][a-z0-9-]*$/.test(name) || reserved.has(name)) throw Error(`Invalid or reserved client component name: ${name}`);

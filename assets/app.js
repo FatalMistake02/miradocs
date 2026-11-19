@@ -1,6 +1,7 @@
 import { enableNavigation } from './navigation.js';
 import { initializeClientComponents } from './client-components.js';
 import { initializeOutline } from './outline.js';
+import { initializeLists } from './lists.js';
 
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
@@ -17,6 +18,7 @@ function initializePage() {
   const config = JSON.parse($('#miradocs-data').textContent), { ui } = config;
   on(document,'miradocs:before-navigate',cleanup);
   initializeClientComponents(signal,ui);
+  initializeLists(signal,ui);
   const visit = url => {
     if (config.clientNavigation !== false) document.dispatchEvent(new CustomEvent('miradocs:visit', { detail: { url } }));
     else location.assign(url);

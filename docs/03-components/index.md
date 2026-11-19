@@ -43,6 +43,9 @@ Number a sequence of instructions.
 :::card File trees | /components/file-trees/
 Display a directory structure.
 :::
+:::card Lists | /components/lists/
+Group Markdown entries with optional search.
+:::
 :::card Badges | /components/badges/
 Display a short status label.
 :::

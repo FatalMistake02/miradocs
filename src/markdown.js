@@ -4,6 +4,7 @@ import taskLists from 'markdown-it-task-lists';
 import hljs from 'highlight.js';
 import { escape, slug, localUrl } from './utils.js';
 import { parseFileTree, renderFileTree } from './file-tree.js';
+import { renderList } from './list.js';
 
 function addClasses(html, classes = []) {
   if (!classes.length) return html;
@@ -79,6 +80,7 @@ export function createMarkdown(components, { base = '/', rawHtml = false, client
     if (kind === 'details') return `<details class="details"><summary><span class="details-title">${title}</span><span class="details-indicator">${env.icons['chevron-down'] || ''}</span></summary><div class="details-content">`;
     if (kind === 'steps') return '<div class="steps">';
     if (kind === 'group') return '<div class="content-group">';
+    if (kind === 'list') return renderList(tokens, i, env);
     if (kind === 'cards') return '<div class="cards">';
     if (kind === 'badge') return `<div class="badge">${title}`;
     if ((kind === 'card' || kind === 'button') && !components[kind]) {
