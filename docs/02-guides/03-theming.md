@@ -127,6 +127,12 @@ Run `npm install`.
 :::tab pnpm
 Run `pnpm install`.
 :::
+:::tab Yarn
+Run `yarn install`.
+:::
+:::tab Bun
+Run `bun install`.
+:::
 :::
 
 :::details More options {.advanced-options}

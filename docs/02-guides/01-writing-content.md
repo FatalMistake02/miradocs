@@ -23,13 +23,35 @@ description: Install the project and start a local preview.
 
 Run these commands from the project directory:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm install
 npm run dev
 ```
+:::
+:::tab pnpm
+```sh
+pnpm install
+pnpm run dev
+```
+:::
+:::tab Yarn
+```sh
+yarn install
+yarn run dev
+```
+:::
+:::tab Bun
+```sh
+bun install
+bun run dev
+```
+:::
+:::
 
 :::note Production build
-Run `npm run build` to generate the finished site.
+Run the `build` script to generate the finished site.
 :::
 ````
 

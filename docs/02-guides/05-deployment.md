@@ -8,10 +8,32 @@ miradocs generates static HTML, CSS, and JavaScript. You can upload the output t
 
 Run these commands in your project:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm run build
 npm run preview
 ```
+:::
+:::tab pnpm
+```sh
+pnpm run build
+pnpm run preview
+```
+:::
+:::tab Yarn
+```sh
+yarn run build
+yarn run preview
+```
+:::
+:::tab Bun
+```sh
+bun run build
+bun run preview
+```
+:::
+:::
 
 Check the preview before uploading the contents of `site/`.
 
@@ -19,13 +41,38 @@ Check the preview before uploading the contents of `site/`.
 
 Use these settings on a service that builds from your repository:
 
+:::tabs Package manager
+:::tab npm
 | Setting | Value |
 | --- | --- |
-| Install command | `npm ci` when you have a committed npm lockfile |
+| Install command | `npm ci` |
 | Build command | `npm run build` |
 | Output directory | `site` |
+:::
+:::tab pnpm
+| Setting | Value |
+| --- | --- |
+| Install command | `pnpm install --frozen-lockfile` |
+| Build command | `pnpm run build` |
+| Output directory | `site` |
+:::
+:::tab Yarn
+| Setting | Value |
+| --- | --- |
+| Install command | `yarn install --immutable` |
+| Build command | `yarn run build` |
+| Output directory | `site` |
+:::
+:::tab Bun
+| Setting | Value |
+| --- | --- |
+| Install command | `bun install --frozen-lockfile` |
+| Build command | `bun run build` |
+| Output directory | `site` |
+:::
+:::
 
-Use the equivalent install and build commands if you use another package manager. For a manual deployment, upload the files already generated in `site/`.
+Commit your package manager’s lockfile before using these install commands. The Yarn example uses Yarn 2 or newer. For a manual deployment, upload the files already generated in `site/`.
 
 Your host should serve `index.html` for directory URLs. Configure its custom 404 page to use `404.html`.
 

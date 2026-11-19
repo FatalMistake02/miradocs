@@ -58,4 +58,4 @@ draft: true
 ---
 ```
 
-Preview drafts with `npm run dev`. They are left out when you run `npm run build`.
+The `dev` script includes drafts in the preview. The `build` script leaves them out. See [Commands](/reference/configuration/#commands) for your package manager.

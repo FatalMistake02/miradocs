@@ -8,12 +8,40 @@ Use Node.js 20.19 or newer on your computer. The finished site is static, so you
 
 Run the starter, install its dependencies, and start the preview:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm create miradocs@latest my-docs
 cd my-docs
 npm install
 npm run dev
 ```
+:::
+:::tab pnpm
+```sh
+pnpm create miradocs@latest my-docs
+cd my-docs
+pnpm install
+pnpm run dev
+```
+:::
+:::tab Yarn
+```sh
+yarn dlx create-miradocs@latest my-docs
+cd my-docs
+yarn install
+yarn run dev
+```
+:::
+:::tab Bun
+```sh
+bun create miradocs@latest my-docs
+cd my-docs
+bun install
+bun run dev
+```
+:::
+:::
 
 :::note Before the first release
 The npm packages have not been published yet. Use the [local package setup](#use-a-local-package) below until they are available.
@@ -35,9 +63,7 @@ The starter gives you a small project:
 
 Your content and styles live here. miradocs is installed as a dependency.
 
-### Other package managers
-
-You can also create a project with `pnpm create miradocs`, `yarn create miradocs`, or `bun create miradocs`. Use the same package manager to install dependencies and run the generated scripts.
+Use the same package manager for creating the project, installing dependencies, and running scripts. The Yarn example uses Yarn 2 or newer.
 
 ## Write your first page
 
@@ -58,10 +84,32 @@ Add more `.md` files to create more pages. See [Writing content](/guides/writing
 
 ## Build your site
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm run build
 npm run preview
 ```
+:::
+:::tab pnpm
+```sh
+pnpm run build
+pnpm run preview
+```
+:::
+:::tab Yarn
+```sh
+yarn run build
+yarn run preview
+```
+:::
+:::tab Bun
+```sh
+bun run build
+bun run preview
+```
+:::
+:::
 
 The build writes your site to `site/`. The preview serves those files locally. When you are ready to put the site online, follow [Deployment](/guides/deployment/).
 
@@ -80,6 +128,33 @@ Generate your project, replacing the package path with the absolute path to the 
 ```sh
 node packages/create-miradocs/bin/create-miradocs.js ../my-docs --miradocs-version file:/absolute/path/to/miradocs-1.0.0.tgz
 cd ../my-docs
+```
+
+Install dependencies and start your site:
+
+:::tabs Package manager
+:::tab npm
+```sh
 npm install
 npm run dev
 ```
+:::
+:::tab pnpm
+```sh
+pnpm install
+pnpm run dev
+```
+:::
+:::tab Yarn
+```sh
+yarn install
+yarn run dev
+```
+:::
+:::tab Bun
+```sh
+bun install
+bun run dev
+```
+:::
+:::

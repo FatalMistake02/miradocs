@@ -98,25 +98,75 @@ Use a Simple Icons slug such as `github`, a Lucide name such as `book-open`, or 
 
 The generated project includes scripts for the usual tasks:
 
+:::tabs Package manager
+:::tab npm
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | Build, watch your files, and refresh the preview |
 | `npm run build` | Generate the production site |
 | `npm run preview` | Build and preview without watching |
+:::
+:::tab pnpm
+| Command | What it does |
+| --- | --- |
+| `pnpm run dev` | Build, watch your files, and refresh the preview |
+| `pnpm run build` | Generate the production site |
+| `pnpm run preview` | Build and preview without watching |
+:::
+:::tab Yarn
+| Command | What it does |
+| --- | --- |
+| `yarn run dev` | Build, watch your files, and refresh the preview |
+| `yarn run build` | Generate the production site |
+| `yarn run preview` | Build and preview without watching |
+:::
+:::tab Bun
+| Command | What it does |
+| --- | --- |
+| `bun run dev` | Build, watch your files, and refresh the preview |
+| `bun run build` | Generate the production site |
+| `bun run preview` | Build and preview without watching |
+:::
+:::
 
 ### Run the CLI directly
 
-For a project with miradocs installed, use `npx miradocs`:
+Run the installed miradocs CLI through your package manager:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npx miradocs build --config miradocs.config.json
 npx miradocs dev --port 8001
 npx miradocs serve --port 8001
 ```
+:::
+:::tab pnpm
+```sh
+pnpm exec miradocs build --config miradocs.config.json
+pnpm exec miradocs dev --port 8001
+pnpm exec miradocs serve --port 8001
+```
+:::
+:::tab Yarn
+```sh
+yarn exec miradocs build --config miradocs.config.json
+yarn exec miradocs dev --port 8001
+yarn exec miradocs serve --port 8001
+```
+:::
+:::tab Bun
+```sh
+bunx --no-install miradocs build --config miradocs.config.json
+bunx --no-install miradocs dev --port 8001
+bunx --no-install miradocs serve --port 8001
+```
+:::
+:::
 
 `--config` selects a configuration file. `--port` changes the preview port from `8000`. Use `--help` for commands and `--version` for the installed version.
 
-`npx miradocs init my-docs` creates a project from an existing installation. For a new project, start with [Installation](/getting-started/installation/).
+The CLI’s `init my-docs` command creates a project from an existing installation. For a new project, start with [Installation](/getting-started/installation/).
 
 ### Client navigation hooks
 

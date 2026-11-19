@@ -50,13 +50,35 @@ description: Install dependencies and run the project locally.
 
 Run these commands from the project root:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm install
 npm run dev
 ```
+:::
+:::tab pnpm
+```sh
+pnpm install
+pnpm run dev
+```
+:::
+:::tab Yarn
+```sh
+yarn install
+yarn run dev
+```
+:::
+:::tab Bun
+```sh
+bun install
+bun run dev
+```
+:::
+:::
 
 :::note Deployment
-Use `npm run build` when you are ready to generate static files.
+Run the `build` script when you are ready to generate static files.
 :::
 
 ## Configure the site

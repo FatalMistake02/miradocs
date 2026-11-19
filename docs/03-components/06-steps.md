@@ -6,11 +6,11 @@ description: Present instructions as a numbered sequence.
 
 :::steps
 ### Install dependencies
-Run `npm install` in your project.
+Install dependencies using your [package manager](/getting-started/installation/#create-your-site).
 ### Start the preview
-Run `npm run dev` and open the address in your terminal.
+Run the `dev` script and open the address in your terminal.
 ### Build the site
-Run `npm run build` to generate `site/`.
+Run the `build` script to generate `site/`.
 :::
 
 ## Add steps
@@ -20,11 +20,11 @@ Wrap level-three headings (`###`) and their content in `steps`. Each heading bec
 ```md
 :::steps {.setup-steps}
 ### Install dependencies
-Run `npm install` in your project.
+Install dependencies using your [package manager](/getting-started/installation/#create-your-site).
 ### Start the preview
-Run `npm run dev`.
+Run the `dev` script.
 ### Build the site
-Run `npm run build` to generate `site/`.
+Run the `build` script to generate `site/`.
 :::
 ```
 

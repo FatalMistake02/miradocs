@@ -42,9 +42,28 @@ The body is fallback content shown before the component loads or when JavaScript
 
 Install React and React DOM in your project:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm install react react-dom
 ```
+:::
+:::tab pnpm
+```sh
+pnpm add react react-dom
+```
+:::
+:::tab Yarn
+```sh
+yarn add react react-dom
+```
+:::
+:::tab Bun
+```sh
+bun add react react-dom
+```
+:::
+:::
 
 Use React 18 or newer. The configuration above accepts JSX and TSX files.
 
@@ -74,9 +93,28 @@ For component authoring, see the [React documentation](https://react.dev/learn).
 
 Install Vue and its component compiler:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm install vue @vue/compiler-sfc
 ```
+:::
+:::tab pnpm
+```sh
+pnpm add vue @vue/compiler-sfc
+```
+:::
+:::tab Yarn
+```sh
+yarn add vue @vue/compiler-sfc
+```
+:::
+:::tab Bun
+```sh
+bun add vue @vue/compiler-sfc
+```
+:::
+:::
 
 In the configuration above, set `framework` to `"vue"` and `src` to `"./components/Counter.vue"`.
 
@@ -107,9 +145,28 @@ Standard scripts, `<script setup>`, and scoped styles are supported. Vue CSS mod
 
 Install Svelte 5:
 
+:::tabs Package manager
+:::tab npm
 ```sh
 npm install svelte
 ```
+:::
+:::tab pnpm
+```sh
+pnpm add svelte
+```
+:::
+:::tab Yarn
+```sh
+yarn add svelte
+```
+:::
+:::tab Bun
+```sh
+bun add svelte
+```
+:::
+:::
 
 Set `framework` to `"svelte"` and `src` to `"./components/Counter.svelte"`.
 

@@ -15,6 +15,11 @@ npm run build
 pnpm build
 ```
 :::
+:::tab Yarn
+```sh
+yarn run build
+```
+:::
 :::tab Bun
 ```sh
 bun run build
@@ -36,6 +41,11 @@ npm run build
 :::tab pnpm
 ```sh
 pnpm build
+```
+:::
+:::tab Yarn
+```sh
+yarn run build
 ```
 :::
 :::tab Bun
