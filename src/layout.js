@@ -27,9 +27,9 @@ ${config.favicon ? `<link rel="icon" href="${e(localUrl(base, config.favicon))}"
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('miradocs-theme')||'system'}catch(e){}</script>
 <link rel="stylesheet" href="${base}assets/style.css">${styles}</head>
 <body data-base="${e(base)}"><a class="skip-link" href="#main">${e(ui.skip)}</a>
-<header class="topbar"><a class="brand" href="${home}">${config.logo ? `<img class="logo" src="${e(localUrl(base, config.logo))}" alt="">` : icons['book-open']}<span>${e(siteName)}</span></a>
-<div class="top-actions"><nav class="header-links" aria-label="${e(ui.links)}">${links}</nav>
+<header class="topbar"><div class="header-start"><a class="brand" href="${home}">${config.logo ? `<img class="logo" src="${e(localUrl(base, config.logo))}" alt="">` : icons['book-open']}<span>${e(siteName)}</span></a>
 ${config.search !== false ? `<button class="search-trigger" type="button" aria-label="${e(ui.search)}" aria-haspopup="dialog">${icons.search}<span>${e(ui.search)}</span><kbd>Ctrl K</kbd></button>` : ''}
+</div><div class="top-actions"><nav class="header-links" aria-label="${e(ui.links)}">${links}</nav>
 <button class="theme-toggle icon-button" type="button" aria-label="${e(ui.theme)}" title="${e(ui.theme)}"><span data-theme-icon="light">${icons.sun}</span><span data-theme-icon="dark">${icons.moon}</span></button>
 ${languages}
 <button class="menu-toggle icon-button" type="button" aria-label="${e(ui.menu)}" aria-expanded="false" aria-controls="sidebar">${icons.menu}</button></div></header>
