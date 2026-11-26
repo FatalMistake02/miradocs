@@ -1,11 +1,11 @@
 import { escape as e, localUrl } from './utils.js';
-import { navigationHtml } from './navigation.js';
+import { navigationHtml, navigationPages } from './navigation.js';
 
 export function layout(ctx, page, pages, navigation, icons, ui, { dev = false, notFound = false } = {}) {
   const { config, base, locales } = ctx, locale = locales[page.locale];
   const landing = page.layout === 'landing';
-  const sameLanguage = pages.filter(p => p.locale === page.locale && p.sidebar !== false);
-  const index = sameLanguage.indexOf(page), previous = sameLanguage[index - 1], next = sameLanguage[index + 1];
+  const ordered = navigationPages(navigation, pages.filter(p => p.locale === page.locale));
+  const index = ordered.indexOf(page), previous = ordered[index - 1], next = index >= 0 ? ordered[index + 1] : undefined;
   const home = base + (locale.path ? locale.path + '/' : '');
   const siteName = config.title || 'Documentation';
   const styles = (page.clientStyles || []).map(url=>`<link rel="stylesheet" data-miradocs-component-style href="${e(url)}">`).join('') + (config.styles || []).map(file => `<link rel="stylesheet" data-miradocs-theme href="${e(base + 'theme/' + file)}">`).join('');

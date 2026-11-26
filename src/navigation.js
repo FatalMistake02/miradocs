@@ -25,6 +25,21 @@ export function resolveNavigation(items, pages, base) {
     return { ...item, url: localUrl(base, safeUrl(item.link)) };
   });
 }
+export function navigationPages(items, pages) {
+  const byUrl = new Map(pages.filter(page => page.sidebar !== false).map(page => [page.url, page]));
+  const ordered = [];
+  function visit(items) {
+    for (const item of items) {
+      if (item.items) visit(item.items);
+      else if (byUrl.has(item.url)) {
+        ordered.push(byUrl.get(item.url));
+        byUrl.delete(item.url);
+      }
+    }
+  }
+  visit(items);
+  return ordered;
+}
 export function navigationHtml(items, current, chevron, level = 0) {
   return items.map(item => {
     if (item.items) {
